@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
-<title>Starforge Courier — single-file MVP (Mobile-ready)</title>
+  <!-- PWA / Open Graph -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <title>Starforge Courier — single-file MVP (Mobile-ready)</title>
+
+  <!-- Icons / Favicon -->
+  <link rel="icon" href="./star_icon.png">
+  <link rel="apple-touch-icon" href="./star_icon.png">
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0a0c14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Starforge">
+
+  <!-- Open Graph -->
+  <link rel="canonical" href="https://ers123.github.io/star_courier/">
+  <meta property="og:title" content="Starforge Courier">
+  <meta property="og:description" content="Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ers123.github.io/star_courier/">
+  <meta property="og:image" content="https://ers123.github.io/star_courier/start_image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Starforge Courier">
+  <meta name="twitter:description" content="Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.">
+  <meta name="twitter:image" content="https://ers123.github.io/star_courier/start_image.png">
 <style>
   :root{
     --bg:#0a0c14; --ink:#e6f7ff;
@@ -165,7 +193,7 @@
       <div class="k">Aim: <b>← →</b> rotate or mouse</div>
       <div class="k">Shoot: <b>SPACE</b> or <b>K</b> (hold)</div>
       <div class="k">Slow-Mo: <b>Shift</b> when Focus full</div>
-      <div class="k">Lock target: <b>Q/E</b> cycle · Pause: <b>P</b></div>
+      <div class="k">Pause: <b>P</b></div>
       <div class="k">Dock: <b>Fly into station ring</b> to pick up/deliver</div>
     </div>
     <div class="btn" id="startBtn">Start</div>
@@ -290,8 +318,24 @@
   fsBtn && (fsBtn.onclick = async ()=>{ const el = document.documentElement; if(!document.fullscreenElement){ await el.requestFullscreen().catch(()=>{}); } else { await document.exitFullscreen().catch(()=>{}); } });
   document.querySelectorAll('[data-theme]').forEach(el=>{ el.onclick = ()=> applyTheme(el.getAttribute('data-theme')); });
   aimToggleBtn.onclick = ()=> { aimAssist = !aimAssist; aimToggleBtn.style.borderColor = aimAssist ? 'rgba(255,255,255,.85)' : 'rgba(255,255,255,.12)'; };
+  // reflect default aimAssist=true in UI at boot
+  aimToggleBtn.style.borderColor = 'rgba(255,255,255,.85)';
+
   controlArc.onclick = ()=> applyControlMode('arcade');
   controlSim.onclick = ()=> applyControlMode('simulation');
+
+  // Modes
+  hardBtn.onclick = () => {
+    hardBtn.classList.toggle('active');
+    hardBtn.style.borderColor = hardBtn.classList.contains('active') ? 'rgba(255,255,255,.85)' : 'rgba(255,255,255,.12)';
+    hardBtn.textContent = hardBtn.classList.contains('active') ? 'Hard Mode ✓' : 'Hard Mode';
+  };
+  endlessBtn.onclick = () => {
+    endlessBtn.classList.toggle('active');
+    endlessBtn.style.borderColor = endlessBtn.classList.contains('active') ? 'rgba(255,255,255,.85)' : 'rgba(255,255,255,.12)';
+    endlessBtn.textContent = endlessBtn.classList.contains('active') ? 'Endless ✓' : 'Endless';
+  };
+
   emblemUploadBtn.onclick = ()=> emblemUpload.click();
   emblemUpload.onchange = (e)=>{
     const f = e.target.files && e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = ()=>{ shipBadge.style.backgroundImage = `url(${r.result})`; shipBadge.style.backgroundSize = 'contain'; shipBadge.style.backgroundRepeat = 'no-repeat'; shipBadge.textContent=''; }; r.readAsDataURL(f);
@@ -304,6 +348,37 @@
   let score=0, combo=1, comboDecay=0, focus=0, focusMax=100;
   let wave=1, toSpawn=12, waveTimer=0;
   let scrap=0; let engineTier=0, cannonTier=0, hullTier=0;
+
+  const prices = { engine:[120,180,260], cannon:[160,230,320], hull:[140,210,300] };
+
+  // Shop: upgrades
+  function afford(cost){ return scrap >= cost; }
+  function buy(kind){
+    const tiers = {engine:engineTier, cannon:cannonTier, hull:hullTier};
+    const t = tiers[kind];
+    const cost = prices[kind][t] ?? null;
+    if(cost==null) return; // maxed
+    if(!afford(cost)) return;
+    scrap -= cost; scrapEl.textContent = 'SCRAP '+scrap;
+    if(kind==='engine'){ engineTier++; player.maxSpeed += 4; player.accel += 6; }
+    if(kind==='cannon'){ cannonTier++; player.fireRate = Math.min(player.fireRate+2, 24); }
+    if(kind==='hull'){ hullTier++; player.maxHp += 18; player.hp = Math.min(player.maxHp, player.hp+18); }
+    refreshShop();
+    sfxPower(); showBanner(kind.toUpperCase()+' +');
+  }
+  function label(kind, el){
+    const t = (kind==='engine'?engineTier:kind==='cannon'?cannonTier:hullTier);
+    const nxt = prices[kind][t];
+    el.textContent = (kind==='engine'?'Engine +':kind==='cannon'?'Cannon +':'Hull +') + (nxt?` (${nxt})`:' (MAX)');
+    el.disabled = !nxt;
+    el.style.opacity = nxt? '1' : '.6';
+  }
+  function refreshShop(){ label('engine', buyEngine); label('cannon', buyCannon); label('hull', buyHull); }
+  buyEngine.onclick = ()=> buy('engine');
+  buyCannon.onclick = ()=> buy('cannon');
+  buyHull.onclick   = ()=> buy('hull');
+  refreshShop();
+
 
   // World
   const world = { w:90, h:90 };
@@ -331,7 +406,8 @@
   window.injectSponsoredMission = (cfg)=>{ if(cfg && cfg.brand && currentMission){ currentMission.brand=cfg.brand; currentMission.item = cfg.item || currentMission.item; currentMission.reward = cfg.reward || currentMission.reward; updateMissionUI(); } };
 
   // Shop: emblem
-  emblemTxt.addEventListener('input', ()=>{ shipBadge.textContent = emblemTxt.value || 'FORGECORE'; });
+  const emblemTxtEl = emblemTxt;
+  emblemTxtEl.addEventListener('input', ()=>{ shipBadge.textContent = emblemTxt.value || 'FORGECORE'; });
   emblemColor.addEventListener('input', ()=>{ shipBadge.style.textShadow = `0 0 10px ${emblemColor.value}`; shipBadge.style.borderColor = emblemColor.value; shipBadge.style.color = emblemColor.value; });
 
   // Theme
@@ -355,7 +431,7 @@
     const TAU = 0.06;          // low-pass time constant (seconds)
     const RADIUS = 64;         // px radius for the on-screen stick
 
-    const state = { raw:{x:0,y:0}, sm:{x:0,y:0} };
+    const stick = { raw:{x:0,y:0}, sm:{x:0,y:0} }; // renamed to avoid shadowing game `state`
     let touchId = null;
 
     const stickL = document.getElementById('stickL');
@@ -371,10 +447,10 @@
       let dx = clientX - cx, dy = clientY - cy; const d = Math.hypot(dx,dy);
       if(d > RADIUS){ const k = RADIUS/d; dx*=k; dy*=k; }
       nub.style.transform = `translate(${dx}px, ${dy}px) translate(-50%,-50%)`;
-      state.raw.x =  dx / RADIUS;
-      state.raw.y = -dy / RADIUS;
+      stick.raw.x =  dx / RADIUS;
+      stick.raw.y = -dy / RADIUS;
     }
-    function resetStick(){ if(nub) nub.style.transform = 'translate(-50%,-50%)'; state.raw.x = state.raw.y = 0; }
+    function resetStick(){ if(nub) nub.style.transform = 'translate(-50%,-50%)'; stick.raw.x = stick.raw.y = 0; }
     function getTouchOfThis(e){ const ts = e.changedTouches; for(let i=0;i<ts.length;i++){ if(ts[i].identifier === touchId) return ts[i]; } return null; }
 
     if(IS_MOBILE && stickL){
@@ -387,15 +463,16 @@
 
       const hold=(el,onDown,onUp)=>{ el&&el.addEventListener('touchstart', e=>{ e.preventDefault(); onDown(); }, {passive:false}); el&&el.addEventListener('touchend', ()=>onUp(), {passive:true}); el&&el.addEventListener('touchcancel', ()=>onUp(), {passive:true}); };
       hold(btnShoot, ()=>{ shootHeld=true; }, ()=>{ shootHeld=false; });
+      // uses outer `state` now that we renamed inner object to `stick`
       hold(btnFocus, ()=>{ if(focus>=focusMax && state==='playing'){ slowmo=4; focus=0; sfxSlowOn(); showBanner('FOCUS'); } }, ()=>{});
       hold(btnPause, ()=> togglePause(), ()=>{});
     }
 
     function step(dt){
       const alpha = 1 - Math.exp(-dt / TAU);
-      state.sm.x += (state.raw.x - state.sm.x) * alpha;
-      state.sm.y += (state.raw.y - state.sm.y) * alpha;
-      let x = state.sm.x, y = state.sm.y; const mag = Math.hypot(x,y);
+      stick.sm.x += (stick.raw.x - stick.sm.x) * alpha;
+      stick.sm.y += (stick.raw.y - stick.sm.y) * alpha;
+      let x = stick.sm.x, y = stick.sm.y; const mag = Math.hypot(x,y);
       if(mag < DEADZONE) return { f:0, s:0, aim:null };
       const t = Math.min(1, Math.max(0, (mag - DEADZONE) / (1 - DEADZONE)));
       const scaled = Math.pow(t, RESPONSE);
@@ -419,7 +496,7 @@
   function pickItem(){ const items=['Ancient Relic','Flux Core','Stellar Seeds','Quantum Ink','Data Crates']; return items[(Math.random()*items.length)|0]; }
   function updateMissionUI(){ cargoBadge.textContent = haveCargo ? `Cargo: ${currentMission.item}` : 'Cargo: None'; const brand = currentMission.brand ? ` • Sponsor: ${currentMission.brand}` : ''; missionBadge.textContent = haveCargo ? `Deliver to ${currentMission.drop.name}${brand}` : `Pick up at ${currentMission.pickup.name}${brand}`; }
 
-  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.x) < 1 ? false : dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; scrap += Math.floor(currentMission.reward*0.35); scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED'); newMission(); } }
+  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; scrap += Math.floor(currentMission.reward*0.35); scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED'); newMission(); } }
 
   function addText(s,x,y,z,col='#fff',ttl=0.9){ texts.push({s,x,y,z,ttl,vy:0.6,col}); }
   function addParticles(x,y,z,col,n=10,sp=6){ for(let i=0;i<n;i++){ const a=rnd(Math.PI*2), v=rnd(sp*0.4,sp); particles.push({x,y,z, vx:Math.cos(a)*v, vz:Math.sin(a)*v, vy:rnd(0.5,1.5), t:rnd(.4,.9), col}); } }
@@ -481,7 +558,8 @@
   function update(dt){
     waveTimer += dt;
     if(toSpawn > 0 && waveTimer > 0.28){ waveTimer = 0; spawnEnemy(); toSpawn--; }
-    if(toSpawn <= 0 && enemies.length === 0 && !endlessBtn.classList.contains('active')){ nextWave(); }
+    // Endless should still advance waves once clear
+    if(toSpawn <= 0 && enemies.length === 0){ nextWave(); }
 
     let inputF = ((keys['w']||keys['arrowup'])?1:0) - ((keys['s']||keys['arrowdown'])?1:0);
     let inputS = (keys['d']?1:0) - (keys['a']?1:0);
@@ -551,7 +629,16 @@
     tryDock();
   }
 
-  function nextWave(){ wave++; waveEl.textContent='WAVE '+wave; showBanner('WAVE '+wave); sfxWave(); toSpawn = Math.min(10 + wave*2, (controlMode==='arcade'?60:40)); waveTimer=0; spawnAmbush(currentMission && currentMission.drop || {x:player.x,z:player.z}); }
+  function nextWave(){
+    wave++;
+    waveEl.textContent='WAVE '+wave;
+    showBanner('WAVE '+wave);
+    sfxWave();
+    const cap = endlessBtn.classList.contains('active') ? 9999 : (controlMode==='arcade'?60:40);
+    toSpawn = Math.min(10 + wave*2, cap);
+    waveTimer=0;
+    spawnAmbush(currentMission && currentMission.drop || {x:player.x,z:player.z});
+  }
 
   // Draw
   function draw(){
@@ -601,6 +688,7 @@
     gl.bindBuffer(gl.ARRAY_BUFFER, BUF_SIZ); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(sizes), gl.DYNAMIC_DRAW);
     gl.enableVertexAttribArray(ATTR_SIZ); gl.vertexAttribPointer(ATTR_SIZ, 1, gl.FLOAT, false, 0, 0);
     if(IS_MOBILE && particles.length > 200){ particles.length = 200; }
+    if(!IS_MOBILE && particles.length > 400){ particles.length = 400; }
     gl.drawArrays(gl.POINTS, 0, positions.length/3);
 
     // Follow badge to player
@@ -634,5 +722,25 @@
      ============================================================ */
 })();
 </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js', { scope: '/star_courier/' }).catch(console.error);
+      });
+    }
+
+    // 설치 프로모트(선택)
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); deferredPrompt = e;
+      const chip = document.createElement('div');
+      chip.textContent = '⬇ Install';
+      chip.className = 'chip';
+      chip.style.position='fixed'; chip.style.right='8px';
+      chip.style.top='calc(8px + env(safe-area-inset-top))'; chip.style.zIndex=20;
+      chip.onclick = async () => { deferredPrompt.prompt(); await deferredPrompt.userChoice; chip.remove(); deferredPrompt=null; };
+      document.body.appendChild(chip);
+    });
+  </script>
 </body>
 </html>
