@@ -1,0 +1,15 @@
+{
+  "name": "Starforge Courier",
+  "short_name": "Starforge",
+  "description": "Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.",
+  "start_url": "/star_courier/",
+  "scope": "/star_courier/",
+  "display": "standalone",
+  "background_color": "#0a0c14",
+  "theme_color": "#0a0c14",
+  "orientation": "any",
+  "icons": [
+    { "src": "./star_icon.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "./star_icon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
