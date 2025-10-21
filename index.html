@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
   <title>Starforge Courier — single-file MVP (Mobile-ready)</title>
+  <meta name="description" content="Deliver cargo through the Relic Void while upgrading your ship in this mobile-ready WebGL shooter." />
 
   <!-- Icons / Favicon -->
   <link rel="icon" href="./star_icon.png">
@@ -18,12 +19,14 @@
   <meta name="apple-mobile-web-app-title" content="Starforge">
 
   <!-- Open Graph -->
-  <link rel="canonical" href="https://ers123.github.io/star_courier/">
+  <link rel="canonical" href="https://ers123.github.io/space_courier/">
   <meta property="og:title" content="Starforge Courier">
   <meta property="og:description" content="Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ers123.github.io/star_courier/">
-  <meta property="og:image" content="https://ers123.github.io/star_courier/start_image.png">
+  <meta property="og:url" content="https://ers123.github.io/space_courier/">
+  <meta property="og:site_name" content="Starforge Courier">
+  <meta property="og:image" content="https://ers123.github.io/space_courier/star_image.png">
+  <meta property="og:image:alt" content="Starforge Courier starship art hovering above a neon planet.">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
@@ -31,7 +34,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Starforge Courier">
   <meta name="twitter:description" content="Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.">
-  <meta name="twitter:image" content="https://ers123.github.io/star_courier/start_image.png">
+  <meta name="twitter:url" content="https://ers123.github.io/space_courier/">
+  <meta name="twitter:image" content="https://ers123.github.io/space_courier/star_image.png">
+  <meta name="twitter:image:alt" content="Starforge Courier starship art hovering above a neon planet.">
 <style>
   :root{
     --bg:#0a0c14; --ink:#e6f7ff;
@@ -73,6 +78,7 @@
 
   #topRight{position:fixed;top:calc(8px + env(safe-area-inset-top));right:8px;display:flex;gap:6px;z-index:10;transform-origin:top right}
   .chip{pointer-events:auto;cursor:pointer;padding:6px 8px;border-radius:12px;font-size:12px;font-weight:700;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.25));border:1px solid rgba(255,255,255,.08)}
+  .chip[aria-pressed="true"]{border-color:rgba(64,243,255,.6);box-shadow:0 0 12px rgba(64,243,255,.35);}
 
   #shopPanel{position:fixed;top:56px;right:12px;z-index:9;display:none}
   .shop{min-width:320px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg, rgba(16,18,30,.92), rgba(8,10,16,.98));padding:12px;box-shadow:0 10px 24px rgba(0,0,0,.4)}
@@ -245,7 +251,24 @@
 
   // === Game state ===
   let aimYaw = 0;
-  const player = { x:0, y:0.5, z:0, r:1.2, speed:12, hp:100, maxHp:100, invuln:0, shield:0, fireRate:11, fireCD:0, vx:0, vz:0, maxSpeed:30, accel:84, drag:5, energy:100, maxEnergy:100, energyRegen:18, dashCost:40, dashCooldown:2.5, dashCD:0, dashOnShoot:true, dashSpeed:38 };
+  const FIRE_RATE_CAP = 24;
+  const player = {
+    x:0, y:0.5, z:0, r:1.2,
+    speed:12,
+    hp:100, maxHp:100, invuln:0, shield:0,
+    baseFireRate:11, fireRate:11, fireCD:0,
+    vx:0, vz:0, maxSpeed:30, accel:84, drag:5,
+    energy:100, maxEnergy:100, energyRegen:18,
+    dashCost:40, dashCooldown:2.5, dashCD:0,
+    dashOnShoot:true, dashSpeed:38
+  };
+
+  let rapidMultiplier = 1;
+  let rapidTimer = null;
+  function syncFireRate(){
+    player.fireRate = Math.min(player.baseFireRate * rapidMultiplier, FIRE_RATE_CAP);
+  }
+  syncFireRate();
 
   // input
   const keys = {}; let keyShoot=false;
@@ -314,6 +337,7 @@
   muteBtn.onclick = ()=>{ muted = !muted; muteBtn.textContent = muted ? '🔇 Muted' : '🔊 Sound'; };
   helpBtn.onclick = ()=> toggleHelp();
   shopBtn.onclick = ()=> { shopPanel.style.display = shopPanel.style.display === 'block' ? 'none' : 'block'; };
+  streamBtn.setAttribute('aria-pressed','false');
   streamBtn.onclick = ()=> toggleStream();
   fsBtn && (fsBtn.onclick = async ()=>{ const el = document.documentElement; if(!document.fullscreenElement){ await el.requestFullscreen().catch(()=>{}); } else { await document.exitFullscreen().catch(()=>{}); } });
   document.querySelectorAll('[data-theme]').forEach(el=>{ el.onclick = ()=> applyTheme(el.getAttribute('data-theme')); });
@@ -343,6 +367,7 @@
 
   // State
   let state = 'menu', last = 0, timeScale = 1, slowmo = 0, shake = 0;
+  let streamMode = false;
   let camX=0, camZ=0, camLerp = 0.08; function lerp(a,b,t){return a+(b-a)*t;}
   let aimAssist = true; let controlMode = 'arcade';
   let score=0, combo=1, comboDecay=0, focus=0, focusMax=100;
@@ -361,7 +386,7 @@
     if(!afford(cost)) return;
     scrap -= cost; scrapEl.textContent = 'SCRAP '+scrap;
     if(kind==='engine'){ engineTier++; player.maxSpeed += 4; player.accel += 6; }
-    if(kind==='cannon'){ cannonTier++; player.fireRate = Math.min(player.fireRate+2, 24); }
+    if(kind==='cannon'){ cannonTier++; player.baseFireRate = Math.min(player.baseFireRate + 2, FIRE_RATE_CAP); syncFireRate(); }
     if(kind==='hull'){ hullTier++; player.maxHp += 18; player.hp = Math.min(player.maxHp, player.hp+18); }
     refreshShop();
     sfxPower(); showBanner(kind.toUpperCase()+' +');
@@ -393,7 +418,7 @@
 
   // Billboards
   const billboards = stations.map((s,i)=>{
-    const el=document.createElement('a'); el.href='#'; el.target='_blank'; el.className='billboard'; el.innerHTML = `<div class="brand">Sponsored</div><div class="cta">Your brand here</div>`; document.body.appendChild(el); return {el, s};
+    const el=document.createElement('a'); el.href='#'; el.target='_blank'; el.className='billboard'; el.innerHTML = `<div class="brand">Sponsored</div><div class="cta">Your brand here</div>`; el.style.display='none'; document.body.appendChild(el); return {el, s};
   });
 
   // Sponsor rotation API
@@ -490,6 +515,20 @@
   function lerpAngle(a,b,t){ const diff = Math.atan2(Math.sin(b-a), Math.cos(b-a)); return a + diff * t; }
   function showBanner(txt){ banner.textContent = txt; banner.classList.add('show'); setTimeout(()=>banner.classList.remove('show'), 1200); }
 
+  function placeBillboard(el, screen){
+    if(!screen){ el.style.display='none'; return; }
+    const margin = 32;
+    if(screen.x < -160 || screen.x > innerWidth + 160 || screen.y < -160 || screen.y > innerHeight + 160){
+      el.style.display='none';
+      return;
+    }
+    const x = clamp(screen.x, margin, innerWidth - margin);
+    const y = clamp(screen.y - 36, margin, innerHeight - margin);
+    el.style.left = Math.round(x)+'px';
+    el.style.top = Math.round(y)+'px';
+    el.style.display = 'block';
+  }
+
   // Mission system
   let currentMission=null; let haveCargo=false;
   function newMission(){ const a = stations[Math.floor(Math.random()*stations.length)]; let b = a; while(b===a) b = stations[Math.floor(Math.random()*stations.length)]; currentMission = {pickup:a, drop:b, item: pickItem(), reward: 180 + Math.floor(Math.random()*120), brand: null}; haveCargo=false; updateMissionUI(); addText('NEW CONTRACT', a.x,0.6,a.z,'#ffd54f'); showBanner('NEW CONTRACT'); }
@@ -518,11 +557,27 @@
   // Lifecycle
   startBtn.onclick = ()=> startGame();
   function startGame(){ overlay.style.display='none'; state='playing'; resumeAudio(); resetGame(); }
-  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; showBanner('WAVE 1'); sfxWave(); newMission(); shipBadge.style.display='block'; }
-  function gameOver(){ state='gameover'; overlay.style.display='flex'; overlay.querySelector('.card').innerHTML = `<h1>GAME OVER</h1><p class="muted">Final Score: <b>${score}</b> · Wave: <b>${wave}</b> · Scrap: <b>${scrap}</b></p><div class="keys"><div class="k">Press <b>R</b> to Restart</div><div class="k">Press <b>H</b> for Help</div></div><div class="btn" id="restartBtn">Restart</div>`; document.getElementById('restartBtn').onclick = ()=> { overlay.style.display='none'; startGame(); }; }
+  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; if(rapidTimer){ clearTimeout(rapidTimer); rapidTimer=null; } rapidMultiplier = 1; syncFireRate(); player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; showBanner('WAVE 1'); sfxWave(); newMission(); if(!streamMode) shipBadge.style.display='block'; }
+  function gameOver(){ state='gameover'; overlay.style.display='flex'; shipBadge.style.display='none'; overlay.querySelector('.card').innerHTML = `<h1>GAME OVER</h1><p class="muted">Final Score: <b>${score}</b> · Wave: <b>${wave}</b> · Scrap: <b>${scrap}</b></p><div class="keys"><div class="k">Press <b>R</b> to Restart</div><div class="k">Press <b>H</b> for Help</div></div><div class="btn" id="restartBtn">Restart</div>`; document.getElementById('restartBtn').onclick = ()=> { overlay.style.display='none'; startGame(); }; }
   function togglePause(){ if(state!=='playing' && state!=='paused') return; if(state==='playing'){ state='paused'; pausedBadge.classList.add('show'); } else { state='playing'; pausedBadge.classList.remove('show'); resumeAudio(); } }
   function toggleHelp(){ overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex'; }
-  function toggleStream(){ const hide = sponsorBar.style.display!=='none'; sponsorBar.style.display = hide?'none':'block'; billboards.forEach(b=> b.el.style.display = hide?'none':'block'); const hud = document.getElementById('hud'); hud.style.display = hide?'none':'block'; }
+  function toggleStream(){
+    streamMode = !streamMode;
+    sponsorBar.style.display = streamMode ? 'none' : 'block';
+    billboards.forEach(b=>{
+      if(streamMode){
+        b.el.style.display = 'none';
+      } else {
+        placeBillboard(b.el, worldToScreen(b.s.x, b.s.y, b.s.z));
+      }
+    });
+    const hud = document.getElementById('hud');
+    hud.style.display = streamMode ? 'none' : 'block';
+    if(streamMode){ shipBadge.style.display = 'none'; }
+    streamBtn.textContent = streamMode ? '📺 Stream ✓' : '📺 Stream';
+    streamBtn.setAttribute('aria-pressed', streamMode ? 'true' : 'false');
+    streamBtn.title = streamMode ? 'Streamer mode on (HUD hidden)' : 'Streamer mode (hide ads/HUD)';
+  }
 
   let lastTime = 0; function loop(t){ requestAnimationFrame(loop); if(!lastTime) lastTime=t; let dt = Math.min(0.05, (t-lastTime)/1000); lastTime=t; if(state !== 'playing'){ draw(); return; } if(slowmo > 0){ timeScale = 0.36; slowmo -= dt; if(slowmo <= 0){ slowmo = 0; timeScale = 1; sfxSlowOff(); } } else timeScale = 1; dt *= timeScale; update(dt); draw(); }
   requestAnimationFrame(loop);
@@ -538,7 +593,7 @@
   }
 
   function spawnPower(x,z){ const r=Math.random(); let type='rapid'; if(r<.28) type='heal'; else if(r<.55) type='shield'; else if(r<.8) type='rapid'; else type='focus'; powerups.push({type,x,y:0.4,z,t:8,r:1}); }
-  function applyPower(p){ if(p.type==='rapid'){ player.fireRate = Math.min(player.fireRate*1.8, 22); setTimeout(()=>player.fireRate = Math.max(player.fireRate/1.8,11), 5000); addText('RAPID!', p.x,0,p.z,'#09fbd3'); }
+  function applyPower(p){ if(p.type==='rapid'){ rapidMultiplier = 1.8; syncFireRate(); if(rapidTimer) clearTimeout(rapidTimer); rapidTimer = setTimeout(()=>{ rapidMultiplier = 1; syncFireRate(); rapidTimer = null; }, 5000); addText('RAPID!', p.x,0,p.z,'#09fbd3'); }
     if(p.type==='heal'){ player.hp = Math.min(player.maxHp, player.hp+25); addText('+HEALTH', p.x,0,p.z,'#8fff7a'); }
     if(p.type==='shield'){ player.shield = Math.max(player.shield, 4.5); addText('SHIELD', p.x,0,p.z,'#ffd54f'); }
     if(p.type==='focus'){ focus = clamp(focus + 35, 0, focusMax); addText('+FOCUS', p.x,0,p.z,'#a966ff'); }
@@ -661,7 +716,7 @@
     for(let i=0;i<gridPts.length;i++){ const g = gridPts[i]; positions.push(g[0], g[1], g[2]); colors.push(0.06,0.28,0.36); sizes.push(1.8); }
 
     // Stations + billboards
-    for(const s of stations){ positions.push(s.x,s.y,s.z); colors.push(0.95,0.85,0.35); sizes.push(34); const screen = worldToScreen(s.x,s.y,s.z); const bb = billboards.find(b=>b.s===s); if(bb){ if(screen){ bb.el.style.left = screen.x+'px'; bb.el.style.top = screen.y+'px'; bb.el.style.display='block'; } else { bb.el.style.display='none'; } } }
+    for(const s of stations){ positions.push(s.x,s.y,s.z); colors.push(0.95,0.85,0.35); sizes.push(34); const screen = worldToScreen(s.x,s.y,s.z); const bb = billboards.find(b=>b.s===s); if(bb){ if(streamMode){ bb.el.style.display='none'; } else { placeBillboard(bb.el, screen); } } }
 
     // Powerups
     for(const p of powerups){ positions.push(p.x,p.y,p.z); const c = p.type==='heal' ? [0.56,1,0.48] : p.type==='shield' ? [1,0.83,0.3] : p.type==='focus' ? [0.66,0.4,1.0] : [0.04,0.98,0.83]; colors.push(c[0],c[1],c[2]); sizes.push(14); }
@@ -693,7 +748,16 @@
 
     // Follow badge to player
     const shipScreen = worldToScreen(player.x, player.y, player.z);
-    if(shipScreen){ shipBadge.style.left = shipScreen.x+'px'; shipBadge.style.top = shipScreen.y+'px'; shipBadge.style.display = 'block'; } else shipBadge.style.display='none';
+    if(streamMode){
+      shipBadge.style.display = 'none';
+    } else if(shipScreen){
+      const margin = 24;
+      const x = clamp(shipScreen.x, margin, innerWidth - margin);
+      const y = clamp(shipScreen.y - 28, margin, innerHeight - margin);
+      shipBadge.style.left = Math.round(x)+'px';
+      shipBadge.style.top = Math.round(y)+'px';
+      shipBadge.style.display = 'block';
+    } else shipBadge.style.display='none';
   }
 
   function spawnAmbush(at){ for(let i=0;i<4;i++){ const a = Math.random()*Math.PI*2; enemies.push({type:'chaser', x:at.x+Math.cos(a)*18, y:0.5, z:at.z+Math.sin(a)*18, r:1.2, hp:2+Math.floor(wave/3), speed:4+wave*0.06, col:[1,0.31,0.85], score:30, scrap:8}); } }
@@ -725,7 +789,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { scope: '/star_courier/' }).catch(console.error);
+        navigator.serviceWorker.register('./sw.js', { scope: '/space_courier/' }).catch(console.error);
       });
     }
 
