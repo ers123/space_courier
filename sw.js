@@ -5,13 +5,14 @@ const STATIC_ASSETS = [
   './index.html',
   './manifest.json',
   './star_icon.png',
-  './start_image.png'
+  './star_image.png'
 ];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(STATIC_CACHE).then(c => c.addAll(STATIC_ASSETS)));
   self.skipWaiting();
 });
+
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
