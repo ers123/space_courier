@@ -1,12 +1,12 @@
 {
   "name": "Starforge Courier",
   "short_name": "Starforge",
-  "description": "Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.",
-  "start_url": "/star_courier/",
-  "scope": "/star_courier/",
+  "description": "Run courier contracts through the Ember Drift, chase daily challenges, and master focus surges.",
+  "start_url": "/space_courier/",
+  "scope": "/space_courier/",
   "display": "standalone",
-  "background_color": "#0a0c14",
-  "theme_color": "#0a0c14",
+  "background_color": "#120f1b",
+  "theme_color": "#120f1b",
   "orientation": "any",
   "icons": [
     { "src": "./star_icon.png", "sizes": "192x192", "type": "image/png" },
