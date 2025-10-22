@@ -4,7 +4,8 @@
   <!-- PWA / Open Graph -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
-  <title>Starforge Courier — single-file MVP (Mobile-ready)</title>
+  <title>Starforge Courier — Frontier build</title>
+  <meta name="description" content="Guide a courier crew through the Ember Drift, chase daily challenges, and master focus surges in this accessible space shooter." />
 
   <!-- Icons / Favicon -->
   <link rel="icon" href="./star_icon.png">
@@ -12,67 +13,91 @@
 
   <!-- PWA -->
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#0a0c14">
+  <meta name="theme-color" content="#120f1b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Starforge">
 
   <!-- Open Graph -->
-  <link rel="canonical" href="https://ers123.github.io/star_courier/">
+  <link rel="canonical" href="https://ers123.github.io/space_courier/">
   <meta property="og:title" content="Starforge Courier">
-  <meta property="og:description" content="Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.">
+  <meta property="og:description" content="Guide a courier crew through the Ember Drift with daily challenges and quick-hit missions.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ers123.github.io/star_courier/">
-  <meta property="og:image" content="https://ers123.github.io/star_courier/start_image.png">
+  <meta property="og:url" content="https://ers123.github.io/space_courier/">
+  <meta property="og:site_name" content="Starforge Courier">
+  <meta property="og:image" content="https://ers123.github.io/space_courier/star_image.png">
+  <meta property="og:image:alt" content="Starforge Courier starship racing above a glowing world.">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Starforge Courier">
-  <meta name="twitter:description" content="Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.">
-  <meta name="twitter:image" content="https://ers123.github.io/star_courier/start_image.png">
+  <meta name="twitter:description" content="Guide a courier crew through the Ember Drift with daily challenges and quick-hit missions.">
+  <meta name="twitter:url" content="https://ers123.github.io/space_courier/">
+  <meta name="twitter:image" content="https://ers123.github.io/space_courier/star_image.png">
+  <meta name="twitter:image:alt" content="Starforge Courier starship racing above a glowing world.">
 <style>
   :root{
-    --bg:#0a0c14; --ink:#e6f7ff;
-    --cyan:#40f3ff; --mag:#ff4fd8; --vio:#a966ff; --lime:#99ff77; --gold:#ffd54f; --red:#ff5066;
-    --hud:#0c1320; --hud-brd:rgba(255,255,255,.08);
+    --bg:#120f1b; --ink:#f8f5f0;
+    --cyan:#5ad8ff; --mag:#ff6f9d; --vio:#c5b3ff; --lime:#8bf7a0; --gold:#ffb458; --red:#ff6363;
+    --hud:#1c1927; --hud-brd:rgba(255,255,255,.08);
+    --panel:#1a1724; --panel-glow:rgba(255,196,120,.14);
   }
   html,body{height:100%}
-  body{margin:0;background:radial-gradient(120% 80% at 50% 20%, #0f1528 0%, #090b12 55%, #06070b 100%);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
+  body{margin:0;background:radial-gradient(115% 95% at 45% 5%, #2b243f 0%, #171327 55%, #0a0812 100%);color:var(--ink);font-family:"Space Grotesk",Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
   canvas{display:block;position:fixed;inset:0;width:100vw;height:100vh}
-  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 60% at 50% 40%, transparent 60%, rgba(0,0,0,.35) 95%),repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 2px 4px);mix-blend-mode:overlay}
+  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 60% at 50% 42%, transparent 62%, rgba(15,10,25,.55) 100%),repeating-linear-gradient(0deg, rgba(255,198,150,.05) 0 1px, transparent 2px 4px);mix-blend-mode:screen}
 
   /* HUD */
   #hud{position:fixed;left:12px;top:calc(12px + env(safe-area-inset-top));pointer-events:none;z-index:6;transform-origin:top left}
   .row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-  #score{font-weight:800;font-size:16px;text-shadow:0 0 8px var(--cyan)}
+  #score{font-weight:800;font-size:16px;text-shadow:0 0 10px rgba(255,180,88,.6)}
   #wave{font-weight:700;opacity:.95}
   #combo{font-weight:700;opacity:.95;text-shadow:0 0 8px var(--mag)}
   #scrap{font-weight:800}
   #healthBar{width:220px;height:14px;border-radius:10px;position:relative;overflow:hidden;outline:1px solid rgba(255,255,255,.06)}
-  #healthFill{position:absolute;inset:0;background:linear-gradient(90deg,var(--lime),#53ffa4);transform-origin:left center}
+  #healthFill{position:absolute;inset:0;background:linear-gradient(90deg,var(--lime),#53ffcf);transform-origin:left center}
   #focusWrap{width:180px;height:10px;border-radius:8px;position:relative;overflow:hidden;outline:1px solid rgba(255,255,255,.06)}
-  #focusFill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,#08f7fe,#09fbd3);filter:drop-shadow(0 0 8px #09fbd3)}
-  #focusLbl{font-size:12px;opacity:.9;margin-top:6px}
+  #focusFill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,#5ad8ff,#8bf7a0);filter:drop-shadow(0 0 10px rgba(90,216,255,.6))}
+  #focusLbl{font-size:12px;opacity:.95;margin-top:6px;color:rgba(255,245,240,.9)}
   #dashStatus{font-size:12px;opacity:.95;margin-top:6px}
 
   #cargoRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .badge{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.2));border:1px solid var(--hud-brd);padding:4px 8px;border-radius:10px;font-weight:700;font-size:13px}
+  .badge{background:linear-gradient(180deg, rgba(255,196,120,.16), rgba(10,6,18,.45));border:1px solid var(--hud-brd);padding:4px 8px;border-radius:10px;font-weight:700;font-size:13px;box-shadow:0 8px 20px rgba(9,6,16,.28)}
 
-  #banner{position:fixed;top:calc(8% + env(safe-area-inset-top));left:50%;transform:translateX(-50%);pointer-events:none;font-weight:900;font-size:36px;letter-spacing:1px;text-shadow:0 0 8px var(--mag);opacity:0;transition:opacity .35s ease;z-index:5}
+  #banner{position:fixed;top:calc(8% + env(safe-area-inset-top));left:50%;transform:translateX(-50%);pointer-events:none;font-weight:900;font-size:36px;letter-spacing:1px;text-shadow:0 0 24px rgba(255,180,88,.4);opacity:0;transition:opacity .35s ease;z-index:5;color:var(--gold)}
   #pausedBadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:900;font-size:44px;opacity:0;pointer-events:none}
   .show{opacity:1}
 
-  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(80% 60% at 50% 35%, rgba(255,255,255,.04), rgba(0,0,0,.6));backdrop-filter:blur(3px);color:#dff;text-align:center;padding:16px;z-index:8}
-  .card{max-width:720px;border-radius:14px;background:linear-gradient(180deg, rgba(10,12,20,.6), rgba(5,6,10,.98));padding:18px;text-align:left;border:1px solid rgba(255,255,255,.06)}
-  h1{margin:0 0 8px;font-size:28px;text-shadow:0 0 12px var(--cyan)}
-  .keys{display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px}
-  .k{font-size:14px;opacity:.95}
-  .btn{display:inline-block;padding:10px 14px;border-radius:10px;margin-top:10px;cursor:pointer;background:linear-gradient(180deg,#0ef,#08a);color:#001018;font-weight:800;letter-spacing:.3px}
+  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(80% 60% at 50% 35%, rgba(18,15,27,.6), rgba(5,4,10,.85));backdrop-filter:blur(6px);color:var(--ink);text-align:center;padding:24px;z-index:8}
+  .card{max-width:760px;border-radius:18px;background:linear-gradient(180deg, rgba(32,27,45,.88), rgba(12,10,20,.96));padding:24px;text-align:left;border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 48px rgba(6,4,12,.6)}
+  h1{margin:0 0 8px;font-size:30px;text-shadow:0 0 20px rgba(90,216,255,.6);letter-spacing:.4px;color:var(--ink)}
+  .card h2{margin:18px 0 8px;font-size:18px;color:var(--gold);letter-spacing:.4px}
+  .card p{margin:6px 0 12px;line-height:1.5;font-size:15px;opacity:.92}
+  .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}
+  .k{font-size:14px;opacity:.9;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px;line-height:1.4}
+  .card ul,.card ol{margin:8px 0 0 18px;padding:0;font-size:14px;line-height:1.5;opacity:.92}
+  .card li+li{margin-top:6px}
+  .btn{display:inline-block;padding:12px 18px;border-radius:12px;margin-top:16px;cursor:pointer;background:linear-gradient(180deg,var(--gold),#ff9158);color:#2a1200;font-weight:800;letter-spacing:.4px;box-shadow:0 12px 32px rgba(255,126,70,.35)}
+  .btn:hover{filter:brightness(1.05)}
 
   #topRight{position:fixed;top:calc(8px + env(safe-area-inset-top));right:8px;display:flex;gap:6px;z-index:10;transform-origin:top right}
-  .chip{pointer-events:auto;cursor:pointer;padding:6px 8px;border-radius:12px;font-size:12px;font-weight:700;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.25));border:1px solid rgba(255,255,255,.08)}
+  .chip{pointer-events:auto;cursor:pointer;padding:6px 10px;border-radius:12px;font-size:12px;font-weight:700;background:linear-gradient(180deg, rgba(255,196,120,.22), rgba(12,8,20,.7));border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 24px rgba(8,6,16,.35);transition:transform .2s ease,box-shadow .2s ease}
+  .chip:hover{transform:translateY(-1px);box-shadow:0 16px 30px rgba(10,8,18,.4)}
+  .chip[aria-pressed="true"]{border-color:rgba(90,216,255,.8);box-shadow:0 0 16px rgba(90,216,255,.35);background:linear-gradient(180deg, rgba(90,216,255,.32), rgba(12,8,20,.7));}
+
+  #guideRail{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;z-index:8;max-width:min(320px,60vw);pointer-events:none}
+  .cardlet{background:linear-gradient(180deg, rgba(26,23,36,.92), rgba(10,8,18,.96));border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;box-shadow:0 14px 40px rgba(6,4,12,.5)}
+  .cardlet h4{margin:0 0 6px;font-size:14px;letter-spacing:.5px;color:var(--gold);text-transform:uppercase}
+  #guideStep{font-size:14px;line-height:1.5;opacity:.92;margin:0}
+  #guideActions{margin:10px 0 0 16px;padding:0;list-style:disc;color:rgba(255,245,240,.88);font-size:13px;line-height:1.5}
+  #guideActions li+li{margin-top:4px}
+  #challengeList{list-style:none;margin:8px 0 0;padding:0;font-size:13px;line-height:1.45}
+  #challengeList li{position:relative;padding-left:20px;margin-bottom:6px;color:rgba(255,245,240,.82)}
+  #challengeList li::before{content:'○';position:absolute;left:0;color:rgba(255,255,255,.35)}
+  #challengeList li.done{color:rgba(139,247,160,.92)}
+  #challengeList li.done::before{content:'✔';color:rgba(139,247,160,.92)}
 
   #shopPanel{position:fixed;top:56px;right:12px;z-index:9;display:none}
   .shop{min-width:320px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg, rgba(16,18,30,.92), rgba(8,10,16,.98));padding:12px;box-shadow:0 10px 24px rgba(0,0,0,.4)}
@@ -81,12 +106,12 @@
   .muted{opacity:.85;font-size:12px}
 
   /* In-world billboards */
-  .billboard{position:fixed;transform:translate(-50%,-100%) perspective(600px) rotateX(6deg);z-index:4;background:linear-gradient(180deg, rgba(255,255,255,.1), rgba(0,0,0,.35));border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:4px 6px;backdrop-filter:blur(2px);pointer-events:auto;white-space:nowrap;font-size:12px}
+  .billboard{position:fixed;transform:translate(-50%,-100%) perspective(600px) rotateX(6deg);z-index:4;background:linear-gradient(180deg, rgba(255,196,120,.22), rgba(12,8,20,.72));border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:4px 6px;backdrop-filter:blur(3px);pointer-events:auto;white-space:nowrap;font-size:12px;box-shadow:0 12px 28px rgba(10,8,18,.45)}
   .billboard .brand{font-weight:900;letter-spacing:.5px}
   .billboard .cta{font-size:11px;opacity:.9}
 
   /* Player emblem */
-  #shipBadge{position:fixed;transform:translate(-50%,-120%);font-weight:900;padding:2px 6px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.25));border:1px solid rgba(255,255,255,.12);z-index:7;pointer-events:none;font-size:12px}
+  #shipBadge{position:fixed;transform:translate(-50%,-120%);font-weight:900;padding:2px 6px;border-radius:8px;background:linear-gradient(180deg, rgba(255,196,120,.22), rgba(12,8,20,.72));border:1px solid rgba(255,255,255,.16);z-index:7;pointer-events:none;font-size:12px;color:var(--ink);text-shadow:0 0 10px rgba(255,180,88,.5)}
 
   /* Mobile controls */
   #touchUI{position:fixed;inset:0;pointer-events:none;z-index:12;display:none}
@@ -103,6 +128,7 @@
     #topRight{transform:scale(.9)}
     #hud{transform:scale(.9)}
     #banner{font-size:32px}
+    #guideRail{max-width:80vw;left:8px;transform:scale(.95);transform-origin:bottom left;bottom:calc(220px + env(safe-area-inset-bottom))}
   }
 </style>
 </head>
@@ -184,19 +210,54 @@
 <div id="pausedBadge">PAUSED</div>
 <div id="shipBadge" style="display:none;">FORGECORE</div>
 
+<div id="guideRail">
+  <div class="cardlet">
+    <h4>Mission Guide</h4>
+    <p id="guideStep">Dock at the highlighted relay to claim your first contract.</p>
+    <ul id="guideActions">
+      <li>Follow the pulsing station ring to dock.</li>
+      <li>Clear pirates for scrap to spend in the shop.</li>
+      <li>Use Focus Surge when surrounded.</li>
+    </ul>
+  </div>
+  <div class="cardlet">
+    <h4>Daily Challenges</h4>
+    <ul id="challengeList">
+      <li>Score 2,500 points</li>
+      <li>Complete 3 deliveries</li>
+      <li>Trigger Focus Surge twice</li>
+    </ul>
+  </div>
+</div>
+
 <div id="overlay" class="overlay">
   <div class="card">
     <h1>STARFORGE COURIER</h1>
-    <p class="muted">Deliver rare cargo across the Relic Void while fending off pirate ambushes. Dock at stations to <b>pick up</b> and <b>deliver</b>. Earn <b>Scrap</b> to upgrade your ship. Dynamic in-world billboards host sponsors.</p>
+    <p>Deliver rare contracts through the Ember Drift, upgrade your courier rig, and finish the daily challenge board before pirate factions box you in.</p>
+    <h2>How to Fly</h2>
     <div class="keys">
-      <div class="k">Move: <b>WASD</b> (aim-relative) · Strafe: <b>A/D</b></div>
-      <div class="k">Aim: <b>← →</b> rotate or mouse</div>
-      <div class="k">Shoot: <b>SPACE</b> or <b>K</b> (hold)</div>
-      <div class="k">Slow-Mo: <b>Shift</b> when Focus full</div>
-      <div class="k">Pause: <b>P</b></div>
-      <div class="k">Dock: <b>Fly into station ring</b> to pick up/deliver</div>
+      <div class="k">Move: <b>WASD</b> (aim-relative) · Quick strafe with <b>A/D</b></div>
+      <div class="k">Aim: <b>Mouse</b> or <b>← →</b> keys</div>
+      <div class="k">Shoot: Hold <b>SPACE</b> or <b>K</b></div>
+      <div class="k">Focus Surge: <b>SHIFT</b> when the Focus bar glows</div>
+      <div class="k">Dash Shot: Fire with a full energy bar to burst forward</div>
+      <div class="k">Pause / Map: <b>P</b> · Toggle help: <b>H</b></div>
     </div>
-    <div class="btn" id="startBtn">Start</div>
+    <h2>Mission Flow</h2>
+    <ol>
+      <li>Follow the holo-beacon to <b>dock</b> at the pickup station.</li>
+      <li>Guard the cargo while you sprint to the delivery hub.</li>
+      <li>Bank the payout, spend scrap in the shop, and grab the next contract.</li>
+    </ol>
+    <h2>Power Systems</h2>
+    <ul>
+      <li><b>Rapid Cannons</b> speed up your fire rate for a burst window.</li>
+      <li><b>Shield Cells</b> absorb hits—watch the mission guide for tips.</li>
+      <li><b>Focus Surge</b> slows time, perfect for weaving through ambushes.</li>
+    </ul>
+    <h2>Touch Pilots</h2>
+    <p>Drag the left orb to steer, tap the large button to fire, and hit ⚡ once the Focus meter is full for slow-mo.</p>
+    <div class="btn" id="startBtn">Launch Mission</div>
   </div>
 </div>
 
@@ -245,7 +306,24 @@
 
   // === Game state ===
   let aimYaw = 0;
-  const player = { x:0, y:0.5, z:0, r:1.2, speed:12, hp:100, maxHp:100, invuln:0, shield:0, fireRate:11, fireCD:0, vx:0, vz:0, maxSpeed:30, accel:84, drag:5, energy:100, maxEnergy:100, energyRegen:18, dashCost:40, dashCooldown:2.5, dashCD:0, dashOnShoot:true, dashSpeed:38 };
+  const FIRE_RATE_CAP = 24;
+  const player = {
+    x:0, y:0.5, z:0, r:1.2,
+    speed:12,
+    hp:100, maxHp:100, invuln:0, shield:0,
+    baseFireRate:11, fireRate:11, fireCD:0,
+    vx:0, vz:0, maxSpeed:30, accel:84, drag:5,
+    energy:100, maxEnergy:100, energyRegen:18,
+    dashCost:40, dashCooldown:2.5, dashCD:0,
+    dashOnShoot:true, dashSpeed:38
+  };
+
+  let rapidMultiplier = 1;
+  let rapidTimer = null;
+  function syncFireRate(){
+    player.fireRate = Math.min(player.baseFireRate * rapidMultiplier, FIRE_RATE_CAP);
+  }
+  syncFireRate();
 
   // input
   const keys = {}; let keyShoot=false;
@@ -270,6 +348,8 @@
 
   // DOM
   const overlay = document.getElementById('overlay');
+  const overlayCard = overlay.querySelector('.card');
+  const introMarkup = overlayCard.innerHTML;
   const startBtn = document.getElementById('startBtn');
   const scoreEl = document.getElementById('score');
   const waveEl  = document.getElementById('wave');
@@ -295,6 +375,10 @@
   const buyHull = document.getElementById('buyHull');
   const dashEl = document.getElementById('dashStatus');
   const shipBadge = document.getElementById('shipBadge');
+  const guideRail = document.getElementById('guideRail');
+  const guideStepEl = document.getElementById('guideStep');
+  const guideActionsEl = document.getElementById('guideActions');
+  const challengeListEl = document.getElementById('challengeList');
   const emblemTxt = document.getElementById('emblemTxt');
   const emblemColor = document.getElementById('emblemColor');
   const emblemUpload = document.getElementById('emblemUpload');
@@ -314,6 +398,7 @@
   muteBtn.onclick = ()=>{ muted = !muted; muteBtn.textContent = muted ? '🔇 Muted' : '🔊 Sound'; };
   helpBtn.onclick = ()=> toggleHelp();
   shopBtn.onclick = ()=> { shopPanel.style.display = shopPanel.style.display === 'block' ? 'none' : 'block'; };
+  streamBtn.setAttribute('aria-pressed','false');
   streamBtn.onclick = ()=> toggleStream();
   fsBtn && (fsBtn.onclick = async ()=>{ const el = document.documentElement; if(!document.fullscreenElement){ await el.requestFullscreen().catch(()=>{}); } else { await document.exitFullscreen().catch(()=>{}); } });
   document.querySelectorAll('[data-theme]').forEach(el=>{ el.onclick = ()=> applyTheme(el.getAttribute('data-theme')); });
@@ -343,11 +428,14 @@
 
   // State
   let state = 'menu', last = 0, timeScale = 1, slowmo = 0, shake = 0;
+  let streamMode = false;
   let camX=0, camZ=0, camLerp = 0.08; function lerp(a,b,t){return a+(b-a)*t;}
   let aimAssist = true; let controlMode = 'arcade';
   let score=0, combo=1, comboDecay=0, focus=0, focusMax=100;
   let wave=1, toSpawn=12, waveTimer=0;
   let scrap=0; let engineTier=0, cannonTier=0, hullTier=0;
+  let deliveriesCompleted = 0; let focusActivations = 0; let bestScore = 0;
+  const challengeGoals = { score: 2500, deliveries: 3, focus: 2 };
 
   const prices = { engine:[120,180,260], cannon:[160,230,320], hull:[140,210,300] };
 
@@ -361,7 +449,7 @@
     if(!afford(cost)) return;
     scrap -= cost; scrapEl.textContent = 'SCRAP '+scrap;
     if(kind==='engine'){ engineTier++; player.maxSpeed += 4; player.accel += 6; }
-    if(kind==='cannon'){ cannonTier++; player.fireRate = Math.min(player.fireRate+2, 24); }
+    if(kind==='cannon'){ cannonTier++; player.baseFireRate = Math.min(player.baseFireRate + 2, FIRE_RATE_CAP); syncFireRate(); }
     if(kind==='hull'){ hullTier++; player.maxHp += 18; player.hp = Math.min(player.maxHp, player.hp+18); }
     refreshShop();
     sfxPower(); showBanner(kind.toUpperCase()+' +');
@@ -379,6 +467,51 @@
   buyHull.onclick   = ()=> buy('hull');
   refreshShop();
 
+  function setGuide(message, tips){
+    if(guideStepEl) guideStepEl.textContent = message;
+    if(guideActionsEl){
+      guideActionsEl.innerHTML = '';
+      (tips && tips.length ? tips : ['Explore the Drift and chase contracts.']).forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        guideActionsEl.appendChild(li);
+      });
+    }
+  }
+
+  function refreshChallenges(){
+    if(!challengeListEl) return;
+    challengeListEl.innerHTML = '';
+    const rows = [
+      { label: `Score ${challengeGoals.score.toLocaleString()} points (best: ${bestScore.toLocaleString()})`, done: bestScore >= challengeGoals.score },
+      { label: `Complete ${challengeGoals.deliveries} deliveries (${deliveriesCompleted}/${challengeGoals.deliveries})`, done: deliveriesCompleted >= challengeGoals.deliveries },
+      { label: `Trigger Focus Surge ${challengeGoals.focus} times (${focusActivations}/${challengeGoals.focus})`, done: focusActivations >= challengeGoals.focus }
+    ];
+    rows.forEach(row => {
+      const li = document.createElement('li');
+      li.textContent = row.label;
+      if(row.done) li.classList.add('done');
+      challengeListEl.appendChild(li);
+    });
+  }
+
+  setGuide('Dock at the highlighted relay to claim your first contract.', [
+    'Follow the pulsing station ring to dock.',
+    'Clear pirates for scrap to spend in the shop.',
+    'Use Focus Surge when surrounded.'
+  ]);
+  refreshChallenges();
+
+  function triggerFocus(){
+    if(state!=='playing') return;
+    slowmo = 4;
+    focus = 0;
+    focusActivations++;
+    refreshChallenges();
+    sfxSlowOn();
+    showBanner('FOCUS');
+  }
+
 
   // World
   const world = { w:90, h:90 };
@@ -393,14 +526,14 @@
 
   // Billboards
   const billboards = stations.map((s,i)=>{
-    const el=document.createElement('a'); el.href='#'; el.target='_blank'; el.className='billboard'; el.innerHTML = `<div class="brand">Sponsored</div><div class="cta">Your brand here</div>`; document.body.appendChild(el); return {el, s};
+    const el=document.createElement('a'); el.href='#'; el.target='_blank'; el.className='billboard'; el.innerHTML = `<div class="brand">Sponsored</div><div class="cta">Your brand here</div>`; el.style.display='none'; document.body.appendChild(el); return {el, s};
   });
 
   // Sponsor rotation API
   let sponsorIdx=0; let sponsorList=[{brand:'AstroForge', cta:'Mine the stars. Click to learn', url:'https://example.com'},{brand:'FluxDrive', cta:'Hyperjump insurance for couriers', url:'https://example.com'},{brand:'Nova Cola', cta:'Fizz from the future', url:'https://example.com'}];
   function applySponsor(){ const ad=sponsorList[sponsorIdx%sponsorList.length]; billboards.forEach(b=>{ b.el.href=ad.url; b.el.querySelector('.brand').textContent=ad.brand; b.el.querySelector('.cta').textContent=ad.cta; }); sponsorIdx++; if(window.onAdImpression) window.onAdImpression(ad); sponsorBar.textContent = `Sponsor: ${ad.brand}`; }
-  const sponsorBar = document.createElement('div'); sponsorBar.className='chip'; sponsorBar.style.position='fixed'; sponsorBar.style.left='12px'; sponsorBar.style.bottom='12px'; sponsorBar.style.zIndex=9; sponsorBar.textContent='Sponsor: —'; document.body.appendChild(sponsorBar);
-  if(IS_MOBILE){ sponsorBar.style.bottom = 'calc(160px + env(safe-area-inset-bottom))'; }
+  const sponsorBar = document.createElement('div'); sponsorBar.className='chip'; sponsorBar.style.position='fixed'; sponsorBar.style.right='16px'; sponsorBar.style.left='auto'; sponsorBar.style.bottom='16px'; sponsorBar.style.zIndex=9; sponsorBar.textContent='Sponsor: —'; document.body.appendChild(sponsorBar);
+  if(IS_MOBILE){ sponsorBar.style.bottom = 'calc(180px + env(safe-area-inset-bottom))'; }
   setInterval(applySponsor, 12000); applySponsor();
   window.setSponsorAds = (ads)=>{ if(Array.isArray(ads) && ads.length){ sponsorList = ads; sponsorIdx=0; applySponsor(); } };
   window.injectSponsoredMission = (cfg)=>{ if(cfg && cfg.brand && currentMission){ currentMission.brand=cfg.brand; currentMission.item = cfg.item || currentMission.item; currentMission.reward = cfg.reward || currentMission.reward; updateMissionUI(); } };
@@ -416,7 +549,7 @@
     if(name==='sunset'){ r.setProperty('--bg','#0c0a0f'); r.setProperty('--cyan','#ffb86b'); r.setProperty('--mag','#ff79c6'); r.setProperty('--vio','#bd93f9'); r.setProperty('--lime','#ffd54f'); }
     else if(name==='ice'){ r.setProperty('--bg','#071019'); r.setProperty('--cyan','#a8e9ff'); r.setProperty('--mag','#90b4ff'); r.setProperty('--vio','#66ccff'); r.setProperty('--lime','#aaffcc'); }
     else if(name==='pulp'){ r.setProperty('--bg','#120d0b'); r.setProperty('--cyan','#ffd166'); r.setProperty('--mag','#ef476f'); r.setProperty('--vio','#a966ff'); r.setProperty('--lime','#8fff7a'); }
-    else { r.setProperty('--bg','#0a0c14'); r.setProperty('--cyan','#40f3ff'); r.setProperty('--mag','#ff4fd8'); r.setProperty('--vio','#a966ff'); r.setProperty('--lime','#99ff77'); }
+    else { r.setProperty('--bg','#120f1b'); r.setProperty('--cyan','#5ad8ff'); r.setProperty('--mag','#ff6f9d'); r.setProperty('--vio','#c5b3ff'); r.setProperty('--lime','#8bf7a0'); }
   }
 
   // Controls / modes
@@ -464,7 +597,7 @@
       const hold=(el,onDown,onUp)=>{ el&&el.addEventListener('touchstart', e=>{ e.preventDefault(); onDown(); }, {passive:false}); el&&el.addEventListener('touchend', ()=>onUp(), {passive:true}); el&&el.addEventListener('touchcancel', ()=>onUp(), {passive:true}); };
       hold(btnShoot, ()=>{ shootHeld=true; }, ()=>{ shootHeld=false; });
       // uses outer `state` now that we renamed inner object to `stick`
-      hold(btnFocus, ()=>{ if(focus>=focusMax && state==='playing'){ slowmo=4; focus=0; sfxSlowOn(); showBanner('FOCUS'); } }, ()=>{});
+      hold(btnFocus, ()=>{ if(focus>=focusMax) triggerFocus(); }, ()=>{});
       hold(btnPause, ()=> togglePause(), ()=>{});
     }
 
@@ -490,19 +623,52 @@
   function lerpAngle(a,b,t){ const diff = Math.atan2(Math.sin(b-a), Math.cos(b-a)); return a + diff * t; }
   function showBanner(txt){ banner.textContent = txt; banner.classList.add('show'); setTimeout(()=>banner.classList.remove('show'), 1200); }
 
+  function placeBillboard(el, screen){
+    if(!screen){ el.style.display='none'; return; }
+    const margin = 32;
+    if(screen.x < -160 || screen.x > innerWidth + 160 || screen.y < -160 || screen.y > innerHeight + 160){
+      el.style.display='none';
+      return;
+    }
+    const x = clamp(screen.x, margin, innerWidth - margin);
+    const y = clamp(screen.y - 36, margin, innerHeight - margin);
+    el.style.left = Math.round(x)+'px';
+    el.style.top = Math.round(y)+'px';
+    el.style.display = 'block';
+  }
+
   // Mission system
   let currentMission=null; let haveCargo=false;
   function newMission(){ const a = stations[Math.floor(Math.random()*stations.length)]; let b = a; while(b===a) b = stations[Math.floor(Math.random()*stations.length)]; currentMission = {pickup:a, drop:b, item: pickItem(), reward: 180 + Math.floor(Math.random()*120), brand: null}; haveCargo=false; updateMissionUI(); addText('NEW CONTRACT', a.x,0.6,a.z,'#ffd54f'); showBanner('NEW CONTRACT'); }
   function pickItem(){ const items=['Ancient Relic','Flux Core','Stellar Seeds','Quantum Ink','Data Crates']; return items[(Math.random()*items.length)|0]; }
-  function updateMissionUI(){ cargoBadge.textContent = haveCargo ? `Cargo: ${currentMission.item}` : 'Cargo: None'; const brand = currentMission.brand ? ` • Sponsor: ${currentMission.brand}` : ''; missionBadge.textContent = haveCargo ? `Deliver to ${currentMission.drop.name}${brand}` : `Pick up at ${currentMission.pickup.name}${brand}`; }
+  function updateMissionUI(){
+    if(!currentMission) return;
+    cargoBadge.textContent = haveCargo ? `Cargo: ${currentMission.item}` : 'Cargo: None';
+    const brand = currentMission.brand ? ` • Sponsor: ${currentMission.brand}` : '';
+    missionBadge.textContent = haveCargo ? `Deliver to ${currentMission.drop.name}${brand}` : `Pick up at ${currentMission.pickup.name}${brand}`;
+    const sponsorHint = currentMission.brand ? `Sponsor bonus active: ${currentMission.brand}` : 'Stack combo kills to raise payouts.';
+    if(haveCargo){
+      setGuide(`Deliver ${currentMission.item} to ${currentMission.drop.name}.`, [
+        'Keep pirates off the courier lane to protect the cargo.',
+        'Tap fire with a full energy bar to dash past ambushes.',
+        'Dock inside the delivery ring to cash out and rearm.'
+      ]);
+    } else {
+      setGuide(`Dock at ${currentMission.pickup.name} to load ${currentMission.item}.`, [
+        'Follow the pulsing beacon and stay inside the ring to dock.',
+        sponsorHint,
+        'Collect scrap drops to fund engine, cannon, and hull upgrades.'
+      ]);
+    }
+  }
 
-  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; scrap += Math.floor(currentMission.reward*0.35); scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED'); newMission(); } }
+  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; bestScore = Math.max(bestScore, score); scrap += Math.floor(currentMission.reward*0.35); deliveriesCompleted++; scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; refreshChallenges(); addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED'); newMission(); } }
 
   function addText(s,x,y,z,col='#fff',ttl=0.9){ texts.push({s,x,y,z,ttl,vy:0.6,col}); }
   function addParticles(x,y,z,col,n=10,sp=6){ for(let i=0;i<n;i++){ const a=rnd(Math.PI*2), v=rnd(sp*0.4,sp); particles.push({x,y,z, vx:Math.cos(a)*v, vz:Math.sin(a)*v, vy:rnd(0.5,1.5), t:rnd(.4,.9), col}); } }
 
   // Hotkeys
-  function handleHotkeys(k){ if(k==='p') togglePause(); if(k==='m'){ muted=!muted; muteBtn.textContent = muted ? '🔇 Muted' : '🔊 Sound'; } if(k==='h') toggleHelp(); if(k==='r' && state==='gameover'){ overlay.style.display='none'; startGame(); } if(k==='shift'){ if(focus>=focusMax && state==='playing'){ slowmo=4; focus=0; sfxSlowOn(); showBanner('FOCUS'); } } if(k===' '||k==='k') keyShoot = true; }
+  function handleHotkeys(k){ if(k==='p') togglePause(); if(k==='m'){ muted=!muted; muteBtn.textContent = muted ? '🔇 Muted' : '🔊 Sound'; } if(k==='h') toggleHelp(); if(k==='r' && state==='gameover'){ overlay.style.display='none'; startGame(); } if(k==='shift'){ if(focus>=focusMax) triggerFocus(); } if(k===' '||k==='k') keyShoot = true; }
 
   // Shooting
   function shoot(){ if(player.fireCD>0) return; let dir = aimYaw; if(aimAssist && enemies.length>0){ let best=null, bestD=Infinity; for(let i=0;i<enemies.length;i++){ const e=enemies[i]; const d=Math.hypot(e.x-player.x, e.z-player.z); if(d>60) continue; const ed = dirTo(player.x,player.z,e.x,e.z); const ang = Math.abs(Math.atan2(Math.sin(ed-dir), Math.cos(ed-dir))); if(ang < 0.8 && d < bestD){ best = i; bestD = d; } } if(best!==null){ const ed = dirTo(player.x,player.z,enemies[best].x,enemies[best].z); dir = lerpAngle(dir, ed, 0.5); } }
@@ -517,17 +683,41 @@
 
   // Lifecycle
   startBtn.onclick = ()=> startGame();
-  function startGame(){ overlay.style.display='none'; state='playing'; resumeAudio(); resetGame(); }
-  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; showBanner('WAVE 1'); sfxWave(); newMission(); shipBadge.style.display='block'; }
-  function gameOver(){ state='gameover'; overlay.style.display='flex'; overlay.querySelector('.card').innerHTML = `<h1>GAME OVER</h1><p class="muted">Final Score: <b>${score}</b> · Wave: <b>${wave}</b> · Scrap: <b>${scrap}</b></p><div class="keys"><div class="k">Press <b>R</b> to Restart</div><div class="k">Press <b>H</b> for Help</div></div><div class="btn" id="restartBtn">Restart</div>`; document.getElementById('restartBtn').onclick = ()=> { overlay.style.display='none'; startGame(); }; }
+  function startGame(){ overlayCard.innerHTML = introMarkup; overlay.style.display='none'; state='playing'; resumeAudio(); resetGame(); }
+  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; if(rapidTimer){ clearTimeout(rapidTimer); rapidTimer=null; } rapidMultiplier = 1; syncFireRate(); player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; showBanner('WAVE 1'); sfxWave(); newMission(); if(!streamMode) shipBadge.style.display='block'; }
+  function gameOver(){ state='gameover'; overlay.style.display='flex'; shipBadge.style.display='none'; overlayCard.innerHTML = `<h1>MISSION FAILED</h1><p>Final Score: <b>${score.toLocaleString()}</b> · Wave: <b>${wave}</b> · Scrap: <b>${scrap}</b></p><p>Daily challenge progress sticks around—finish the board next sortie.</p><div class="keys"><div class="k">Press <b>R</b> to restart instantly</div><div class="k">Press <b>H</b> to review controls</div></div><div class="btn" id="restartBtn">Rearm & Retry</div>`; document.getElementById('restartBtn').onclick = ()=> { overlay.style.display='none'; startGame(); }; setGuide('Mission failed — reroute and try again.', [ 'Press R to respawn with your upgrades intact.', 'Daily challenge goals persist between runs.', 'Visit the shop to tune your engine before the next drop.' ]); }
   function togglePause(){ if(state!=='playing' && state!=='paused') return; if(state==='playing'){ state='paused'; pausedBadge.classList.add('show'); } else { state='playing'; pausedBadge.classList.remove('show'); resumeAudio(); } }
-  function toggleHelp(){ overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex'; }
-  function toggleStream(){ const hide = sponsorBar.style.display!=='none'; sponsorBar.style.display = hide?'none':'block'; billboards.forEach(b=> b.el.style.display = hide?'none':'block'); const hud = document.getElementById('hud'); hud.style.display = hide?'none':'block'; }
+  function toggleHelp(){
+    if(overlay.style.display === 'flex'){
+      overlay.style.display = 'none';
+      return;
+    }
+    if(state !== 'gameover') overlayCard.innerHTML = introMarkup;
+    overlay.style.display = 'flex';
+  }
+  function toggleStream(){
+    streamMode = !streamMode;
+    sponsorBar.style.display = streamMode ? 'none' : 'block';
+    billboards.forEach(b=>{
+      if(streamMode){
+        b.el.style.display = 'none';
+      } else {
+        placeBillboard(b.el, worldToScreen(b.s.x, b.s.y, b.s.z));
+      }
+    });
+    const hud = document.getElementById('hud');
+    hud.style.display = streamMode ? 'none' : 'block';
+    if(guideRail) guideRail.style.display = streamMode ? 'none' : 'flex';
+    if(streamMode){ shipBadge.style.display = 'none'; }
+    streamBtn.textContent = streamMode ? '📺 Stream ✓' : '📺 Stream';
+    streamBtn.setAttribute('aria-pressed', streamMode ? 'true' : 'false');
+    streamBtn.title = streamMode ? 'Streamer mode on (HUD hidden)' : 'Streamer mode (hide ads/HUD)';
+  }
 
   let lastTime = 0; function loop(t){ requestAnimationFrame(loop); if(!lastTime) lastTime=t; let dt = Math.min(0.05, (t-lastTime)/1000); lastTime=t; if(state !== 'playing'){ draw(); return; } if(slowmo > 0){ timeScale = 0.36; slowmo -= dt; if(slowmo <= 0){ slowmo = 0; timeScale = 1; sfxSlowOff(); } } else timeScale = 1; dt *= timeScale; update(dt); draw(); }
   requestAnimationFrame(loop);
 
-  function killEnemy(idx,e){ enemies.splice(idx,1); const gain = Math.floor((e.score||30) * combo); score += gain; scoreEl.textContent = 'SCORE '+score; combo = Math.min(5, +(combo + 0.2).toFixed(1)); comboDecay = 0; focus = clamp(focus + 8, 0, focusMax); sfxKill(); shake = Math.min(16, shake + 4); addText('+'+gain, e.x,0.6,e.z, '#fff'); addParticles(e.x,0.5,e.z,'#fff',16,5); scrap += (e.scrap||8); scrapEl.textContent = 'SCRAP '+scrap; if(Math.random() < 0.2) spawnPower(e.x + rnd(2,-2), e.z + rnd(2,-2)); }
+  function killEnemy(idx,e){ enemies.splice(idx,1); const gain = Math.floor((e.score||30) * combo); score += gain; bestScore = Math.max(bestScore, score); scoreEl.textContent = 'SCORE '+score; combo = Math.min(5, +(combo + 0.2).toFixed(1)); comboDecay = 0; focus = clamp(focus + 8, 0, focusMax); sfxKill(); shake = Math.min(16, shake + 4); addText('+'+gain, e.x,0.6,e.z, '#fff'); addParticles(e.x,0.5,e.z,'#fff',16,5); scrap += (e.scrap||8); scrapEl.textContent = 'SCRAP '+scrap; refreshChallenges(); if(Math.random() < 0.2) spawnPower(e.x + rnd(2,-2), e.z + rnd(2,-2)); }
   function enemyHitPlayer(dmg){ if(player.invuln > 0) return; const mult = hardBtn.classList.contains('active') ? 1.3 : 1.0; if(player.shield > 0){ player.shield -= 1.2*mult; addParticles(player.x,0.5,player.z,'#ffd54f',10,4); addText('SHIELD', player.x,0.6,player.z,'#ffd54f'); sfxHit(); return; } player.hp -= dmg*mult; player.invuln = 0.5; combo = 1; comboDecay = 0; sfxHit(); shake = Math.min(18, shake + 6); addParticles(player.x,0.5,player.z,'#ff5066',16,6); if(player.hp <= 0) gameOver(); }
 
   function spawnEnemy(){ const roll=Math.random(); let type='chaser'; if(roll>0.75) type='shooter'; else if(roll>0.55) type='dasher'; const ang=Math.random()*Math.PI*2, rad=(Math.random()*(50-30))+30; const e={ type, x: player.x + Math.cos(ang)*rad, y:0.5, z: player.z + Math.sin(ang)*rad, r:1.2, hp: 2 + Math.floor(wave/3), t:0, cd: (Math.random()*(1.6-0.6))+0.6 };
@@ -538,7 +728,7 @@
   }
 
   function spawnPower(x,z){ const r=Math.random(); let type='rapid'; if(r<.28) type='heal'; else if(r<.55) type='shield'; else if(r<.8) type='rapid'; else type='focus'; powerups.push({type,x,y:0.4,z,t:8,r:1}); }
-  function applyPower(p){ if(p.type==='rapid'){ player.fireRate = Math.min(player.fireRate*1.8, 22); setTimeout(()=>player.fireRate = Math.max(player.fireRate/1.8,11), 5000); addText('RAPID!', p.x,0,p.z,'#09fbd3'); }
+  function applyPower(p){ if(p.type==='rapid'){ rapidMultiplier = 1.8; syncFireRate(); if(rapidTimer) clearTimeout(rapidTimer); rapidTimer = setTimeout(()=>{ rapidMultiplier = 1; syncFireRate(); rapidTimer = null; }, 5000); addText('RAPID!', p.x,0,p.z,'#09fbd3'); }
     if(p.type==='heal'){ player.hp = Math.min(player.maxHp, player.hp+25); addText('+HEALTH', p.x,0,p.z,'#8fff7a'); }
     if(p.type==='shield'){ player.shield = Math.max(player.shield, 4.5); addText('SHIELD', p.x,0,p.z,'#ffd54f'); }
     if(p.type==='focus'){ focus = clamp(focus + 35, 0, focusMax); addText('+FOCUS', p.x,0,p.z,'#a966ff'); }
@@ -620,7 +810,7 @@
     player.energy = Math.max(0, Math.min(player.maxEnergy, player.energy + player.energyRegen * dt)); player.dashCD = Math.max(0, player.dashCD - dt);
     healthFill.style.transform = `scaleX(${Math.max(0, Math.min(1, player.hp/player.maxHp))})`;
     focusFill.style.width = `${Math.floor((focus/focusMax*100))}%`;
-    focusLbl.textContent = focus >= focusMax ? 'FOCUS: Ready — Press SHIFT' : 'FOCUS: Fill by eliminations';
+    focusLbl.textContent = focus >= focusMax ? 'FOCUS READY — Tap SHIFT or ⚡' : 'FOCUS: Charge via kills & deliveries';
     if(dashEl){ if(player.energy >= player.dashCost && player.dashCD <= 0) dashEl.textContent = 'DASH: Ready'; else if(player.dashCD > 0) dashEl.textContent = 'DASH: CD ' + player.dashCD.toFixed(1); else dashEl.textContent = 'DASH: No energy'; }
     if(combo > 1){ comboDecay += dt/(slowmo>0?2.2:1); if(comboDecay > 1.2){ combo = Math.max(1, +(combo - 0.1).toFixed(1)); comboDecay = 0; } }
     comboEl.textContent = 'x' + combo.toFixed(1);
@@ -661,7 +851,7 @@
     for(let i=0;i<gridPts.length;i++){ const g = gridPts[i]; positions.push(g[0], g[1], g[2]); colors.push(0.06,0.28,0.36); sizes.push(1.8); }
 
     // Stations + billboards
-    for(const s of stations){ positions.push(s.x,s.y,s.z); colors.push(0.95,0.85,0.35); sizes.push(34); const screen = worldToScreen(s.x,s.y,s.z); const bb = billboards.find(b=>b.s===s); if(bb){ if(screen){ bb.el.style.left = screen.x+'px'; bb.el.style.top = screen.y+'px'; bb.el.style.display='block'; } else { bb.el.style.display='none'; } } }
+    for(const s of stations){ positions.push(s.x,s.y,s.z); colors.push(0.95,0.85,0.35); sizes.push(34); const screen = worldToScreen(s.x,s.y,s.z); const bb = billboards.find(b=>b.s===s); if(bb){ if(streamMode){ bb.el.style.display='none'; } else { placeBillboard(bb.el, screen); } } }
 
     // Powerups
     for(const p of powerups){ positions.push(p.x,p.y,p.z); const c = p.type==='heal' ? [0.56,1,0.48] : p.type==='shield' ? [1,0.83,0.3] : p.type==='focus' ? [0.66,0.4,1.0] : [0.04,0.98,0.83]; colors.push(c[0],c[1],c[2]); sizes.push(14); }
@@ -693,7 +883,16 @@
 
     // Follow badge to player
     const shipScreen = worldToScreen(player.x, player.y, player.z);
-    if(shipScreen){ shipBadge.style.left = shipScreen.x+'px'; shipBadge.style.top = shipScreen.y+'px'; shipBadge.style.display = 'block'; } else shipBadge.style.display='none';
+    if(streamMode){
+      shipBadge.style.display = 'none';
+    } else if(shipScreen){
+      const margin = 24;
+      const x = clamp(shipScreen.x, margin, innerWidth - margin);
+      const y = clamp(shipScreen.y - 28, margin, innerHeight - margin);
+      shipBadge.style.left = Math.round(x)+'px';
+      shipBadge.style.top = Math.round(y)+'px';
+      shipBadge.style.display = 'block';
+    } else shipBadge.style.display='none';
   }
 
   function spawnAmbush(at){ for(let i=0;i<4;i++){ const a = Math.random()*Math.PI*2; enemies.push({type:'chaser', x:at.x+Math.cos(a)*18, y:0.5, z:at.z+Math.sin(a)*18, r:1.2, hp:2+Math.floor(wave/3), speed:4+wave*0.06, col:[1,0.31,0.85], score:30, scrap:8}); } }
@@ -725,7 +924,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { scope: '/star_courier/' }).catch(console.error);
+        navigator.serviceWorker.register('./sw.js', { scope: '/space_courier/' }).catch(console.error);
       });
     }
 
