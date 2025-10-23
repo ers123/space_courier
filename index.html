@@ -4,8 +4,8 @@
   <!-- PWA / Open Graph -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
-  <title>Star Courier — Cozy Delivery Run</title>
-  <meta name="description" content="Relax into the Drift with casual-friendly delivery runs, guided missions, and a cozy chill mode built for pick-up play." />
+  <title>Star Courier — Aurora Drift Edition</title>
+  <meta name="description" content="Tour the Aurora Drift with richer coaching, objective tracking, and casual-friendly pacing that teaches every courier how to thrive." />
 
   <!-- Icons / Favicon -->
   <link rel="icon" href="./star_icon.png">
@@ -13,7 +13,7 @@
 
   <!-- PWA -->
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#10131b">
+  <meta name="theme-color" content="#0a1020">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Star Courier">
@@ -21,7 +21,7 @@
   <!-- Open Graph -->
   <link rel="canonical" href="https://ers123.github.io/space_courier/">
   <meta property="og:title" content="Star Courier">
-  <meta property="og:description" content="Relax into the Drift with casual-friendly delivery runs, guided missions, and a cozy chill mode built for pick-up play.">
+  <meta property="og:description" content="Tour the Aurora Drift with richer coaching, objective tracking, and casual-friendly pacing that teaches every courier how to thrive.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ers123.github.io/space_courier/">
   <meta property="og:site_name" content="Star Courier">
@@ -33,23 +33,23 @@
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Star Courier">
-  <meta name="twitter:description" content="Relax into the Drift with casual-friendly delivery runs, guided missions, and a cozy chill mode built for pick-up play.">
+  <meta name="twitter:description" content="Tour the Aurora Drift with richer coaching, objective tracking, and casual-friendly pacing that teaches every courier how to thrive.">
   <meta name="twitter:url" content="https://ers123.github.io/space_courier/">
   <meta name="twitter:image" content="https://ers123.github.io/space_courier/star_image.png">
   <meta name="twitter:image:alt" content="Star Courier freighter gliding above the Driftline.">
 <style>
   :root{
-    --bg:#10131b; --ink:#fdf7f0;
-    --amber:#f7a072; --coral:#f47c7c; --sea:#7dcfb6; --lagoon:#6ab7d6; --mauve:#d9b8ff;
-    --cyan:var(--sea); --mag:var(--coral); --vio:var(--mauve); --lime:#b9f2a1; --gold:var(--amber); --red:#ff6b6b;
-    --hud:#1b2533; --hud-brd:rgba(255,255,255,.16);
-    --panel:#1a2230; --panel-glow:rgba(255,255,255,.12);
-    --card:#1d2635; --card-brd:rgba(255,255,255,.16);
+    --bg:#0a1020; --ink:#f6f4ff;
+    --amber:#f8b86c; --coral:#ff8aa0; --sea:#74d9d3; --lagoon:#69b7ff; --mauve:#c7b7ff;
+    --cyan:#7de0ff; --mag:#ff8fb7; --vio:#cbb8ff; --lime:#aef6b2; --gold:#f8b86c; --red:#ff6b6b;
+    --hud:#121a2b; --hud-brd:rgba(255,255,255,.18);
+    --panel:#131b2d; --panel-glow:rgba(139,215,255,.18);
+    --card:#151f32; --card-brd:rgba(157,206,255,.24);
   }
   html,body{height:100%}
-  body{margin:0;background:radial-gradient(130% 110% at 18% -8%, #32435c 0%, #202c3d 42%, #0d111b 100%);color:var(--ink);font-family:"Space Grotesk",Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
+  body{margin:0;background:radial-gradient(140% 120% at 12% -12%, #23395f 0%, #152440 46%, #060b18 100%);color:var(--ink);font-family:"Space Grotesk",Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
   canvas{display:block;position:fixed;inset:0;width:100vw;height:100vh}
-  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(62% 58% at 52% 40%, transparent 58%, rgba(9,20,35,.66) 100%),linear-gradient(145deg, rgba(122,198,206,.08), rgba(247,160,114,.05));mix-blend-mode:screen}
+  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(62% 58% at 52% 40%, transparent 58%, rgba(5,14,32,.64) 100%),linear-gradient(160deg, rgba(121,198,255,.14), rgba(254,151,177,.08));mix-blend-mode:screen}
 
   /* HUD */
   #hud{position:fixed;left:12px;top:calc(12px + env(safe-area-inset-top));pointer-events:none;z-index:6;transform-origin:top left}
@@ -100,6 +100,12 @@
   #challengeList li::before{content:'○';position:absolute;left:0;color:rgba(255,255,255,.35)}
   #challengeList li.done{color:rgba(139,247,160,.92)}
   #challengeList li.done::before{content:'✔';color:rgba(139,247,160,.92)}
+
+  #powerTray{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px;font-size:13px}
+  #powerTray li{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:background .2s ease, border-color .2s ease, color .2s ease}
+  #powerTray li.active{background:linear-gradient(180deg, rgba(121,198,255,.26), rgba(12,28,46,.92));border-color:rgba(121,198,255,.7);color:var(--ink);box-shadow:0 12px 30px rgba(12,32,64,.45)}
+  #powerTray .label{font-weight:700;letter-spacing:.2px}
+  #powerTray .status{font-size:12px;opacity:.88}
 
   .manual-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
   .manual-tab{padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:var(--ink);font-weight:700;font-size:13px;letter-spacing:.3px;cursor:pointer;transition:background .2s ease,transform .2s ease}
@@ -264,6 +270,15 @@
     </ul>
   </div>
   <div class="cardlet">
+    <h4>Power-Up Tray</h4>
+    <ul id="powerTray">
+      <li data-power="rapid"><span class="label">Rapid Cannons</span><span class="status">Awaiting drop</span></li>
+      <li data-power="shield"><span class="label">Shield Dome</span><span class="status">Offline</span></li>
+      <li data-power="focus"><span class="label">Focus Surge</span><span class="status">Fill the meter</span></li>
+      <li data-power="heal"><span class="label">Hull Repairs</span><span class="status">No pack found</span></li>
+    </ul>
+  </div>
+  <div class="cardlet">
     <h4>Run Summary</h4>
     <ul id="sessionStats">
       <li>Deliveries this run: 0</li>
@@ -273,7 +288,7 @@
   </div>
   <div class="cardlet coach">
     <h4>Pilot Coach</h4>
-    <p id="coachTip">Tap Launch when you are ready—use WASD to drift and the mouse to steer your cannons.</p>
+    <p id="coachTip">Tap Launch when you are ready—use WASD to drift, the mouse to steer your cannons, and watch the Power-Up Tray for fresh boosts.</p>
     <div id="coachKeys"><span>WASD</span><span>Mouse</span><span>SHIFT</span></div>
     <p id="paceNote">Arcade pace: standard spawn rate and enemy speed.</p>
   </div>
@@ -282,11 +297,12 @@
 <div id="overlay" class="overlay">
   <div class="card">
     <h1>STAR COURIER</h1>
-    <p>Welcome to the Hearthlight driftway. This build leans into storybook warmth—smooth contracts, gentle pacing tools, and an onboard coach that keeps casual pilots on track.</p>
+    <p>Welcome to the Aurora Drift build. This cut of Star Courier leans into painterly gradients, mid-run coaching, and collectible power notes so casual pilots feel prepared before the first pirate spawn.</p>
     <div class="manual-tabs">
       <button class="manual-tab active" data-tab="briefing">Route Briefing</button>
       <button class="manual-tab" data-tab="controls">Flight Controls</button>
       <button class="manual-tab" data-tab="tips">Casual Tricks</button>
+      <button class="manual-tab" data-tab="powers">Power Notes</button>
     </div>
     <div class="manual-panels">
       <section class="manual-panel active" data-panel="briefing">
@@ -297,7 +313,7 @@
           <li><b>Escort</b> — steer through pirate pockets, collecting scrap for upgrades.</li>
           <li><b>Drop Off</b> — deliver at the glowing depot, restock, then accept the next route.</li>
         </ol>
-        <p>Watch the Route Tracker along the left rail—it updates with step-by-step objectives in plain language.</p>
+        <p>Watch the Route Tracker and Power-Up Tray along the left rail—they update with step-by-step objectives and active boosts in plain language.</p>
       </section>
       <section class="manual-panel" data-panel="controls">
         <h3>Flight Controls</h3>
@@ -318,7 +334,17 @@
           <li><b>Upgrade Rhythm</b>: engine ➜ hull ➜ cannon keeps handling comfy without spiking difficulty.</li>
           <li><b>Focus Surges</b>: trigger during deliveries to freeze foes, then dash shot out of the crowd.</li>
           <li><b>Chill Mode</b>: the Route Tracker and Coach both remind you when it’s on—use it liberally to learn wave cadence.</li>
-          <li><b>Session Stats</b>: the new Run Summary card tallies deliveries, surges, and best combos so you can celebrate progress.</li>
+          <li><b>Session Stats</b>: the Run Summary card tallies deliveries, surges, and best combos so you can celebrate progress.</li>
+        </ul>
+      </section>
+      <section class="manual-panel" data-panel="powers">
+        <h3>Power Notes</h3>
+        <p>The Power-Up Tray lights up whenever you scoop a boost. Here’s what each icon means:</p>
+        <ul>
+          <li><b>Rapid Cannons</b>: five-second fire-rate burst. The tray counts down so you know when to re-engage.</li>
+          <li><b>Shield Dome</b>: absorbs the next few hits—its tile glows while the barrier holds.</li>
+          <li><b>Focus Surge</b>: fills faster with combos and deliveries; once ready, the tile flashes "Surge!"</li>
+          <li><b>Hull Repairs</b>: heals instantly, then fades so you know to hunt another kit.</li>
         </ul>
       </section>
     </div>
@@ -449,6 +475,15 @@
   const routeChecklistEl = document.getElementById('routeChecklist');
   const challengeListEl = document.getElementById('challengeList');
   const sessionStatsEl = document.getElementById('sessionStats');
+  const powerTrayEl = document.getElementById('powerTray');
+  const powerTiles = powerTrayEl ? Array.from(powerTrayEl.querySelectorAll('li')).reduce((map, li) => {
+    map[li.getAttribute('data-power')] = {
+      root: li,
+      label: li.querySelector('.label'),
+      status: li.querySelector('.status')
+    };
+    return map;
+  }, {}) : {};
   const coachTipEl = document.getElementById('coachTip');
   const coachKeysEl = document.getElementById('coachKeys');
   const paceNoteEl = document.getElementById('paceNote');
@@ -528,6 +563,11 @@
   let camX=0, camZ=0, camLerp = 0.08; function lerp(a,b,t){return a+(b-a)*t;}
   let aimAssist = true; let controlMode = 'arcade';
   let score=0, combo=1, comboDecay=0, focus=0, focusMax=100;
+  let gameClock = 0;
+  let rapidUntil = 0;
+  let healFlash = 0;
+  let shieldFlash = 0;
+  let focusFlash = 0;
   let wave=1, toSpawn=12, waveTimer=0;
   let scrap=0; let engineTier=0, cannonTier=0, hullTier=0;
   let deliveriesCompleted = 0; let focusActivations = 0; let bestScore = 0;
@@ -682,6 +722,49 @@
     });
   }
 
+  function setPowerTileState(key, status, active){
+    const tile = powerTiles[key];
+    if(!tile) return;
+    if(status) tile.status.textContent = status;
+    tile.root.classList.toggle('active', !!active);
+  }
+
+  function refreshPowerTray(){
+    if(!powerTrayEl) return;
+    const now = gameClock;
+    if(powerTiles.rapid){
+      if(rapidUntil > now){
+        setPowerTileState('rapid', `Boosting ${Math.max(1, Math.ceil(rapidUntil - now))}s`, true);
+      } else {
+        setPowerTileState('rapid', 'Awaiting drop', false);
+      }
+    }
+    if(powerTiles.shield){
+      if(player.shield > 0){
+        setPowerTileState('shield', 'Barrier charged', true);
+      } else if(shieldFlash > 0){
+        setPowerTileState('shield', 'Barrier spent', false);
+      } else {
+        setPowerTileState('shield', 'Offline', false);
+      }
+    }
+    if(powerTiles.focus){
+      const pct = Math.round((focus / focusMax) * 100);
+      if(focus >= focusMax){
+        setPowerTileState('focus', 'Surge ready!', true);
+      } else {
+        setPowerTileState('focus', `Charge ${pct}%`, focusFlash > 0);
+      }
+    }
+    if(powerTiles.heal){
+      if(healFlash > 0){
+        setPowerTileState('heal', 'Hull restored', true);
+      } else {
+        setPowerTileState('heal', 'No pack found', false);
+      }
+    }
+  }
+
   function updateRouteCard(){
     if(!routeBriefEl || !routeChecklistEl){
       return;
@@ -703,12 +786,12 @@
       ? [
           'Escort the parcel—clear pirate ambushes for scrap.',
           'Dock inside the glowing drop-off ring.',
-          'Visit the shop after drop-off for cozy upgrades.'
+          'Glance at the Power-Up Tray for active boosts before the drop-off.'
         ]
       : [
           'Follow the pulsing pickup ring to dock.',
           'Sweep raiders for scrap en route.',
-          'Peek at Run Summary to celebrate milestones.'
+          'Peek at the Power-Up Tray once you scoop the crate.'
         ];
     steps.forEach(text => {
       const li = document.createElement('li');
@@ -717,7 +800,7 @@
     });
   }
 
-  setGuide('Roll into the highlighted relay to claim your first Hearthlight contract.', [
+  setGuide('Roll into the highlighted relay to claim your first Aurora contract.', [
     'Follow the pulsing station ring to dock and load cozy cargo.',
     'Clear pirates for scrap, then glance at the Route Tracker for the next beat.',
     'Use Focus Surge when surrounded or toggle 🌙 Chill to ease the pace.'
@@ -725,6 +808,7 @@
   refreshChallenges();
   updateDeliveriesBadge();
   updateSessionStats();
+  refreshPowerTray();
   updateRouteCard();
   rotateCoach('tick');
   startCoachTicker();
@@ -960,9 +1044,15 @@
     const dmgScale = chillMode ? 0.7 : 1.0;
     if(player.shield > 0){
       player.shield -= 1.2 * mult * dmgScale;
+      shieldFlash = 1.8;
       addParticles(player.x,0.5,player.z,'#ffd54f',10,4);
       addText('SHIELD', player.x,0.6,player.z,'#ffd54f');
       sfxHit();
+      if(player.shield <= 0){
+        player.shield = 0;
+        shieldFlash = 2.5;
+      }
+      refreshPowerTray();
       return;
     }
     player.hp -= dmg * mult * dmgScale;
@@ -983,10 +1073,42 @@
   }
 
   function spawnPower(x,z){ const r=Math.random(); let type='rapid'; if(r<.28) type='heal'; else if(r<.55) type='shield'; else if(r<.8) type='rapid'; else type='focus'; powerups.push({type,x,y:0.4,z,t:8,r:1}); }
-  function applyPower(p){ if(p.type==='rapid'){ rapidMultiplier = 1.8; syncFireRate(); if(rapidTimer) clearTimeout(rapidTimer); rapidTimer = setTimeout(()=>{ rapidMultiplier = 1; syncFireRate(); rapidTimer = null; }, 5000); addText('RAPID!', p.x,0,p.z,'#09fbd3'); }
-    if(p.type==='heal'){ player.hp = Math.min(player.maxHp, player.hp+25); addText('+HEALTH', p.x,0,p.z,'#8fff7a'); }
-    if(p.type==='shield'){ player.shield = Math.max(player.shield, 4.5); addText('SHIELD', p.x,0,p.z,'#ffd54f'); }
-    if(p.type==='focus'){ focus = clamp(focus + 35, 0, focusMax); addText('+FOCUS', p.x,0,p.z,'#a966ff'); }
+  function applyPower(p){
+    let changed = false;
+    if(p.type==='rapid'){
+      rapidMultiplier = 1.8;
+      syncFireRate();
+      if(rapidTimer) clearTimeout(rapidTimer);
+      rapidTimer = setTimeout(()=>{
+        rapidMultiplier = 1;
+        syncFireRate();
+        rapidTimer = null;
+        rapidUntil = 0;
+        refreshPowerTray();
+      }, 5000);
+      rapidUntil = gameClock + 5;
+      addText('RAPID!', p.x,0,p.z,'#09fbd3');
+      changed = true;
+    }
+    if(p.type==='heal'){
+      player.hp = Math.min(player.maxHp, player.hp+25);
+      healFlash = 2.5;
+      addText('+HEALTH', p.x,0,p.z,'#8fff7a');
+      changed = true;
+    }
+    if(p.type==='shield'){
+      player.shield = Math.max(player.shield, 4.5);
+      shieldFlash = 2.5;
+      addText('SHIELD', p.x,0,p.z,'#ffd54f');
+      changed = true;
+    }
+    if(p.type==='focus'){
+      focus = clamp(focus + 35, 0, focusMax);
+      focusFlash = 2;
+      addText('+FOCUS', p.x,0,p.z,'#a966ff');
+      changed = true;
+    }
+    if(changed) refreshPowerTray();
     sfxPower();
   }
 
@@ -1001,6 +1123,11 @@
   function worldToScreen(x,y,z){ const v = mat4mulv(lastView, [x,y,z,1]); const c = mat4mulv(lastProj, v); if(c[3] <= 0) return null; const ndcX = c[0]/c[3], ndcY = c[1]/c[3]; const sx = (ndcX*0.5+0.5)*innerWidth; const sy = (1-(ndcY*0.5+0.5))*innerHeight; return {x:sx, y:sy}; }
 
   function update(dt){
+    gameClock += dt;
+    if(healFlash > 0) healFlash = Math.max(0, healFlash - dt);
+    if(shieldFlash > 0) shieldFlash = Math.max(0, shieldFlash - dt);
+    if(focusFlash > 0) focusFlash = Math.max(0, focusFlash - dt);
+    refreshPowerTray();
     waveTimer += dt;
     const spawnCadence = 0.28 / paceScale;
     if(toSpawn > 0 && waveTimer > spawnCadence){ waveTimer = 0; spawnEnemy(); toSpawn--; }
