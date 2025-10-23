@@ -1,6 +1,6 @@
-# Starforge Courier PWA
+# Star Courier PWA
 
-This repo hosts the production build of **Starforge Courier**, a single-file WebGL shooter optimized as a Progressive Web App (PWA). The project is published through GitHub Pages at [`https://ers123.github.io/space_courier/`](https://ers123.github.io/space_courier/).
+This repo hosts the production build of **Star Courier**, a cozy WebGL delivery shooter optimized as a Progressive Web App (PWA). The project is published through GitHub Pages at [`https://ers123.github.io/space_courier/`](https://ers123.github.io/space_courier/).
 
 ## Working entirely in the GitHub web UI
 If you prefer to manage updates without cloning the repository locally, follow this flow:
@@ -34,9 +34,9 @@ If something goes wrong after merging:
 1. Use the PR page to click **"Revert"**, or
 2. Create a new commit reverting the problematic files, then push it via the web editor.
 
-Following this playbook lets you iterate on Starforge Courier purely through the GitHub interface while keeping the deployed PWA healthy.
+Following this playbook lets you iterate on Star Courier purely through the GitHub interface while keeping the deployed PWA healthy.
 
 ## Gameplay experience snapshot
-- The HUD now includes a live <b>Mission Guide</b> card that surfaces the current pickup/dropoff target plus context-sensitive tips. Update the helper copy in `setGuide(...)` inside [`index.html`](./index.html) if mission design changes.
-- A <b>Daily Challenges</b> tracker celebrates streak-worthy goals (score milestone, delivery count, focus surges). Tweak the thresholds via the `challengeGoals` constants in [`index.html`](./index.html).
-- The onboarding overlay was rewritten as a mini flight manual covering movement, power systems, and touch controls so casual players have clearer direction when launching the PWA.
+- The HUD retains the live <b>Mission Guide</b> plus adds a persistent <b>Best Score</b> badge so players always see their top run without diving into menus. Update helper copy in `setGuide(...)` inside [`index.html`](./index.html) if mission design changes.
+- A <b>Pilot Coach</b> rail rotates contextual tips and hotkeys while the new <b>🌙 Chill mode</b> chip slows spawns, damage, and bullet speed for relaxed sessions. The toggle wiring lives in `toggleChill()` within [`index.html`](./index.html).
+- Onboarding is now a full <b>flight manual</b> that explains delivery flow, power systems, and touch controls; adjust the markup under `#overlay` in [`index.html`](./index.html) to tune copy or layout.

@@ -1,5 +1,5 @@
 // Bump the version when cached assets change to force clients to refresh.
-const VERSION = 'v1.1.0';
+const VERSION = 'v1.2.0';
 const STATIC_CACHE = `sfc-static-${VERSION}`;
 const STATIC_ASSETS = [
   './',
