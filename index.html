@@ -13,7 +13,7 @@
 
   <!-- PWA -->
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#0f1d2f">
+  <meta name="theme-color" content="#10131b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Star Courier">
@@ -39,17 +39,17 @@
   <meta name="twitter:image:alt" content="Star Courier freighter gliding above the Driftline.">
 <style>
   :root{
-    --bg:#0f1d2f; --ink:#f8f1e6;
-    --citrus:#f4b860; --rose:#ff8ba7; --sky:#7dd3fc; --mint:#9de4b3; --violet:#c8b6ff;
-    --cyan:var(--sky); --mag:var(--rose); --vio:var(--violet); --lime:var(--mint); --gold:var(--citrus); --red:#ff6b6b;
-    --hud:#152437; --hud-brd:rgba(255,255,255,.12);
-    --panel:#132133; --panel-glow:rgba(255,255,255,.12);
-    --card:#162944; --card-brd:rgba(255,255,255,.12);
+    --bg:#10131b; --ink:#fdf7f0;
+    --amber:#f7a072; --coral:#f47c7c; --sea:#7dcfb6; --lagoon:#6ab7d6; --mauve:#d9b8ff;
+    --cyan:var(--sea); --mag:var(--coral); --vio:var(--mauve); --lime:#b9f2a1; --gold:var(--amber); --red:#ff6b6b;
+    --hud:#1b2533; --hud-brd:rgba(255,255,255,.16);
+    --panel:#1a2230; --panel-glow:rgba(255,255,255,.12);
+    --card:#1d2635; --card-brd:rgba(255,255,255,.16);
   }
   html,body{height:100%}
-  body{margin:0;background:radial-gradient(140% 120% at 20% -10%, #355c7d 0%, #1a2f47 46%, #0a182b 100%);color:var(--ink);font-family:"Space Grotesk",Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
+  body{margin:0;background:radial-gradient(130% 110% at 18% -8%, #32435c 0%, #202c3d 42%, #0d111b 100%);color:var(--ink);font-family:"Space Grotesk",Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
   canvas{display:block;position:fixed;inset:0;width:100vw;height:100vh}
-  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 60% at 50% 42%, transparent 62%, rgba(10,25,42,.62) 100%),repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 2px 5px);mix-blend-mode:screen}
+  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(62% 58% at 52% 40%, transparent 58%, rgba(9,20,35,.66) 100%),linear-gradient(145deg, rgba(122,198,206,.08), rgba(247,160,114,.05));mix-blend-mode:screen}
 
   /* HUD */
   #hud{position:fixed;left:12px;top:calc(12px + env(safe-area-inset-top));pointer-events:none;z-index:6;transform-origin:top left}
@@ -72,16 +72,16 @@
   #pausedBadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:900;font-size:44px;opacity:0;pointer-events:none}
   .show{opacity:1}
 
-  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(80% 60% at 50% 35%, rgba(10,24,42,.72), rgba(3,10,20,.92));backdrop-filter:blur(8px);color:var(--ink);text-align:center;padding:24px;z-index:8}
-  .card{max-width:780px;border-radius:18px;background:linear-gradient(180deg, rgba(22,41,68,.9), rgba(10,22,37,.97));padding:26px;text-align:left;border:1px solid rgba(255,255,255,.12);box-shadow:0 22px 52px rgba(4,12,24,.65)}
-  h1{margin:0 0 8px;font-size:30px;text-shadow:0 0 20px rgba(125,211,252,.5);letter-spacing:.4px;color:var(--ink)}
+  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(82% 64% at 50% 36%, rgba(13,21,33,.78), rgba(5,10,18,.94));backdrop-filter:blur(10px);color:var(--ink);text-align:center;padding:24px;z-index:8}
+  .card{max-width:820px;border-radius:20px;background:linear-gradient(180deg, rgba(30,40,54,.92), rgba(13,18,28,.98));padding:30px;text-align:left;border:1px solid rgba(255,255,255,.16);box-shadow:0 26px 60px rgba(5,12,22,.68)}
+  h1{margin:0 0 8px;font-size:30px;text-shadow:0 0 22px rgba(247,160,114,.45);letter-spacing:.4px;color:var(--ink)}
   .card h2{margin:18px 0 8px;font-size:18px;color:var(--gold);letter-spacing:.4px}
   .card p{margin:6px 0 12px;line-height:1.6;font-size:15px;opacity:.94}
   .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}
   .k{font-size:14px;opacity:.9;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px;line-height:1.4}
   .card ul,.card ol{margin:8px 0 0 18px;padding:0;font-size:14px;line-height:1.5;opacity:.92}
   .card li+li{margin-top:6px}
-  .btn{display:inline-block;padding:12px 20px;border-radius:12px;margin-top:16px;cursor:pointer;background:linear-gradient(180deg,var(--gold),#ff9158);color:#2a1200;font-weight:800;letter-spacing:.4px;box-shadow:0 12px 32px rgba(255,126,70,.35)}
+  .btn{display:inline-block;padding:12px 22px;border-radius:14px;margin-top:18px;cursor:pointer;background:linear-gradient(180deg,var(--gold),#ff9366);color:#2a1200;font-weight:800;letter-spacing:.4px;box-shadow:0 14px 34px rgba(255,147,102,.34)}
   .btn:hover{filter:brightness(1.05)}
 
   #topRight{position:fixed;top:calc(8px + env(safe-area-inset-top));right:8px;display:flex;gap:6px;z-index:10;transform-origin:top right}
@@ -90,7 +90,7 @@
   .chip[aria-pressed="true"], .chip.active{border-color:rgba(244,184,96,.85);box-shadow:0 0 16px rgba(244,184,96,.45);background:linear-gradient(180deg, rgba(244,184,96,.32), rgba(10,24,40,.78));}
 
   #guideRail{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;z-index:8;max-width:min(340px,64vw);pointer-events:none}
-  .cardlet{background:linear-gradient(180deg, rgba(22,41,68,.92), rgba(10,24,40,.96));border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px;box-shadow:0 14px 40px rgba(4,12,24,.55)}
+  .cardlet{background:linear-gradient(180deg, rgba(29,38,52,.94), rgba(12,20,32,.98));border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:16px;box-shadow:0 16px 44px rgba(6,14,28,.6)}
   .cardlet h4{margin:0 0 6px;font-size:14px;letter-spacing:.5px;color:var(--gold);text-transform:uppercase}
   #guideStep{font-size:14px;line-height:1.5;opacity:.92;margin:0}
   #guideActions{margin:10px 0 0 16px;padding:0;list-style:disc;color:rgba(255,245,240,.88);font-size:13px;line-height:1.5}
@@ -100,6 +100,23 @@
   #challengeList li::before{content:'○';position:absolute;left:0;color:rgba(255,255,255,.35)}
   #challengeList li.done{color:rgba(139,247,160,.92)}
   #challengeList li.done::before{content:'✔';color:rgba(139,247,160,.92)}
+
+  .manual-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
+  .manual-tab{padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:var(--ink);font-weight:700;font-size:13px;letter-spacing:.3px;cursor:pointer;transition:background .2s ease,transform .2s ease}
+  .manual-tab:hover{background:rgba(255,255,255,.08);transform:translateY(-1px)}
+  .manual-tab.active{background:linear-gradient(180deg, rgba(247,160,114,.3), rgba(247,160,114,.08));border-color:rgba(247,160,114,.7);color:var(--ink)}
+  .manual-panels{display:grid;gap:16px}
+  .manual-panel{display:none}
+  .manual-panel.active{display:block}
+  .manual-panel h3{margin:0 0 6px;font-size:17px;color:var(--gold);letter-spacing:.4px}
+  .manual-panel p{margin:6px 0 10px;line-height:1.6}
+  .manual-panel ul,.manual-panel ol{margin:6px 0 0 18px;padding:0;line-height:1.55;font-size:14px;opacity:.92}
+  .manual-panel li+li{margin-top:4px}
+
+  #routeChecklist{margin:10px 0 0 16px;padding:0;list-style:disc;font-size:13px;line-height:1.45;color:rgba(255,245,240,.85)}
+  #routeChecklist li+li{margin-top:4px}
+  #sessionStats{margin:10px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.5;color:rgba(255,245,240,.85)}
+  #sessionStats li+li{margin-top:4px}
 
   .coach{display:flex;flex-direction:column;gap:8px}
   #coachTip{font-size:14px;line-height:1.5;opacity:.92;margin:0}
@@ -201,6 +218,7 @@
     <div id="combo">x1.0</div>
     <div id="scrap" class="badge">SCRAP 0</div>
     <div id="best" class="badge">BEST 0</div>
+    <div id="deliveries" class="badge">RUN DROPS 0</div>
   </div>
   <div class="row" id="cargoRow">
     <div class="badge" id="cargoBadge">Cargo: None</div>
@@ -231,11 +249,26 @@
     </ul>
   </div>
   <div class="cardlet">
+    <h4>Route Tracker</h4>
+    <p id="routeBrief">Awaiting launch clearance.</p>
+    <ul id="routeChecklist">
+      <li>Accept a contract to populate your route.</li>
+    </ul>
+  </div>
+  <div class="cardlet">
     <h4>Daily Challenges</h4>
     <ul id="challengeList">
       <li>Score 2,500 points</li>
       <li>Complete 3 deliveries</li>
       <li>Trigger Focus Surge twice</li>
+    </ul>
+  </div>
+  <div class="cardlet">
+    <h4>Run Summary</h4>
+    <ul id="sessionStats">
+      <li>Deliveries this run: 0</li>
+      <li>Focus Surges: 0</li>
+      <li>Best combo: x1.0</li>
     </ul>
   </div>
   <div class="cardlet coach">
@@ -249,29 +282,46 @@
 <div id="overlay" class="overlay">
   <div class="card">
     <h1>STAR COURIER</h1>
-    <p>Welcome to the Driftline! Star Courier leans into cozy arcade runs—complete contracts, earn tips, and flip on Chill Mode whenever you want a slower groove.</p>
-    <h2>Quickstart</h2>
-    <div class="keys">
-      <div class="k"><b>WASD</b> to thrust and drift relative to where you aim.</div>
-      <div class="k"><b>Mouse</b> (or <b>← →</b>) to steer your cannons.</div>
-      <div class="k">Hold <b>SPACE</b>/<b>K</b> to fire. Full energy + fire = dash shot.</div>
-      <div class="k"><b>SHIFT</b> for Focus Surge once the meter glows.</div>
-      <div class="k"><b>P</b> pauses · <b>H</b> reopens this flight manual.</div>
+    <p>Welcome to the Hearthlight driftway. This build leans into storybook warmth—smooth contracts, gentle pacing tools, and an onboard coach that keeps casual pilots on track.</p>
+    <div class="manual-tabs">
+      <button class="manual-tab active" data-tab="briefing">Route Briefing</button>
+      <button class="manual-tab" data-tab="controls">Flight Controls</button>
+      <button class="manual-tab" data-tab="tips">Casual Tricks</button>
     </div>
-    <h2>Delivery Loop</h2>
-    <ol>
-      <li>Dock at the highlighted pickup ring to load cargo.</li>
-      <li>Escort the parcel across the lane, clearing raiders for scrap.</li>
-      <li>Drop at the glowing depot, grab upgrades, and chase the next contract.</li>
-    </ol>
-    <h2>Power-Ups & Pace</h2>
-    <ul>
-      <li><b>Rapid Cannons</b> and <b>Shield Cells</b> drop from elites—snag them for breathing room.</li>
-      <li><b>Focus Surge</b> freezes chaos; pair it with dash shots to cut through swarms.</li>
-      <li>Tap <b>🌙 Chill</b> anytime to ease enemy speed, spawn rate, and damage for a relaxed run.</li>
-    </ul>
-    <h2>Touch Pilots</h2>
-    <p>Drag the left orb to steer, tap the big button to fire, and hit ⚡ when the Focus meter is full to slip into slow-mo.</p>
+    <div class="manual-panels">
+      <section class="manual-panel active" data-panel="briefing">
+        <h3>Delivery Loop</h3>
+        <p>Your courier freighter ferries keepsakes between friendly stations. Each contract follows the same cozy arc:</p>
+        <ol>
+          <li><b>Pick Up</b> — dock inside the highlighted ring to load the parcel.</li>
+          <li><b>Escort</b> — steer through pirate pockets, collecting scrap for upgrades.</li>
+          <li><b>Drop Off</b> — deliver at the glowing depot, restock, then accept the next route.</li>
+        </ol>
+        <p>Watch the Route Tracker along the left rail—it updates with step-by-step objectives in plain language.</p>
+      </section>
+      <section class="manual-panel" data-panel="controls">
+        <h3>Flight Controls</h3>
+        <div class="keys">
+          <div class="k"><b>WASD</b> to thrust and drift relative to where you aim.</div>
+          <div class="k"><b>Mouse</b> (or <b>← →</b>) to steer your cannons.</div>
+          <div class="k">Hold <b>SPACE</b>/<b>K</b> to fire. Full energy + fire = a dash shot burst.</div>
+          <div class="k"><b>SHIFT</b> for Focus Surge once the meter glows.</div>
+          <div class="k"><b>P</b> pauses · <b>H</b> reopens this illustrated manual.</div>
+        </div>
+        <h3 style="margin-top:16px">Touch Pilots</h3>
+        <p>Drag the left orb to drift, tap the big button to fire, and hit ⚡ once the Focus meter fills to slip into slow-mo safety.</p>
+        <p>Prefer a relaxed pace? Toggle <b>🌙 Chill</b> from the HUD chips to soften enemy speed and incoming damage.</p>
+      </section>
+      <section class="manual-panel" data-panel="tips">
+        <h3>Casual Tricks</h3>
+        <ul>
+          <li><b>Upgrade Rhythm</b>: engine ➜ hull ➜ cannon keeps handling comfy without spiking difficulty.</li>
+          <li><b>Focus Surges</b>: trigger during deliveries to freeze foes, then dash shot out of the crowd.</li>
+          <li><b>Chill Mode</b>: the Route Tracker and Coach both remind you when it’s on—use it liberally to learn wave cadence.</li>
+          <li><b>Session Stats</b>: the new Run Summary card tallies deliveries, surges, and best combos so you can celebrate progress.</li>
+        </ul>
+      </section>
+    </div>
     <div class="btn" id="startBtn">Launch Mission</div>
   </div>
 </div>
@@ -365,12 +415,12 @@
   const overlay = document.getElementById('overlay');
   const overlayCard = overlay.querySelector('.card');
   const introMarkup = overlayCard.innerHTML;
-  const startBtn = document.getElementById('startBtn');
   const scoreEl = document.getElementById('score');
   const waveEl  = document.getElementById('wave');
   const comboEl = document.getElementById('combo');
   const scrapEl = document.getElementById('scrap');
   const bestEl = document.getElementById('best');
+  const deliveriesEl = document.getElementById('deliveries');
   const cargoBadge = document.getElementById('cargoBadge');
   const missionBadge = document.getElementById('missionBadge');
   const healthFill = document.getElementById('healthFill');
@@ -395,7 +445,10 @@
   const guideRail = document.getElementById('guideRail');
   const guideStepEl = document.getElementById('guideStep');
   const guideActionsEl = document.getElementById('guideActions');
+  const routeBriefEl = document.getElementById('routeBrief');
+  const routeChecklistEl = document.getElementById('routeChecklist');
   const challengeListEl = document.getElementById('challengeList');
+  const sessionStatsEl = document.getElementById('sessionStats');
   const coachTipEl = document.getElementById('coachTip');
   const coachKeysEl = document.getElementById('coachKeys');
   const paceNoteEl = document.getElementById('paceNote');
@@ -406,6 +459,28 @@
   const hardBtn = document.getElementById('hardMode');
   const endlessBtn = document.getElementById('endlessMode');
   const fsBtn = document.getElementById('fsBtn');
+
+  function hydrateManual(){
+    const tabs = overlayCard.querySelectorAll('.manual-tab');
+    const panels = overlayCard.querySelectorAll('.manual-panel');
+    tabs.forEach(btn => {
+      btn.onclick = ()=>{
+        tabs.forEach(tab => tab.classList.toggle('active', tab === btn));
+        const id = btn.getAttribute('data-tab');
+        panels.forEach(panel => panel.classList.toggle('active', panel.getAttribute('data-panel') === id));
+      };
+    });
+    if(tabs.length){
+      const active = Array.from(tabs).find(tab => tab.classList.contains('active')) || tabs[0];
+      const id = active ? active.getAttribute('data-tab') : null;
+      if(id){
+        panels.forEach(panel => panel.classList.toggle('active', panel.getAttribute('data-panel') === id));
+      }
+    }
+    const start = overlayCard.querySelector('#startBtn');
+    if(start) start.onclick = ()=> startGame();
+  }
+  hydrateManual();
 
   // Mobile UI elements
   const touchUI = document.getElementById('touchUI');
@@ -456,15 +531,16 @@
   let wave=1, toSpawn=12, waveTimer=0;
   let scrap=0; let engineTier=0, cannonTier=0, hullTier=0;
   let deliveriesCompleted = 0; let focusActivations = 0; let bestScore = 0;
+  let runDeliveries = 0; let runFocus = 0; let bestComboRun = 1;
   const challengeGoals = { score: 2500, deliveries: 3, focus: 2 };
   let chillMode = false;
   let paceScale = 1;
 
   const coachTips = [
+    { text: 'Route Tracker mirrors your objectives. Glance left if you ever forget the next step.', keys:['Route Tracker'] },
     { text: 'Dash shots chew through blockades—fire while your energy bar is full to lunge past raiders.', keys:['SPACE','Full Energy'] },
     { text: 'Focus Surge slows everything to a crawl. Chain it after picking up scrap to reset the battlefield.', keys:['SHIFT'] },
     { text: 'Spend early scrap on Engine upgrades to widen your drift window before waves intensify.', keys:['🛒 Shop','Engine +'] },
-    { text: 'Aim Assist is on by default. Toggle it in the shop if you prefer free-aim challenge.', keys:['Aim Assist'] },
     { text: 'Deliveries boost combo and Focus. Keep the contract streak alive for faster challenge clears.', keys:['Deliver'] }
   ];
   const chillCoach = {
@@ -587,12 +663,69 @@
     });
   }
 
-  setGuide('Dock at the highlighted relay to claim your first contract.', [
-    'Follow the pulsing station ring to dock.',
-    'Clear pirates for scrap to spend in the shop.',
+  function updateDeliveriesBadge(){
+    if(deliveriesEl) deliveriesEl.textContent = 'RUN DROPS ' + runDeliveries;
+  }
+
+  function updateSessionStats(){
+    if(!sessionStatsEl) return;
+    sessionStatsEl.innerHTML = '';
+    const rows = [
+      `Deliveries this run: ${runDeliveries}`,
+      `Focus Surges: ${runFocus}`,
+      `Best combo: x${bestComboRun.toFixed(1)}`
+    ];
+    rows.forEach(text => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      sessionStatsEl.appendChild(li);
+    });
+  }
+
+  function updateRouteCard(){
+    if(!routeBriefEl || !routeChecklistEl){
+      return;
+    }
+    if(!currentMission){
+      routeBriefEl.textContent = 'Awaiting launch clearance.';
+      routeChecklistEl.innerHTML = '';
+      const li = document.createElement('li');
+      li.textContent = 'Accept a contract to populate your route.';
+      routeChecklistEl.appendChild(li);
+      return;
+    }
+    const sponsorCopy = currentMission.brand ? ` for ${currentMission.brand}` : '';
+    routeBriefEl.textContent = haveCargo
+      ? `Deliver ${currentMission.item}${sponsorCopy} to ${currentMission.drop.name}.`
+      : `Head to ${currentMission.pickup.name} to load ${currentMission.item}${sponsorCopy}.`;
+    routeChecklistEl.innerHTML = '';
+    const steps = haveCargo
+      ? [
+          'Escort the parcel—clear pirate ambushes for scrap.',
+          'Dock inside the glowing drop-off ring.',
+          'Visit the shop after drop-off for cozy upgrades.'
+        ]
+      : [
+          'Follow the pulsing pickup ring to dock.',
+          'Sweep raiders for scrap en route.',
+          'Peek at Run Summary to celebrate milestones.'
+        ];
+    steps.forEach(text => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      routeChecklistEl.appendChild(li);
+    });
+  }
+
+  setGuide('Roll into the highlighted relay to claim your first Hearthlight contract.', [
+    'Follow the pulsing station ring to dock and load cozy cargo.',
+    'Clear pirates for scrap, then glance at the Route Tracker for the next beat.',
     'Use Focus Surge when surrounded or toggle 🌙 Chill to ease the pace.'
   ]);
   refreshChallenges();
+  updateDeliveriesBadge();
+  updateSessionStats();
+  updateRouteCard();
   rotateCoach('tick');
   startCoachTicker();
   updatePaceUI();
@@ -603,7 +736,9 @@
     slowmo = 4;
     focus = 0;
     focusActivations++;
+    runFocus++;
     refreshChallenges();
+    updateSessionStats();
     sfxSlowOn();
     showBanner('FOCUS');
   }
@@ -738,7 +873,10 @@
   function newMission(){ const a = stations[Math.floor(Math.random()*stations.length)]; let b = a; while(b===a) b = stations[Math.floor(Math.random()*stations.length)]; currentMission = {pickup:a, drop:b, item: pickItem(), reward: 180 + Math.floor(Math.random()*120), brand: null}; haveCargo=false; updateMissionUI(); addText('NEW CONTRACT', a.x,0.6,a.z,'#ffd54f'); showBanner('NEW CONTRACT'); }
   function pickItem(){ const items=['Ancient Relic','Flux Core','Stellar Seeds','Quantum Ink','Data Crates']; return items[(Math.random()*items.length)|0]; }
   function updateMissionUI(){
-    if(!currentMission) return;
+    if(!currentMission){
+      updateRouteCard();
+      return;
+    }
     cargoBadge.textContent = haveCargo ? `Cargo: ${currentMission.item}` : 'Cargo: None';
     const brand = currentMission.brand ? ` • Sponsor: ${currentMission.brand}` : '';
     missionBadge.textContent = haveCargo ? `Deliver to ${currentMission.drop.name}${brand}` : `Pick up at ${currentMission.pickup.name}${brand}`;
@@ -758,9 +896,10 @@
         'Need a breather? Flip on 🌙 Chill for slower traffic.'
       ]);
     }
+    updateRouteCard();
   }
 
-  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; bestScore = Math.max(bestScore, score); updateBest(); scrap += Math.floor(currentMission.reward*0.35); deliveriesCompleted++; scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; refreshChallenges(); addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED'); newMission(); } }
+  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; bestScore = Math.max(bestScore, score); updateBest(); scrap += Math.floor(currentMission.reward*0.35); deliveriesCompleted++; runDeliveries++; updateDeliveriesBadge(); scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; refreshChallenges(); addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED'); updateSessionStats(); newMission(); } }
 
   function addText(s,x,y,z,col='#fff',ttl=0.9){ texts.push({s,x,y,z,ttl,vy:0.6,col}); }
   function addParticles(x,y,z,col,n=10,sp=6){ for(let i=0;i<n;i++){ const a=rnd(Math.PI*2), v=rnd(sp*0.4,sp); particles.push({x,y,z, vx:Math.cos(a)*v, vz:Math.sin(a)*v, vy:rnd(0.5,1.5), t:rnd(.4,.9), col}); } }
@@ -780,9 +919,8 @@
   function enemyShoot(e){ const a = dirTo(e.x,e.z,player.x,player.z); const sp = 14 + wave*0.3; eBullets.push({x:e.x,y:0.5,z:e.z,vx:Math.cos(a)*sp,vy:0,vz:Math.sin(a)*sp,t:3,r:0.6}); }
 
   // Lifecycle
-  startBtn.onclick = ()=> startGame();
-  function startGame(){ overlayCard.innerHTML = introMarkup; overlay.style.display='none'; state='playing'; resumeAudio(); resetGame(); }
-  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; if(rapidTimer){ clearTimeout(rapidTimer); rapidTimer=null; } rapidMultiplier = 1; syncFireRate(); player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; updateBest(); updatePaceUI(); showBanner('WAVE 1'); sfxWave(); newMission(); if(!streamMode) shipBadge.style.display='block'; rotateCoach('tick'); startCoachTicker(); }
+  function startGame(){ overlayCard.innerHTML = introMarkup; hydrateManual(); overlay.style.display='none'; state='playing'; resumeAudio(); resetGame(); }
+  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; if(rapidTimer){ clearTimeout(rapidTimer); rapidTimer=null; } rapidMultiplier = 1; syncFireRate(); player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; runDeliveries = 0; runFocus = 0; bestComboRun = 1; updateDeliveriesBadge(); updateSessionStats(); updateBest(); updatePaceUI(); updateRouteCard(); showBanner('WAVE 1'); sfxWave(); newMission(); if(!streamMode) shipBadge.style.display='block'; rotateCoach('tick'); startCoachTicker(); }
   function gameOver(){ state='gameover'; overlay.style.display='flex'; shipBadge.style.display='none'; overlayCard.innerHTML = `<h1>MISSION FAILED</h1><p>Final Score: <b>${score.toLocaleString()}</b> · Best: <b>${bestScore.toLocaleString()}</b> · Wave: <b>${wave}</b></p><p>Daily challenge progress sticks around—finish the board next sortie. Need a breather? Tap 🌙 Chill before launching.</p><div class="keys"><div class="k">Press <b>R</b> to restart instantly</div><div class="k">Press <b>H</b> to review controls</div></div><div class="btn" id="restartBtn">Rearm & Retry</div>`; document.getElementById('restartBtn').onclick = ()=> { overlay.style.display='none'; startGame(); }; setGuide('Mission failed — reroute and try again.', [ 'Press R to respawn with your upgrades intact.', 'Daily challenge goals persist between runs.', 'Visit the shop to tune your engine before the next drop.' ]); }
   function togglePause(){ if(state!=='playing' && state!=='paused') return; if(state==='playing'){ state='paused'; pausedBadge.classList.add('show'); } else { state='playing'; pausedBadge.classList.remove('show'); resumeAudio(); } }
   function toggleHelp(){
@@ -790,7 +928,7 @@
       overlay.style.display = 'none';
       return;
     }
-    if(state !== 'gameover') overlayCard.innerHTML = introMarkup;
+    if(state !== 'gameover'){ overlayCard.innerHTML = introMarkup; hydrateManual(); }
     overlay.style.display = 'flex';
   }
   function toggleStream(){
@@ -815,7 +953,7 @@
   let lastTime = 0; function loop(t){ requestAnimationFrame(loop); if(!lastTime) lastTime=t; let dt = Math.min(0.05, (t-lastTime)/1000); lastTime=t; if(state !== 'playing'){ draw(); return; } if(slowmo > 0){ timeScale = 0.36; slowmo -= dt; if(slowmo <= 0){ slowmo = 0; timeScale = 1; sfxSlowOff(); } } else timeScale = 1; dt *= timeScale; update(dt); draw(); }
   requestAnimationFrame(loop);
 
-  function killEnemy(idx,e){ enemies.splice(idx,1); const gain = Math.floor((e.score||30) * combo); score += gain; bestScore = Math.max(bestScore, score); updateBest(); scoreEl.textContent = 'SCORE '+score; combo = Math.min(5, +(combo + 0.2).toFixed(1)); comboDecay = 0; focus = clamp(focus + 8, 0, focusMax); sfxKill(); shake = Math.min(16, shake + 4); addText('+'+gain, e.x,0.6,e.z, '#fff'); addParticles(e.x,0.5,e.z,'#fff',16,5); scrap += (e.scrap||8); scrapEl.textContent = 'SCRAP '+scrap; refreshChallenges(); if(Math.random() < 0.2) spawnPower(e.x + rnd(2,-2), e.z + rnd(2,-2)); }
+  function killEnemy(idx,e){ enemies.splice(idx,1); const gain = Math.floor((e.score||30) * combo); score += gain; bestScore = Math.max(bestScore, score); updateBest(); scoreEl.textContent = 'SCORE '+score; combo = Math.min(5, +(combo + 0.2).toFixed(1)); comboDecay = 0; bestComboRun = Math.max(bestComboRun, combo); updateSessionStats(); focus = clamp(focus + 8, 0, focusMax); sfxKill(); shake = Math.min(16, shake + 4); addText('+'+gain, e.x,0.6,e.z, '#fff'); addParticles(e.x,0.5,e.z,'#fff',16,5); scrap += (e.scrap||8); scrapEl.textContent = 'SCRAP '+scrap; refreshChallenges(); if(Math.random() < 0.2) spawnPower(e.x + rnd(2,-2), e.z + rnd(2,-2)); }
   function enemyHitPlayer(dmg){
     if(player.invuln > 0) return;
     const mult = hardBtn.classList.contains('active') ? 1.3 : 1.0;

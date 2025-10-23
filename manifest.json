@@ -1,12 +1,12 @@
 {
   "name": "Star Courier",
   "short_name": "StarCourier",
-  "description": "Cozy arcade delivery runs with guided missions, daily challenges, and a chill mode for relaxed play.",
+  "description": "Cozy arcade delivery runs with a route tracker, run summary stats, guided missions, and a chill mode for relaxed play.",
   "start_url": "/space_courier/",
   "scope": "/space_courier/",
   "display": "standalone",
-  "background_color": "#0f1d2f",
-  "theme_color": "#0f1d2f",
+  "background_color": "#10131b",
+  "theme_color": "#10131b",
   "orientation": "any",
   "icons": [
     { "src": "./star_icon.png", "sizes": "192x192", "type": "image/png" },

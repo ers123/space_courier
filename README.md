@@ -37,6 +37,6 @@ If something goes wrong after merging:
 Following this playbook lets you iterate on Star Courier purely through the GitHub interface while keeping the deployed PWA healthy.
 
 ## Gameplay experience snapshot
-- The HUD retains the live <b>Mission Guide</b> plus adds a persistent <b>Best Score</b> badge so players always see their top run without diving into menus. Update helper copy in `setGuide(...)` inside [`index.html`](./index.html) if mission design changes.
-- A <b>Pilot Coach</b> rail rotates contextual tips and hotkeys while the new <b>🌙 Chill mode</b> chip slows spawns, damage, and bullet speed for relaxed sessions. The toggle wiring lives in `toggleChill()` within [`index.html`](./index.html).
-- Onboarding is now a full <b>flight manual</b> that explains delivery flow, power systems, and touch controls; adjust the markup under `#overlay` in [`index.html`](./index.html) to tune copy or layout.
+- The HUD now pairs the <b>Mission Guide</b> with a new <b>Route Tracker</b> card, a <b>Run Summary</b> board, and a dedicated <b>Run Drops</b> badge so casual pilots always know their objective and session progress. Adjust the helper logic in `updateRouteCard()` or `updateSessionStats()` inside [`index.html`](./index.html) if you tweak mission flow.
+- A refreshed <b>Pilot Coach</b> references the Route Tracker and Chill mode while the chip palette trades neon for a cozy Hearthlight gradient. Styling updates live in the `<style>` block of [`index.html`](./index.html).
+- The onboarding overlay is now a tabbed <b>flight manual</b> that separates the briefing, controls, and casual tips. Modify the markup under `#overlay` and the tab behavior in `hydrateManual()` within [`index.html`](./index.html) to expand or reorder instructions.
