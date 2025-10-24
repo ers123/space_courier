@@ -4,8 +4,8 @@
   <!-- PWA / Open Graph -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
-  <title>Star Courier — Aurora Drift Edition</title>
-  <meta name="description" content="Tour the Aurora Drift with richer coaching, objective tracking, and casual-friendly pacing that teaches every courier how to thrive." />
+  <title>Star Courier — Wayfarer's Atlas</title>
+  <meta name="description" content="Embark on the Wayfarer's Atlas update with a warmer cockpit, story-driven objectives, and a narrated flight manual that helps every casual courier feel at home." />
 
   <!-- Icons / Favicon -->
   <link rel="icon" href="./star_icon.png">
@@ -13,7 +13,7 @@
 
   <!-- PWA -->
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#0a1020">
+  <meta name="theme-color" content="#120d1a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Star Courier">
@@ -21,7 +21,7 @@
   <!-- Open Graph -->
   <link rel="canonical" href="https://ers123.github.io/space_courier/">
   <meta property="og:title" content="Star Courier">
-  <meta property="og:description" content="Tour the Aurora Drift with richer coaching, objective tracking, and casual-friendly pacing that teaches every courier how to thrive.">
+  <meta property="og:description" content="Embark on the Wayfarer's Atlas update with a warmer cockpit, story-driven objectives, and a narrated flight manual that helps every casual courier feel at home.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ers123.github.io/space_courier/">
   <meta property="og:site_name" content="Star Courier">
@@ -33,23 +33,23 @@
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Star Courier">
-  <meta name="twitter:description" content="Tour the Aurora Drift with richer coaching, objective tracking, and casual-friendly pacing that teaches every courier how to thrive.">
+  <meta name="twitter:description" content="Embark on the Wayfarer's Atlas update with a warmer cockpit, story-driven objectives, and a narrated flight manual that helps every casual courier feel at home.">
   <meta name="twitter:url" content="https://ers123.github.io/space_courier/">
   <meta name="twitter:image" content="https://ers123.github.io/space_courier/star_image.png">
   <meta name="twitter:image:alt" content="Star Courier freighter gliding above the Driftline.">
 <style>
   :root{
-    --bg:#0a1020; --ink:#f6f4ff;
-    --amber:#f8b86c; --coral:#ff8aa0; --sea:#74d9d3; --lagoon:#69b7ff; --mauve:#c7b7ff;
-    --cyan:#7de0ff; --mag:#ff8fb7; --vio:#cbb8ff; --lime:#aef6b2; --gold:#f8b86c; --red:#ff6b6b;
-    --hud:#121a2b; --hud-brd:rgba(255,255,255,.18);
-    --panel:#131b2d; --panel-glow:rgba(139,215,255,.18);
-    --card:#151f32; --card-brd:rgba(157,206,255,.24);
+    --bg:#120d1a; --ink:#fff9f3;
+    --amber:#ffb572; --coral:#ff8da1; --sea:#7cd7d0; --lagoon:#5fa7ff; --mauve:#cbb7ff;
+    --cyan:#8fe3ff; --mag:#ff99be; --vio:#d0c2ff; --lime:#c0f3a2; --gold:#fbc678; --red:#ff6b6b;
+    --hud:#1a1423; --hud-brd:rgba(255,240,220,.22);
+    --panel:#21192d; --panel-glow:rgba(255,197,120,.16);
+    --card:#251d33; --card-brd:rgba(255,224,190,.26);
   }
   html,body{height:100%}
-  body{margin:0;background:radial-gradient(140% 120% at 12% -12%, #23395f 0%, #152440 46%, #060b18 100%);color:var(--ink);font-family:"Space Grotesk",Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
+  body{margin:0;background:radial-gradient(140% 120% at 16% -20%, #3b2847 0%, #24192f 46%, #120d1a 100%);color:var(--ink);font-family:"Space Grotesk",Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden;padding-top:env(safe-area-inset-top)}
   canvas{display:block;position:fixed;inset:0;width:100vw;height:100vh}
-  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(62% 58% at 52% 40%, transparent 58%, rgba(5,14,32,.64) 100%),linear-gradient(160deg, rgba(121,198,255,.14), rgba(254,151,177,.08));mix-blend-mode:screen}
+  #fx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 56% at 50% 38%, transparent 58%, rgba(25,15,32,.64) 100%),linear-gradient(140deg, rgba(255,198,143,.16), rgba(133,192,255,.08));mix-blend-mode:screen}
 
   /* HUD */
   #hud{position:fixed;left:12px;top:calc(12px + env(safe-area-inset-top));pointer-events:none;z-index:6;transform-origin:top left}
@@ -66,14 +66,14 @@
   #dashStatus{font-size:12px;opacity:.95;margin-top:6px}
 
   #cargoRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .badge{background:linear-gradient(180deg, rgba(244,184,96,.22), rgba(9,26,43,.65));border:1px solid var(--hud-brd);padding:4px 10px;border-radius:10px;font-weight:700;font-size:13px;box-shadow:0 8px 20px rgba(3,12,24,.32)}
+  .badge{background:linear-gradient(180deg, rgba(251,198,120,.28), rgba(23,15,30,.72));border:1px solid var(--hud-brd);padding:4px 10px;border-radius:10px;font-weight:700;font-size:13px;box-shadow:0 8px 20px rgba(12,6,18,.38)}
 
   #banner{position:fixed;top:calc(8% + env(safe-area-inset-top));left:50%;transform:translateX(-50%);pointer-events:none;font-weight:900;font-size:36px;letter-spacing:1px;text-shadow:0 0 24px rgba(244,184,96,.55);opacity:0;transition:opacity .35s ease;z-index:5;color:var(--gold)}
   #pausedBadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:900;font-size:44px;opacity:0;pointer-events:none}
   .show{opacity:1}
 
   .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(82% 64% at 50% 36%, rgba(13,21,33,.78), rgba(5,10,18,.94));backdrop-filter:blur(10px);color:var(--ink);text-align:center;padding:24px;z-index:8}
-  .card{max-width:820px;border-radius:20px;background:linear-gradient(180deg, rgba(30,40,54,.92), rgba(13,18,28,.98));padding:30px;text-align:left;border:1px solid rgba(255,255,255,.16);box-shadow:0 26px 60px rgba(5,12,22,.68)}
+  .card{max-width:820px;border-radius:20px;background:linear-gradient(180deg, rgba(52,34,62,.94), rgba(22,15,32,.98));padding:30px;text-align:left;border:1px solid rgba(255,224,190,.24);box-shadow:0 26px 60px rgba(20,12,32,.68)}
   h1{margin:0 0 8px;font-size:30px;text-shadow:0 0 22px rgba(247,160,114,.45);letter-spacing:.4px;color:var(--ink)}
   .card h2{margin:18px 0 8px;font-size:18px;color:var(--gold);letter-spacing:.4px}
   .card p{margin:6px 0 12px;line-height:1.6;font-size:15px;opacity:.94}
@@ -85,12 +85,12 @@
   .btn:hover{filter:brightness(1.05)}
 
   #topRight{position:fixed;top:calc(8px + env(safe-area-inset-top));right:8px;display:flex;gap:6px;z-index:10;transform-origin:top right}
-  .chip{pointer-events:auto;cursor:pointer;padding:6px 11px;border-radius:12px;font-size:12px;font-weight:700;background:linear-gradient(180deg, rgba(125,211,252,.18), rgba(10,24,40,.78));border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 24px rgba(4,14,26,.42);transition:transform .2s ease,box-shadow .2s ease}
-  .chip:hover{transform:translateY(-1px);box-shadow:0 16px 30px rgba(6,18,32,.5)}
-  .chip[aria-pressed="true"], .chip.active{border-color:rgba(244,184,96,.85);box-shadow:0 0 16px rgba(244,184,96,.45);background:linear-gradient(180deg, rgba(244,184,96,.32), rgba(10,24,40,.78));}
+  .chip{pointer-events:auto;cursor:pointer;padding:6px 11px;border-radius:12px;font-size:12px;font-weight:700;background:linear-gradient(180deg, rgba(255,198,143,.2), rgba(20,15,28,.82));border:1px solid rgba(255,240,220,.18);box-shadow:0 10px 24px rgba(18,12,28,.42);transition:transform .2s ease,box-shadow .2s ease}
+  .chip:hover{transform:translateY(-1px);box-shadow:0 16px 30px rgba(24,16,32,.5)}
+  .chip[aria-pressed="true"], .chip.active{border-color:rgba(255,198,143,.9);box-shadow:0 0 16px rgba(255,198,143,.42);background:linear-gradient(180deg, rgba(255,198,143,.38), rgba(24,16,32,.78));}
 
   #guideRail{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;z-index:8;max-width:min(340px,64vw);pointer-events:none}
-  .cardlet{background:linear-gradient(180deg, rgba(29,38,52,.94), rgba(12,20,32,.98));border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:16px;box-shadow:0 16px 44px rgba(6,14,28,.6)}
+  .cardlet{background:linear-gradient(180deg, rgba(45,32,58,.94), rgba(20,14,29,.98));border:1px solid rgba(255,224,190,.2);border-radius:16px;padding:16px;box-shadow:0 16px 44px rgba(20,12,32,.58)}
   .cardlet h4{margin:0 0 6px;font-size:14px;letter-spacing:.5px;color:var(--gold);text-transform:uppercase}
   #guideStep{font-size:14px;line-height:1.5;opacity:.92;margin:0}
   #guideActions{margin:10px 0 0 16px;padding:0;list-style:disc;color:rgba(255,245,240,.88);font-size:13px;line-height:1.5}
@@ -234,7 +234,7 @@
     <div id="healthBar"><div id="healthFill"></div></div>
     <div style="display:flex;flex-direction:column;gap:4px">
       <div id="focusWrap"><div id="focusFill"></div></div>
-      <div id="focusLbl">FOCUS: Fill by eliminations</div>
+      <div id="focusLbl">FOCUS: Build combos & deliveries</div>
       <div id="dashStatus">DASH: Ready</div>
     </div>
   </div>
@@ -246,27 +246,27 @@
 
 <div id="guideRail">
   <div class="cardlet">
-    <h4>Mission Guide</h4>
-    <p id="guideStep">Dock at the highlighted relay to claim your first contract.</p>
+    <h4>Storyteller</h4>
+    <p id="guideStep">Tune the transponder to pick up your first tale.</p>
     <ul id="guideActions">
-      <li>Follow the pulsing station ring to dock.</li>
-      <li>Clear pirates for scrap to spend in the shop.</li>
-      <li>Use Focus Surge when surrounded.</li>
+      <li>Follow the lantern-lit station ring and hold position to hear the sender.</li>
+      <li>Scoop scrap from raiders—your shipwright is listening for upgrade cues.</li>
+      <li>Tap 🌙 Chill whenever you want the storyteller to slow the action.</li>
     </ul>
   </div>
   <div class="cardlet">
-    <h4>Route Tracker</h4>
-    <p id="routeBrief">Awaiting launch clearance.</p>
+    <h4>Voyage Log</h4>
+    <p id="routeBrief">Awaiting first contract.</p>
     <ul id="routeChecklist">
       <li>Accept a contract to populate your route.</li>
     </ul>
   </div>
   <div class="cardlet">
-    <h4>Daily Challenges</h4>
+    <h4>Daily Deeds</h4>
     <ul id="challengeList">
-      <li>Score 2,500 points</li>
-      <li>Complete 3 deliveries</li>
-      <li>Trigger Focus Surge twice</li>
+      <li>Score 2,500 points for the festival postcard</li>
+      <li>Complete 3 deliveries to hear the cook's tale</li>
+      <li>Trigger Focus Surge twice to unlock the starlight lullaby</li>
     </ul>
   </div>
   <div class="cardlet">
@@ -288,7 +288,7 @@
   </div>
   <div class="cardlet coach">
     <h4>Pilot Coach</h4>
-    <p id="coachTip">Tap Launch when you are ready—use WASD to drift, the mouse to steer your cannons, and watch the Power-Up Tray for fresh boosts.</p>
+    <p id="coachTip">Tap Launch when you are ready—ride the Storyteller's cues, drift with WASD, aim with the mouse, and peek at the Power-Up Tray for fresh boosts.</p>
     <div id="coachKeys"><span>WASD</span><span>Mouse</span><span>SHIFT</span></div>
     <p id="paceNote">Arcade pace: standard spawn rate and enemy speed.</p>
   </div>
@@ -297,58 +297,58 @@
 <div id="overlay" class="overlay">
   <div class="card">
     <h1>STAR COURIER</h1>
-    <p>Welcome to the Aurora Drift build. This cut of Star Courier leans into painterly gradients, mid-run coaching, and collectible power notes so casual pilots feel prepared before the first pirate spawn.</p>
+    <p>Welcome to the Wayfarer's Atlas season. This cut wraps the cockpit in warmer hues, adds a storyteller to every contract, and expands the guidebook so casual pilots know exactly what to try next.</p>
     <div class="manual-tabs">
-      <button class="manual-tab active" data-tab="briefing">Route Briefing</button>
-      <button class="manual-tab" data-tab="controls">Flight Controls</button>
-      <button class="manual-tab" data-tab="tips">Casual Tricks</button>
-      <button class="manual-tab" data-tab="powers">Power Notes</button>
+      <button class="manual-tab active" data-tab="primer">Story Primer</button>
+      <button class="manual-tab" data-tab="controls">How to Fly</button>
+      <button class="manual-tab" data-tab="combat">Cargo & Combat</button>
+      <button class="manual-tab" data-tab="atlas">Atlas Extras</button>
     </div>
     <div class="manual-panels">
-      <section class="manual-panel active" data-panel="briefing">
-        <h3>Delivery Loop</h3>
-        <p>Your courier freighter ferries keepsakes between friendly stations. Each contract follows the same cozy arc:</p>
+      <section class="manual-panel active" data-panel="primer">
+        <h3>Courier's Oath</h3>
+        <p>You shuttle heirlooms, recipes, and letters between homesteads stretched across the Drift. A typical contract now plays out like this:</p>
         <ol>
-          <li><b>Pick Up</b> — dock inside the highlighted ring to load the parcel.</li>
-          <li><b>Escort</b> — steer through pirate pockets, collecting scrap for upgrades.</li>
-          <li><b>Drop Off</b> — deliver at the glowing depot, restock, then accept the next route.</li>
+          <li><b>Gather</b> — dock at the lantern-ringed station to hear the sender's blurb and load their parcel.</li>
+          <li><b>Journey</b> — weave through raider skirmishes, grabbing scrap to fund ship upgrades.</li>
+          <li><b>Deliver</b> — settle the parcel at a receiving outpost, then choose your next tale from the mission guide.</li>
         </ol>
-        <p>Watch the Route Tracker and Power-Up Tray along the left rail—they update with step-by-step objectives and active boosts in plain language.</p>
+        <p>The new <b>Voyage Log</b> on the left summarizes your current story beat, while the <b>Storyteller</b> narrates optional tasks like savoring nebula views or rescuing stranded pods.</p>
       </section>
       <section class="manual-panel" data-panel="controls">
-        <h3>Flight Controls</h3>
+        <h3>How to Fly</h3>
         <div class="keys">
           <div class="k"><b>WASD</b> to thrust and drift relative to where you aim.</div>
           <div class="k"><b>Mouse</b> (or <b>← →</b>) to steer your cannons.</div>
-          <div class="k">Hold <b>SPACE</b>/<b>K</b> to fire. Full energy + fire = a dash shot burst.</div>
+          <div class="k">Hold <b>SPACE</b>/<b>K</b> to fire. A full energy bar adds a comet dash burst.</div>
           <div class="k"><b>SHIFT</b> for Focus Surge once the meter glows.</div>
-          <div class="k"><b>P</b> pauses · <b>H</b> reopens this illustrated manual.</div>
+          <div class="k"><b>P</b> pauses · <b>H</b> reopens this narrated manual.</div>
         </div>
         <h3 style="margin-top:16px">Touch Pilots</h3>
-        <p>Drag the left orb to drift, tap the big button to fire, and hit ⚡ once the Focus meter fills to slip into slow-mo safety.</p>
-        <p>Prefer a relaxed pace? Toggle <b>🌙 Chill</b> from the HUD chips to soften enemy speed and incoming damage.</p>
+        <p>Drag the left orb to drift, tap the big button to fire, and hit ⚡ once Focus fills to slip into slow-mo safety.</p>
+        <p>Need a breather? Toggle <b>🌙 Chill</b> from the HUD chips to soften enemy pace, incoming damage, and bullet speed.</p>
       </section>
-      <section class="manual-panel" data-panel="tips">
-        <h3>Casual Tricks</h3>
+      <section class="manual-panel" data-panel="combat">
+        <h3>Cargo & Combat</h3>
         <ul>
-          <li><b>Upgrade Rhythm</b>: engine ➜ hull ➜ cannon keeps handling comfy without spiking difficulty.</li>
-          <li><b>Focus Surges</b>: trigger during deliveries to freeze foes, then dash shot out of the crowd.</li>
-          <li><b>Chill Mode</b>: the Route Tracker and Coach both remind you when it’s on—use it liberally to learn wave cadence.</li>
-          <li><b>Session Stats</b>: the Run Summary card tallies deliveries, surges, and best combos so you can celebrate progress.</li>
+          <li><b>Upgrade Loop</b>: rotate Engine ➜ Hull ➜ Cannon purchases to keep handling comfortable while scaling damage.</li>
+          <li><b>Delivery Streaks</b>: consecutive drops raise combo multipliers and fast-track Focus Surges.</li>
+          <li><b>Voyage Log</b>: each step lists plain-language goals ("Collect starlight samples", "Escort the tea convoy") so you always know what to try.</li>
+          <li><b>Session Recap</b>: the Run Summary tallies deliveries, surges, and your best combo for easy bragging rights.</li>
         </ul>
       </section>
-      <section class="manual-panel" data-panel="powers">
-        <h3>Power Notes</h3>
-        <p>The Power-Up Tray lights up whenever you scoop a boost. Here’s what each icon means:</p>
+      <section class="manual-panel" data-panel="atlas">
+        <h3>Atlas Extras</h3>
+        <p>The Wayfarer's Atlas adds cozy distractions between volleys:</p>
         <ul>
-          <li><b>Rapid Cannons</b>: five-second fire-rate burst. The tray counts down so you know when to re-engage.</li>
-          <li><b>Shield Dome</b>: absorbs the next few hits—its tile glows while the barrier holds.</li>
-          <li><b>Focus Surge</b>: fills faster with combos and deliveries; once ready, the tile flashes "Surge!"</li>
-          <li><b>Hull Repairs</b>: heals instantly, then fades so you know to hunt another kit.</li>
+          <li><b>Daily Deeds</b>: three rotating challenges reward you with lore snippets once cleared.</li>
+          <li><b>Power Notes</b>: the tray icons glow, count down, and explain what each boost is doing in real time.</li>
+          <li><b>Pilot Coach</b>: when you stumble, the storyteller surfaces a tip or invites you to toggle Chill Mode.</li>
+          <li><b>Streaming Ready</b>: enable Stream HUD from the top-right chips to tidy overlays for broadcasts.</li>
         </ul>
       </section>
     </div>
-    <div class="btn" id="startBtn">Launch Mission</div>
+    <div class="btn" id="startBtn">Launch the Route</div>
   </div>
 </div>
 
@@ -577,7 +577,7 @@
   let paceScale = 1;
 
   const coachTips = [
-    { text: 'Route Tracker mirrors your objectives. Glance left if you ever forget the next step.', keys:['Route Tracker'] },
+    { text: 'The Voyage Log mirrors your objectives. Glance left if you ever forget the next beat.', keys:['Voyage Log'] },
     { text: 'Dash shots chew through blockades—fire while your energy bar is full to lunge past raiders.', keys:['SPACE','Full Energy'] },
     { text: 'Focus Surge slows everything to a crawl. Chain it after picking up scrap to reset the battlefield.', keys:['SHIFT'] },
     { text: 'Spend early scrap on Engine upgrades to widen your drift window before waves intensify.', keys:['🛒 Shop','Engine +'] },
@@ -585,7 +585,7 @@
   ];
   const chillCoach = {
     on: { text: 'Chill Mode engaged—enemy speed, damage, and spawn cadence are eased so you can explore the Drift.', keys:['🌙 Chill'] },
-    off:{ text: 'Arcade pace restored. Keep an eye on the Mission Guide for the next delivery route.', keys:['Arcade Pace'] }
+    off:{ text: 'Arcade pace restored. Keep an ear on the Storyteller for the next delivery route.', keys:['Arcade Pace'] }
   };
   let coachIdx = 0;
   let coachTimer = null;
@@ -679,7 +679,7 @@
     if(guideStepEl) guideStepEl.textContent = message;
     if(guideActionsEl){
       guideActionsEl.innerHTML = '';
-      (tips && tips.length ? tips : ['Explore the Drift and chase contracts.']).forEach(text => {
+      (tips && tips.length ? tips : ['Explore the Atlas and chase cozy contracts.']).forEach(text => {
         const li = document.createElement('li');
         li.textContent = text;
         guideActionsEl.appendChild(li);
@@ -691,9 +691,9 @@
     if(!challengeListEl) return;
     challengeListEl.innerHTML = '';
     const rows = [
-      { label: `Score ${challengeGoals.score.toLocaleString()} points (best: ${bestScore.toLocaleString()})`, done: bestScore >= challengeGoals.score },
-      { label: `Complete ${challengeGoals.deliveries} deliveries (${deliveriesCompleted}/${challengeGoals.deliveries})`, done: deliveriesCompleted >= challengeGoals.deliveries },
-      { label: `Trigger Focus Surge ${challengeGoals.focus} times (${focusActivations}/${challengeGoals.focus})`, done: focusActivations >= challengeGoals.focus }
+      { label: `Score ${challengeGoals.score.toLocaleString()} points for the festival postcard (best: ${bestScore.toLocaleString()})`, done: bestScore >= challengeGoals.score },
+      { label: `Complete ${challengeGoals.deliveries} deliveries to hear the cook's tale (${deliveriesCompleted}/${challengeGoals.deliveries})`, done: deliveriesCompleted >= challengeGoals.deliveries },
+      { label: `Trigger Focus Surge ${challengeGoals.focus} times to unlock the starlight lullaby (${focusActivations}/${challengeGoals.focus})`, done: focusActivations >= challengeGoals.focus }
     ];
     rows.forEach(row => {
       const li = document.createElement('li');
@@ -770,27 +770,27 @@
       return;
     }
     if(!currentMission){
-      routeBriefEl.textContent = 'Awaiting launch clearance.';
+      routeBriefEl.textContent = 'Awaiting storyteller cue.';
       routeChecklistEl.innerHTML = '';
       const li = document.createElement('li');
-      li.textContent = 'Accept a contract to populate your route.';
+      li.textContent = 'Tune the transponder and accept a contract to populate your route.';
       routeChecklistEl.appendChild(li);
       return;
     }
     const sponsorCopy = currentMission.brand ? ` for ${currentMission.brand}` : '';
     routeBriefEl.textContent = haveCargo
-      ? `Deliver ${currentMission.item}${sponsorCopy} to ${currentMission.drop.name}.`
-      : `Head to ${currentMission.pickup.name} to load ${currentMission.item}${sponsorCopy}.`;
+      ? `Escort ${currentMission.item}${sponsorCopy} to ${currentMission.drop.name}.`
+      : `Meet ${currentMission.pickup.name} to hear the sender and load ${currentMission.item}${sponsorCopy}.`;
     routeChecklistEl.innerHTML = '';
     const steps = haveCargo
       ? [
-          'Escort the parcel—clear pirate ambushes for scrap.',
-          'Dock inside the glowing drop-off ring.',
-          'Glance at the Power-Up Tray for active boosts before the drop-off.'
+          'Stay within sight of the parcel and sweep raiders for scrap.',
+          'Dock inside the glowing drop-off ring when the outpost hails you.',
+          'Glance at the Power-Up Tray for active boosts before the hand-off.'
         ]
       : [
-          'Follow the pulsing pickup ring to dock.',
-          'Sweep raiders for scrap en route.',
+          'Follow the pulsing pickup ring and idle to receive the story.',
+          'Gather scrap on the way—engineers will suggest upgrades mid-flight.',
           'Peek at the Power-Up Tray once you scoop the crate.'
         ];
     steps.forEach(text => {
@@ -800,10 +800,10 @@
     });
   }
 
-  setGuide('Roll into the highlighted relay to claim your first Aurora contract.', [
-    'Follow the pulsing station ring to dock and load cozy cargo.',
-    'Clear pirates for scrap, then glance at the Route Tracker for the next beat.',
-    'Use Focus Surge when surrounded or toggle 🌙 Chill to ease the pace.'
+  setGuide('Tune into the lantern-lit relay to accept your first Wayfarer tale.', [
+    'Drift into the glowing station ring and listen for the sender intro.',
+    'Sweep raiders for scrap so the shipwright can cue upgrades.',
+    'Toggle 🌙 Chill or trigger Focus Surge whenever things get loud.'
   ]);
   refreshChallenges();
   updateDeliveriesBadge();

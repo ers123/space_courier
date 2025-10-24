@@ -1,6 +1,6 @@
 # Star Courier PWA
 
-This repo hosts the production build of **Star Courier**, a cozy WebGL delivery shooter optimized as a Progressive Web App (PWA). The latest "Aurora Drift" pass layers in a new art direction, richer coaching, and a power-up tray so casual pilots always know what tools they have equipped. The project is published through GitHub Pages at [`https://ers123.github.io/space_courier/`](https://ers123.github.io/space_courier/).
+This repo hosts the production build of **Star Courier**, a cozy WebGL delivery shooter optimized as a Progressive Web App (PWA). The new **"Wayfarer's Atlas"** season warms up the cockpit palette, layers in a storyteller HUD, and expands onboarding with narrated instructions so casual pilots know what to try at every step. The project is published through GitHub Pages at [`https://ers123.github.io/space_courier/`](https://ers123.github.io/space_courier/).
 
 ## Working entirely in the GitHub web UI
 If you prefer to manage updates without cloning the repository locally, follow this flow:
@@ -37,6 +37,6 @@ If something goes wrong after merging:
 Following this playbook lets you iterate on Star Courier purely through the GitHub interface while keeping the deployed PWA healthy.
 
 ## Gameplay experience snapshot
-- The HUD now pairs the <b>Mission Guide</b> with a <b>Route Tracker</b>, <b>Run Summary</b> board, a dedicated <b>Run Drops</b> badge, and the brand new <b>Power-Up Tray</b> so casual pilots always know their objective, session progress, and active boosts. Adjust the helper logic in `updateRouteCard()`, `updateSessionStats()`, or `refreshPowerTray()` inside [`index.html`](./index.html) if you tweak mission flow.
-- A refreshed <b>Pilot Coach</b> references the Route Tracker and Chill mode while the chip palette trades neon for an Aurora-inspired gradient. Styling updates live in the `<style>` block of [`index.html`](./index.html).
-- The onboarding overlay is now a tabbed <b>flight manual</b> that separates the briefing, controls, casual tips, and a new <b>Power Notes</b> appendix. Modify the markup under `#overlay` and the tab behavior in `hydrateManual()` within [`index.html`](./index.html) to expand or reorder instructions.
+- The HUD now pairs the <b>Storyteller</b> card with a <b>Voyage Log</b>, <b>Daily Deeds</b>, <b>Run Summary</b>, and the upgraded <b>Power-Up Tray</b> so casual pilots always know their objective, side goals, and active boosts. Adjust the helper logic in `setGuide()`, `updateRouteCard()`, `refreshChallenges()`, or `refreshPowerTray()` inside [`index.html`](./index.html) if you tweak mission flow.
+- A refreshed <b>Pilot Coach</b> references Chill mode, delivery streaks, and the Voyage Log while the chip palette adopts a warmer twilight gradient. Styling updates live in the `<style>` block of [`index.html`](./index.html).
+- The onboarding overlay is now a narrated, tabbed <b>flight manual</b> that separates the story primer, controls, cargo/combat guidance, and Atlas extras. Modify the markup under `#overlay` and the tab behavior in `hydrateManual()` within [`index.html`](./index.html) to expand or reorder instructions.
