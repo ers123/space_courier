@@ -1,15 +1,32 @@
 {
   "name": "Starforge Courier",
   "short_name": "Starforge",
-  "description": "Deliver cargo through the Relic Void. Mobile-ready WebGL shooter.",
+  "description": "Deliver cargo through the Relic Void. Mobile-ready WebGL shooter with daily missions and achievements.",
   "start_url": "/space_courier/",
   "scope": "/space_courier/",
   "display": "standalone",
   "background_color": "#0a0c14",
   "theme_color": "#0a0c14",
   "orientation": "any",
+  "categories": ["games", "action"],
   "icons": [
-    { "src": "./star_icon.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "./star_icon.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "./star_icon.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./star_icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Quick Play",
+      "short_name": "Play",
+      "description": "Jump straight into the action",
+      "url": "/space_courier/?quickplay=true",
+      "icons": [{ "src": "./star_icon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Daily Challenges",
+      "short_name": "Daily",
+      "description": "Complete daily missions",
+      "url": "/space_courier/?view=daily",
+      "icons": [{ "src": "./star_icon.png", "sizes": "192x192" }]
+    }
   ]
 }

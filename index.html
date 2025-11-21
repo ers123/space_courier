@@ -104,11 +104,55 @@
   #btnCluster button:active{transform:scale(.96)}
   #btnCluster button[data-cap]::after{content:attr(data-cap);position:absolute;left:50%;transform:translateX(-50%);bottom:-18px;font-size:12px;opacity:.85;pointer-events:none}
 
+  /* 2025 Features: Progression, Dailies, Achievements, Rewards */
+  #levelBadge{position:fixed;top:calc(40px + env(safe-area-inset-top));right:12px;z-index:6;padding:8px 12px;border-radius:12px;background:linear-gradient(135deg,#667eea,#764ba2);border:1px solid rgba(255,255,255,.15);font-weight:900;font-size:14px;box-shadow:0 4px 12px rgba(102,126,234,.3);pointer-events:none}
+  #xpBar{width:80px;height:4px;background:rgba(0,0,0,.4);border-radius:2px;margin-top:4px;overflow:hidden}
+  #xpFill{height:100%;background:linear-gradient(90deg,#84fab0,#8fd3f4);transition:width .3s ease}
+
+  #dailyBtn,#achieveBtn,#leaderBtn{pointer-events:auto;cursor:pointer}
+  .notif{position:absolute;top:-4px;right:-4px;background:#ff4fd8;border-radius:50%;width:8px;height:8px;animation:pulse 1.5s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.3);opacity:.7}}
+
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);z-index:20;display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+  .modal.show{display:flex}
+  .modalCard{max-width:600px;width:100%;max-height:80vh;overflow-y:auto;border-radius:16px;background:linear-gradient(180deg,rgba(15,17,30,.95),rgba(8,10,16,.98));border:1px solid rgba(255,255,255,.1);padding:20px;position:relative}
+  .modalClose{position:absolute;top:12px;right:12px;cursor:pointer;font-size:24px;opacity:.7;line-height:1}
+  .modalClose:hover{opacity:1}
+
+  .dailyMission{background:linear-gradient(135deg,rgba(64,243,255,.08),rgba(166,102,255,.08));border:1px solid rgba(64,243,255,.2);border-radius:12px;padding:12px;margin-bottom:10px}
+  .dailyMission.completed{opacity:.6;background:linear-gradient(135deg,rgba(153,255,119,.08),rgba(64,243,255,.08))}
+  .missionTitle{font-weight:800;font-size:15px;margin-bottom:4px}
+  .missionProgress{font-size:13px;opacity:.9;margin-top:6px}
+  .progressBar{width:100%;height:6px;background:rgba(0,0,0,.3);border-radius:3px;margin-top:6px;overflow:hidden}
+  .progressFill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--mag));transition:width .3s ease}
+  .missionReward{display:inline-block;margin-top:6px;padding:4px 8px;background:rgba(255,215,79,.15);border-radius:6px;font-size:12px;font-weight:700;color:var(--gold)}
+
+  .achievement{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px;margin-bottom:8px;display:flex;gap:10px;align-items:center}
+  .achievement.unlocked{background:linear-gradient(135deg,rgba(255,215,79,.12),rgba(64,243,255,.08));border-color:rgba(255,215,79,.3)}
+  .achieveIcon{font-size:32px;line-height:1}
+  .achieveDetails{flex:1}
+  .achieveName{font-weight:800;font-size:14px}
+  .achieveDesc{font-size:12px;opacity:.85;margin-top:2px}
+
+  #rewardWheel{width:280px;height:280px;border-radius:50%;margin:20px auto;position:relative;background:conic-gradient(from 0deg,#ff4fd8 0deg 60deg,#40f3ff 60deg 120deg,#99ff77 120deg 180deg,#ffd54f 180deg 240deg,#a966ff 240deg 300deg,#ff5066 300deg 360deg);border:4px solid rgba(255,255,255,.2);transition:transform 3s cubic-bezier(.25,.1,.25,1)}
+  .wheelSpin{animation:spin 3s cubic-bezier(.25,.1,.25,1) forwards}
+  @keyframes spin{to{transform:rotate(1800deg)}}
+  .wheelPointer{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:25px solid #fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+  .rewardResult{text-align:center;margin-top:20px;font-size:20px;font-weight:900;color:var(--gold)}
+
+  .leaderEntry{display:flex;align-items:center;gap:12px;padding:10px;background:rgba(255,255,255,.03);border-radius:10px;margin-bottom:8px}
+  .leaderEntry.highlight{background:linear-gradient(135deg,rgba(64,243,255,.15),rgba(166,102,255,.15));border:1px solid rgba(64,243,255,.3)}
+  .leaderRank{font-size:20px;font-weight:900;min-width:40px}
+  .leaderName{flex:1;font-weight:700}
+  .leaderScore{font-weight:800;color:var(--cyan)}
+
   @media (max-width: 900px){
     #touchUI{display:block}
     #topRight{transform:scale(.9)}
     #hud{transform:scale(.9)}
     #banner{font-size:32px}
+    #levelBadge{font-size:12px;padding:6px 10px}
+    .modalCard{padding:16px;max-height:85vh}
   }
 </style>
 </head>
@@ -118,10 +162,19 @@
 
 <div id="topRight">
   <div id="mute" class="chip" title="Mute/Unmute audio [M]">🔊 Sound</div>
+  <div id="dailyBtn" class="chip" title="Daily Challenges">📅 Daily</div>
+  <div id="achieveBtn" class="chip" title="Achievements">🏆 Achieve</div>
+  <div id="leaderBtn" class="chip" title="Leaderboard">👥 Leaders</div>
   <div id="shopBtn" class="chip" title="Cosmetics, Upgrades & Modes">🛒 Shop</div>
   <div id="streamBtn" class="chip" title="Streamer mode (hide ads/HUD)">📺 Stream</div>
   <div id="fsBtn" class="chip" title="Fullscreen">⛶ Full</div>
   <div id="help" class="chip" title="Show controls [H]">❓ Help</div>
+</div>
+
+<!-- Level badge -->
+<div id="levelBadge">
+  <div>LVL <span id="levelNum">1</span></div>
+  <div id="xpBar"><div id="xpFill" style="width:0%"></div></div>
 </div>
 
 <div id="shopPanel">
@@ -193,7 +246,8 @@
 <div id="overlay" class="overlay">
   <div class="card">
     <h1>STARFORGE COURIER</h1>
-    <p class="muted">Deliver rare cargo across the Relic Void while fending off pirate ambushes. Dock at stations to <b>pick up</b> and <b>deliver</b>. Earn <b>Scrap</b> to upgrade your ship. Dynamic in-world billboards host sponsors.</p>
+    <p class="muted">Deliver rare cargo across the Relic Void while fending off pirate ambushes. Dock at stations to <b>pick up</b> and <b>deliver</b>. Earn <b>Scrap</b> to upgrade your ship.</p>
+    <p style="margin-top:8px;font-size:13px;color:var(--cyan)">🎮 <b>NEW 2025 Features:</b> Daily Challenges, Achievements, Level Progression, Reward Wheel & Leaderboards!</p>
     <div class="keys">
       <div class="k">Move: <b>WASD</b> (aim-relative) · Strafe: <b>A/D</b></div>
       <div class="k">Aim: <b>← →</b> rotate or mouse</div>
@@ -202,7 +256,54 @@
       <div class="k">Pause: <b>P</b></div>
       <div class="k">Dock: <b>Fly into station ring</b> to pick up/deliver</div>
     </div>
-    <div class="btn" id="startBtn">Start</div>
+    <div class="btn" id="startBtn">Start Game</div>
+  </div>
+</div>
+
+<!-- Daily Missions Modal -->
+<div id="dailyModal" class="modal">
+  <div class="modalCard">
+    <div class="modalClose" onclick="document.getElementById('dailyModal').classList.remove('show')">×</div>
+    <h1>📅 Daily Challenges</h1>
+    <p class="muted" style="margin-bottom:16px">Complete missions for bonus XP and Scrap! Resets every 24 hours.</p>
+    <div id="dailyMissionsList"></div>
+  </div>
+</div>
+
+<!-- Achievements Modal -->
+<div id="achieveModal" class="modal">
+  <div class="modalCard">
+    <div class="modalClose" onclick="document.getElementById('achieveModal').classList.remove('show')">×</div>
+    <h1>🏆 Achievements</h1>
+    <p class="muted" style="margin-bottom:16px">Unlock achievements to earn permanent rewards!</p>
+    <div id="achievementsList"></div>
+  </div>
+</div>
+
+<!-- Leaderboard Modal -->
+<div id="leaderModal" class="modal">
+  <div class="modalCard">
+    <div class="modalClose" onclick="document.getElementById('leaderModal').classList.remove('show')">×</div>
+    <h1>👥 Leaderboard</h1>
+    <p class="muted" style="margin-bottom:16px">Top pilots in the Relic Void</p>
+    <div id="leaderboardList"></div>
+  </div>
+</div>
+
+<!-- Reward Wheel Modal -->
+<div id="rewardModal" class="modal">
+  <div class="modalCard">
+    <div class="modalClose" onclick="document.getElementById('rewardModal').classList.remove('show')">×</div>
+    <h1>🎁 Daily Reward</h1>
+    <p class="muted" style="text-align:center;margin-bottom:10px">Spin the wheel for your daily bonus!</p>
+    <div style="position:relative">
+      <div class="wheelPointer"></div>
+      <div id="rewardWheel"></div>
+    </div>
+    <div id="rewardResult"></div>
+    <div style="text-align:center;margin-top:20px">
+      <button class="btn" id="spinBtn">Spin Wheel!</button>
+    </div>
   </div>
 </div>
 
@@ -219,6 +320,335 @@
 <script>
 (() => {
   'use strict';
+
+  // ========================================
+  // === 2025 CASUAL GAME FEATURES =========
+  // ========================================
+
+  // === Persistent Storage System ===
+  const Storage = {
+    get(key, def) {
+      try {
+        const val = localStorage.getItem('starforge_' + key);
+        return val ? JSON.parse(val) : def;
+      } catch (e) { return def; }
+    },
+    set(key, val) {
+      try {
+        localStorage.setItem('starforge_' + key, JSON.stringify(val));
+      } catch (e) {}
+    }
+  };
+
+  // === Player Progression System ===
+  let playerLevel = Storage.get('level', 1);
+  let playerXP = Storage.get('xp', 0);
+  let totalKills = Storage.get('totalKills', 0);
+  let totalDeliveries = Storage.get('totalDeliveries', 0);
+  let totalScore = Storage.get('totalScore', 0);
+  let highScore = Storage.get('highScore', 0);
+  let gamesPlayed = Storage.get('gamesPlayed', 0);
+
+  function getXPForLevel(lvl) {
+    return Math.floor(100 * Math.pow(1.2, lvl - 1));
+  }
+
+  function addXP(amount) {
+    playerXP += amount;
+    const needed = getXPForLevel(playerLevel);
+    if (playerXP >= needed) {
+      playerXP -= needed;
+      playerLevel++;
+      Storage.set('level', playerLevel);
+      showBanner('LEVEL UP! ' + playerLevel);
+      sfxPower();
+      // Reward: bonus scrap on level up
+      scrap += 50 * playerLevel;
+      scrapEl.textContent = 'SCRAP ' + scrap;
+    }
+    Storage.set('xp', playerXP);
+    updateLevelUI();
+  }
+
+  function updateLevelUI() {
+    document.getElementById('levelNum').textContent = playerLevel;
+    const needed = getXPForLevel(playerLevel);
+    const pct = Math.min(100, (playerXP / needed) * 100);
+    document.getElementById('xpFill').style.width = pct + '%';
+  }
+
+  // === Daily Missions System ===
+  const dailyMissions = [
+    { id: 'kills', name: 'Bounty Hunter', desc: 'Destroy 50 enemies', goal: 50, reward: { xp: 200, scrap: 100 }, icon: '💥' },
+    { id: 'wave', name: 'Wave Warrior', desc: 'Reach wave 15', goal: 15, reward: { xp: 150, scrap: 80 }, icon: '🌊' },
+    { id: 'delivery', name: 'Courier Elite', desc: 'Complete 5 deliveries', goal: 5, reward: { xp: 100, scrap: 60 }, icon: '📦' },
+    { id: 'score', name: 'High Scorer', desc: 'Score 5000 points in one game', goal: 5000, reward: { xp: 250, scrap: 120 }, icon: '⭐' }
+  ];
+
+  let dailyProgress = Storage.get('dailyProgress', {});
+  let lastDailyReset = Storage.get('lastDailyReset', Date.now());
+
+  function checkDailyReset() {
+    const now = Date.now();
+    const dayMs = 24 * 60 * 60 * 1000;
+    if (now - lastDailyReset > dayMs) {
+      dailyProgress = {};
+      lastDailyReset = now;
+      Storage.set('dailyProgress', dailyProgress);
+      Storage.set('lastDailyReset', lastDailyReset);
+    }
+  }
+
+  function updateDailyMission(id, value) {
+    checkDailyReset();
+    if (!dailyProgress[id]) dailyProgress[id] = { progress: 0, completed: false };
+    const mission = dailyMissions.find(m => m.id === id);
+    if (!mission || dailyProgress[id].completed) return;
+
+    dailyProgress[id].progress = Math.min(mission.goal, value);
+    if (dailyProgress[id].progress >= mission.goal && !dailyProgress[id].completed) {
+      dailyProgress[id].completed = true;
+      addXP(mission.reward.xp);
+      scrap += mission.reward.scrap;
+      scrapEl.textContent = 'SCRAP ' + scrap;
+      showBanner('DAILY COMPLETE! +' + mission.reward.scrap + ' SCRAP');
+      Storage.set('dailyProgress', dailyProgress);
+      updateDailyNotification();
+    }
+    Storage.set('dailyProgress', dailyProgress);
+  }
+
+  function renderDailyMissions() {
+    checkDailyReset();
+    const container = document.getElementById('dailyMissionsList');
+    container.innerHTML = dailyMissions.map(m => {
+      const prog = dailyProgress[m.id] || { progress: 0, completed: false };
+      const pct = Math.min(100, (prog.progress / m.goal) * 100);
+      return `
+        <div class="dailyMission ${prog.completed ? 'completed' : ''}">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="font-size:32px">${m.icon}</div>
+            <div style="flex:1">
+              <div class="missionTitle">${m.name}</div>
+              <div class="missionProgress">${m.desc} (${prog.progress}/${m.goal})</div>
+              <div class="progressBar"><div class="progressFill" style="width:${pct}%"></div></div>
+              <div class="missionReward">+${m.reward.xp} XP, +${m.reward.scrap} Scrap</div>
+            </div>
+            <div>${prog.completed ? '✓' : ''}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function updateDailyNotification() {
+    checkDailyReset();
+    const hasIncomplete = dailyMissions.some(m => {
+      const prog = dailyProgress[m.id] || { completed: false };
+      return !prog.completed;
+    });
+    const btn = document.getElementById('dailyBtn');
+    let notif = btn.querySelector('.notif');
+    if (hasIncomplete && !notif) {
+      notif = document.createElement('div');
+      notif.className = 'notif';
+      btn.style.position = 'relative';
+      btn.appendChild(notif);
+    } else if (!hasIncomplete && notif) {
+      notif.remove();
+    }
+  }
+
+  // === Achievement System ===
+  const achievements = [
+    { id: 'first_kill', name: 'First Blood', desc: 'Destroy your first enemy', check: () => totalKills >= 1, reward: 50, icon: '🎯' },
+    { id: 'killer_100', name: 'Centurion', desc: 'Destroy 100 enemies', check: () => totalKills >= 100, reward: 150, icon: '💀' },
+    { id: 'killer_500', name: 'Ace Pilot', desc: 'Destroy 500 enemies', check: () => totalKills >= 500, reward: 300, icon: '⚡' },
+    { id: 'wave_10', name: 'Survivor', desc: 'Reach wave 10', check: () => Storage.get('maxWave', 0) >= 10, reward: 100, icon: '🛡️' },
+    { id: 'wave_25', name: 'Unstoppable', desc: 'Reach wave 25', check: () => Storage.get('maxWave', 0) >= 25, reward: 250, icon: '🔥' },
+    { id: 'level_5', name: 'Rising Star', desc: 'Reach level 5', check: () => playerLevel >= 5, reward: 100, icon: '⭐' },
+    { id: 'level_10', name: 'Veteran', desc: 'Reach level 10', check: () => playerLevel >= 10, reward: 200, icon: '💫' },
+    { id: 'deliveries_10', name: 'Reliable Courier', desc: 'Complete 10 deliveries', check: () => totalDeliveries >= 10, reward: 80, icon: '📦' },
+    { id: 'score_10k', name: 'Point Master', desc: 'Score 10,000 in one game', check: () => highScore >= 10000, reward: 200, icon: '🏆' }
+  ];
+
+  let unlockedAchievements = Storage.get('achievements', []);
+
+  function checkAchievements() {
+    let newUnlocks = false;
+    achievements.forEach(a => {
+      if (!unlockedAchievements.includes(a.id) && a.check()) {
+        unlockedAchievements.push(a.id);
+        scrap += a.reward;
+        scrapEl.textContent = 'SCRAP ' + scrap;
+        showBanner('🏆 ' + a.name + ' UNLOCKED!');
+        sfxPower();
+        newUnlocks = true;
+      }
+    });
+    if (newUnlocks) {
+      Storage.set('achievements', unlockedAchievements);
+      updateAchievementNotification();
+    }
+  }
+
+  function renderAchievements() {
+    const container = document.getElementById('achievementsList');
+    container.innerHTML = achievements.map(a => {
+      const unlocked = unlockedAchievements.includes(a.id);
+      return `
+        <div class="achievement ${unlocked ? 'unlocked' : ''}">
+          <div class="achieveIcon">${unlocked ? a.icon : '🔒'}</div>
+          <div class="achieveDetails">
+            <div class="achieveName">${a.name}</div>
+            <div class="achieveDesc">${a.desc}</div>
+            <div style="margin-top:4px;font-size:12px;color:var(--gold)">+${a.reward} Scrap</div>
+          </div>
+          <div style="font-size:24px">${unlocked ? '✓' : ''}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function updateAchievementNotification() {
+    const hasNew = achievements.some(a => !unlockedAchievements.includes(a.id) && a.check());
+    const btn = document.getElementById('achieveBtn');
+    let notif = btn.querySelector('.notif');
+    if (hasNew && !notif) {
+      notif = document.createElement('div');
+      notif.className = 'notif';
+      btn.style.position = 'relative';
+      btn.appendChild(notif);
+    } else if (!hasNew && notif) {
+      notif.remove();
+    }
+  }
+
+  // === Reward Wheel System ===
+  let lastWheelSpin = Storage.get('lastWheelSpin', 0);
+  const wheelRewards = [
+    { name: '50 Scrap', value: 50, type: 'scrap' },
+    { name: '100 XP', value: 100, type: 'xp' },
+    { name: '200 Scrap', value: 200, type: 'scrap' },
+    { name: '150 XP', value: 150, type: 'xp' },
+    { name: '300 Scrap', value: 300, type: 'scrap' },
+    { name: '250 XP', value: 250, type: 'xp' }
+  ];
+
+  function canSpinWheel() {
+    const dayMs = 24 * 60 * 60 * 1000;
+    return Date.now() - lastWheelSpin > dayMs;
+  }
+
+  function spinWheel() {
+    if (!canSpinWheel()) {
+      showBanner('WHEEL AVAILABLE IN 24H');
+      return;
+    }
+
+    const btn = document.getElementById('spinBtn');
+    btn.disabled = true;
+    btn.textContent = 'Spinning...';
+
+    const wheel = document.getElementById('rewardWheel');
+    const result = document.getElementById('rewardResult');
+    const reward = wheelRewards[Math.floor(Math.random() * wheelRewards.length)];
+
+    // Calculate rotation to land on reward (60deg per segment)
+    const segmentDeg = 360 / wheelRewards.length;
+    const rewardIndex = wheelRewards.indexOf(reward);
+    const targetDeg = 1800 + (rewardIndex * segmentDeg) + (segmentDeg / 2);
+
+    wheel.style.transform = `rotate(${targetDeg}deg)`;
+
+    setTimeout(() => {
+      result.textContent = `You won: ${reward.name}!`;
+      if (reward.type === 'scrap') {
+        scrap += reward.value;
+        scrapEl.textContent = 'SCRAP ' + scrap;
+      } else if (reward.type === 'xp') {
+        addXP(reward.value);
+      }
+      lastWheelSpin = Date.now();
+      Storage.set('lastWheelSpin', lastWheelSpin);
+      sfxPower();
+
+      setTimeout(() => {
+        document.getElementById('rewardModal').classList.remove('show');
+        wheel.style.transform = 'rotate(0deg)';
+        result.textContent = '';
+        btn.disabled = false;
+        btn.textContent = 'Spin Wheel!';
+      }, 2000);
+    }, 3000);
+  }
+
+  // === Leaderboard System ===
+  function updateLeaderboard(newScore, playerName = 'You') {
+    let leaderboard = Storage.get('leaderboard', []);
+    leaderboard.push({ name: playerName, score: newScore, date: Date.now() });
+    leaderboard.sort((a, b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0, 10); // Keep top 10
+    Storage.set('leaderboard', leaderboard);
+    return leaderboard;
+  }
+
+  function renderLeaderboard() {
+    const leaderboard = Storage.get('leaderboard', []);
+    const container = document.getElementById('leaderboardList');
+    if (leaderboard.length === 0) {
+      container.innerHTML = '<p class="muted" style="text-align:center;padding:20px">No scores yet. Play to set a record!</p>';
+      return;
+    }
+    container.innerHTML = leaderboard.map((entry, i) => `
+      <div class="leaderEntry ${entry.name === 'You' && i === 0 ? 'highlight' : ''}">
+        <div class="leaderRank">#${i + 1}</div>
+        <div class="leaderName">${entry.name}</div>
+        <div class="leaderScore">${entry.score}</div>
+      </div>
+    `).join('');
+  }
+
+  // === Initialize 2025 Features ===
+  function init2025Features() {
+    updateLevelUI();
+    checkDailyReset();
+    updateDailyNotification();
+    updateAchievementNotification();
+
+    // Show daily wheel if available
+    if (canSpinWheel()) {
+      setTimeout(() => {
+        document.getElementById('rewardModal').classList.add('show');
+      }, 1000);
+    }
+  }
+
+  // === Event Handlers ===
+  document.getElementById('dailyBtn').onclick = () => {
+    renderDailyMissions();
+    document.getElementById('dailyModal').classList.add('show');
+  };
+
+  document.getElementById('achieveBtn').onclick = () => {
+    renderAchievements();
+    document.getElementById('achieveModal').classList.add('show');
+  };
+
+  document.getElementById('leaderBtn').onclick = () => {
+    renderLeaderboard();
+    document.getElementById('leaderModal').classList.add('show');
+  };
+
+  document.getElementById('spinBtn').onclick = () => spinWheel();
+
+  // Initialize on load
+  setTimeout(() => init2025Features(), 500);
+
+  // ========================================
+  // === END 2025 FEATURES =================
+  // ========================================
+
   // === WebGL renderer ===
   const canvas = document.getElementById('gl');
   const gl = canvas.getContext('webgl', { antialias:false, alpha:true });
@@ -535,7 +965,10 @@
   function pickItem(){ const items=['Ancient Relic','Flux Core','Stellar Seeds','Quantum Ink','Data Crates']; return items[(Math.random()*items.length)|0]; }
   function updateMissionUI(){ cargoBadge.textContent = haveCargo ? `Cargo: ${currentMission.item}` : 'Cargo: None'; const brand = currentMission.brand ? ` • Sponsor: ${currentMission.brand}` : ''; missionBadge.textContent = haveCargo ? `Deliver to ${currentMission.drop.name}${brand}` : `Pick up at ${currentMission.pickup.name}${brand}`; }
 
-  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; scrap += Math.floor(currentMission.reward*0.35); scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED'); newMission(); } }
+  function tryDock(){ if(!currentMission) return; const nearPick = dist2(player.x,player.z,currentMission.pickup.x,currentMission.pickup.z) < 16; const nearDrop = dist2(player.x,player.z,currentMission.drop.x,currentMission.drop.z) < 16; if(!haveCargo && nearPick){ haveCargo=true; updateMissionUI(); addText('PICKED UP', currentMission.pickup.x,0.6,currentMission.pickup.z,'#09fbd3'); sfxPower(); toSpawn += 4; } else if(haveCargo && nearDrop){ haveCargo=false; score += currentMission.reward; scrap += Math.floor(currentMission.reward*0.35); scoreEl.textContent='SCORE '+score; scrapEl.textContent='SCRAP '+scrap; addText('DELIVERED +'+currentMission.reward, currentMission.drop.x,0.6,currentMission.drop.z,'#fff'); sfxWave(); showBanner('DELIVERED');
+  // 2025 features: Track deliveries
+  totalDeliveries++; Storage.set('totalDeliveries', totalDeliveries); let sessionDeliveries = Storage.get('sessionDeliveries', 0) + 1; Storage.set('sessionDeliveries', sessionDeliveries); updateDailyMission('delivery', sessionDeliveries); addXP(20); checkAchievements();
+  newMission(); } }
 
   function addText(s,x,y,z,col='#fff',ttl=0.9){ texts.push({s,x,y,z,ttl,vy:0.6,col}); }
   function addParticles(x,y,z,col,n=10,sp=6){ for(let i=0;i<n;i++){ const a=rnd(Math.PI*2), v=rnd(sp*0.4,sp); particles.push({x,y,z, vx:Math.cos(a)*v, vz:Math.sin(a)*v, vy:rnd(0.5,1.5), t:rnd(.4,.9), col}); } }
@@ -557,8 +990,13 @@
   // Lifecycle
   startBtn.onclick = ()=> startGame();
   function startGame(){ overlay.style.display='none'; state='playing'; resumeAudio(); resetGame(); }
-  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; if(rapidTimer){ clearTimeout(rapidTimer); rapidTimer=null; } rapidMultiplier = 1; syncFireRate(); player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; showBanner('WAVE 1'); sfxWave(); newMission(); if(!streamMode) shipBadge.style.display='block'; }
-  function gameOver(){ state='gameover'; overlay.style.display='flex'; shipBadge.style.display='none'; overlay.querySelector('.card').innerHTML = `<h1>GAME OVER</h1><p class="muted">Final Score: <b>${score}</b> · Wave: <b>${wave}</b> · Scrap: <b>${scrap}</b></p><div class="keys"><div class="k">Press <b>R</b> to Restart</div><div class="k">Press <b>H</b> for Help</div></div><div class="btn" id="restartBtn">Restart</div>`; document.getElementById('restartBtn').onclick = ()=> { overlay.style.display='none'; startGame(); }; }
+  function resetGame(){ score = 0; wave = 1; combo = 1; comboDecay = 0; focus = 0; slowmo=0; timeScale=1; shake=0; aimYaw=0; enemies.length = bullets.length = eBullets.length = powerups.length = texts.length = particles.length = 0; toSpawn = 12; waveTimer = 0; player.x=0; player.z=0; player.vx=0; player.vz=0; player.hp = player.maxHp=100 + hullTier*18; player.invuln=0; player.shield=0; player.fireCD=0; if(rapidTimer){ clearTimeout(rapidTimer); rapidTimer=null; } rapidMultiplier = 1; syncFireRate(); player.energy = player.maxEnergy; player.dashCD = 0; waveEl.textContent = 'WAVE 1'; scoreEl.textContent = 'SCORE 0'; comboEl.textContent = 'x1.0'; scrapEl.textContent = 'SCRAP '+scrap; showBanner('WAVE 1'); sfxWave(); newMission(); if(!streamMode) shipBadge.style.display='block';
+  // 2025 features: Reset session stats
+  Storage.set('sessionKills', 0); Storage.set('sessionDeliveries', 0); }
+  function gameOver(){ state='gameover'; overlay.style.display='flex'; shipBadge.style.display='none';
+  // 2025 features: Update stats and leaderboard
+  gamesPlayed++; totalScore += score; if(score > highScore){ highScore = score; Storage.set('highScore', highScore); } Storage.set('gamesPlayed', gamesPlayed); Storage.set('totalScore', totalScore); const maxWave = Storage.get('maxWave', 0); if(wave > maxWave){ Storage.set('maxWave', wave); } updateDailyMission('wave', wave); updateDailyMission('score', score); addXP(Math.floor(score / 10)); updateLeaderboard(score); checkAchievements();
+  overlay.querySelector('.card').innerHTML = `<h1>GAME OVER</h1><p class="muted">Final Score: <b>${score}</b> · Wave: <b>${wave}</b> · Scrap: <b>${scrap}</b></p><p class="muted">+${Math.floor(score/10)} XP · High Score: <b>${highScore}</b></p><div class="keys"><div class="k">Press <b>R</b> to Restart</div><div class="k">Press <b>H</b> for Help</div></div><div class="btn" id="restartBtn">Restart</div>`; document.getElementById('restartBtn').onclick = ()=> { overlay.style.display='none'; startGame(); }; }
   function togglePause(){ if(state!=='playing' && state!=='paused') return; if(state==='playing'){ state='paused'; pausedBadge.classList.add('show'); } else { state='playing'; pausedBadge.classList.remove('show'); resumeAudio(); } }
   function toggleHelp(){ overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex'; }
   function toggleStream(){
@@ -582,7 +1020,9 @@
   let lastTime = 0; function loop(t){ requestAnimationFrame(loop); if(!lastTime) lastTime=t; let dt = Math.min(0.05, (t-lastTime)/1000); lastTime=t; if(state !== 'playing'){ draw(); return; } if(slowmo > 0){ timeScale = 0.36; slowmo -= dt; if(slowmo <= 0){ slowmo = 0; timeScale = 1; sfxSlowOff(); } } else timeScale = 1; dt *= timeScale; update(dt); draw(); }
   requestAnimationFrame(loop);
 
-  function killEnemy(idx,e){ enemies.splice(idx,1); const gain = Math.floor((e.score||30) * combo); score += gain; scoreEl.textContent = 'SCORE '+score; combo = Math.min(5, +(combo + 0.2).toFixed(1)); comboDecay = 0; focus = clamp(focus + 8, 0, focusMax); sfxKill(); shake = Math.min(16, shake + 4); addText('+'+gain, e.x,0.6,e.z, '#fff'); addParticles(e.x,0.5,e.z,'#fff',16,5); scrap += (e.scrap||8); scrapEl.textContent = 'SCRAP '+scrap; if(Math.random() < 0.2) spawnPower(e.x + rnd(2,-2), e.z + rnd(2,-2)); }
+  function killEnemy(idx,e){ enemies.splice(idx,1); const gain = Math.floor((e.score||30) * combo); score += gain; scoreEl.textContent = 'SCORE '+score; combo = Math.min(5, +(combo + 0.2).toFixed(1)); comboDecay = 0; focus = clamp(focus + 8, 0, focusMax); sfxKill(); shake = Math.min(16, shake + 4); addText('+'+gain, e.x,0.6,e.z, '#fff'); addParticles(e.x,0.5,e.z,'#fff',16,5); scrap += (e.scrap||8); scrapEl.textContent = 'SCRAP '+scrap; if(Math.random() < 0.2) spawnPower(e.x + rnd(2,-2), e.z + rnd(2,-2));
+  // 2025 features tracking
+  totalKills++; Storage.set('totalKills', totalKills); let sessionKills = Storage.get('sessionKills', 0) + 1; Storage.set('sessionKills', sessionKills); updateDailyMission('kills', sessionKills); addXP(5); checkAchievements(); }
   function enemyHitPlayer(dmg){ if(player.invuln > 0) return; const mult = hardBtn.classList.contains('active') ? 1.3 : 1.0; if(player.shield > 0){ player.shield -= 1.2*mult; addParticles(player.x,0.5,player.z,'#ffd54f',10,4); addText('SHIELD', player.x,0.6,player.z,'#ffd54f'); sfxHit(); return; } player.hp -= dmg*mult; player.invuln = 0.5; combo = 1; comboDecay = 0; sfxHit(); shake = Math.min(18, shake + 6); addParticles(player.x,0.5,player.z,'#ff5066',16,6); if(player.hp <= 0) gameOver(); }
 
   function spawnEnemy(){ const roll=Math.random(); let type='chaser'; if(roll>0.75) type='shooter'; else if(roll>0.55) type='dasher'; const ang=Math.random()*Math.PI*2, rad=(Math.random()*(50-30))+30; const e={ type, x: player.x + Math.cos(ang)*rad, y:0.5, z: player.z + Math.sin(ang)*rad, r:1.2, hp: 2 + Math.floor(wave/3), t:0, cd: (Math.random()*(1.6-0.6))+0.6 };
