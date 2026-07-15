@@ -102,7 +102,16 @@ Persistent release thread: `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna,
 
 ### Current release review
 
-Fresh local and live evidence is complete for release commit `67f784f1e22ea2a621266dd99be491ae1fc7c429`; an evidence-only follow-up commit will add the live receipt/screenshot and then repeat the exact Pages/live verification. Persistent thread: `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna, Medium effort); nothing has been posted to X.
+Fresh local and live evidence is complete for verified evidence revision `22a3c617f85a95a9cba1242ef05d372bc4686fdc`; Pages built that exact revision and the live audit passed. The final docs-only receipt commit is reported in the release handoff. Persistent thread: `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna, Medium effort); nothing has been posted to X.
+
+### Final Review — 2026-07-15
+
+- [x] Final MP4 replaced and independently inspected: 26.240 seconds, 1280×720, H.264 High, yuv420p, 25 fps, video-only, faststart; SHA-256 `0331c5e13683afdd8d4684506822712e68258a998e1ec8ff8cc4137a6bd489b3`.
+- [x] Local official client, full loop, controls, gamepad, mobile layouts, PWA/offline, asset HTTP, and console gates passed.
+- [x] X kit is factual and ready; Terra High is credited for final visual/control recovery; main hashtags are exactly `#GPT56 #Codex #gamedev`; no X post was made.
+- [x] Prior exact evidence revision `22a3c617f85a95a9cba1242ef05d372bc4686fdc` was on `origin/main` and Pages reported `built` from that revision before this final docs-only receipt.
+- [x] Final live HTTP, gameplay/full loop, Quick Play, mobile controls, controlled offline reload, and console gates passed; durable proof is `output/release/live-recovery-audit.json` and `output/release/live-full-loop.png`.
+- [x] Preserved and excluded machine leftovers: `.DS_Store`, `docs/.DS_Store`, and `output/.DS_Store` remain untracked and unstaged; raw WebM/temporary scripts/obsolete delta captures were excluded.
 
 ## Visual Quality Recovery Plan — Approved 2026-07-15
 

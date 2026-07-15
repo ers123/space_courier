@@ -394,9 +394,11 @@ Release/video owner: persistent thread `019f6615-e235-75d0-bfdb-6c3f41765426`, G
 ### Deployment and live proof
 
 - Deployment lock: `/tmp/space_courier.deploy.lock`, acquired before fetch/push and held through Pages polling and live verification. No stale lock was present; it will be released only after the final evidence commit and recheck.
-- Release commit pushed non-destructively: `67f784f1e22ea2a621266dd99be491ae1fc7c429`; `origin/main` matched exactly before live verification.
-- Pages receipt for `67f784f1e22ea2a621266dd99be491ae1fc7c429`: source `main`/`/`, URL `https://ers123.github.io/space_courier/`, status `built`, build API latest commit matched the exact revision.
+- Gameplay release commit pushed non-destructively: `67f784f1e22ea2a621266dd99be491ae1fc7c429`. Evidence-only final release commit: `22a3c617f85a95a9cba1242ef05d372bc4686fdc`; `origin/main` matched the final revision exactly.
+- Prior exact Pages receipt for evidence revision `22a3c617f85a95a9cba1242ef05d372bc4686fdc`: source `main`/`/`, URL `https://ers123.github.io/space_courier/`, status `built`, build API matched that revision.
 - Fresh live command: `node /tmp/live_recovery_audit.mjs`. Durable receipt: `output/release/live-recovery-audit.json`; fresh screenshot: `output/release/live-full-loop.png`.
 - Live HTTP checks returned 200 and expected content types for root, manifest, service worker, all icons, final MP4, linked X kit/catalog, and all shipped gameplay/control sprites.
 - Live gameplay receipt: start `mode:"playing"`/`objective:"pickup"`; pickup `carrying:true`; combat/delivery reached `mode:"upgrade"`, score 257, scrap 106, deliveries 1, bullets 3; real upgrade selection reached tier 2 with engine 1. Quick Play starts with menu hidden; controlled offline reload remains playing and service-worker controlled; mobile MOVE/AIM/FIRE/FOCUS are all displayed; `consoleErrors:[]`.
 - The live proof is evidence-only and contains no gameplay/source behavior change. X remains unposted.
+
+Prior verified evidence revision: `22a3c617f85a95a9cba1242ef05d372bc4686fdc`; the final docs-only receipt commit is reported in the release handoff.
