@@ -1,7 +1,7 @@
 # Starforge Courier PWA Overhaul
 
 Date: 2026-07-15  
-Status: Approved; implementation relay ready
+Status: visual-quality recovery approved; Terra implementation gate in progress
 
 ## Starting State
 
@@ -86,3 +86,99 @@ Release/video owner: persistent thread `019f65a3-ea58-7311-9a84-c672ca1996db`, G
 ### Release review
 
 Release complete: `docs/media/starforge-courier-gameplay.mp4` is a 23.240-second, 1280x720, H.264/yuv420p, silent, faststart MP4. The final capture/contact sheet was visually inspected; local and live official-client/PWA gates are clean. Final commit, Pages receipt, and live proof are recorded in `progress.md`.
+
+## Current Luna Medium Release Takeover Plan — 2026-07-15
+
+Persistent release thread: `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna, Medium effort). This checklist supersedes stale release checkmarks above for the current recovery run; only fresh evidence from this thread may close these items.
+
+- [x] Inspect the final recovery implementation, existing evidence, and current worktree; preserve unrelated `.DS_Store` files and exclude them from release.
+- [x] Run the official web-game client and direct local full-loop/control/PWA gates; inspect fresh screenshots, text state, and console output.
+- [x] Capture a real-input 24–30 second gameplay trailer showing start/install affordance, desktop controls, mobile twin-stick controls, pickup, combat/fire/impact, delivery score/scrap, upgrade, and tier progression.
+- [x] Inspect the candidate MP4 with exact ffprobe metadata, faststart evidence, extracted frames, and a visually inspected contact sheet; replace the HOLD video only after it passes.
+- [x] Reconcile `docs/social/x-post-kit.md` minimally against shipped behavior, including factual Korean/English copy, accessibility text, video description, and exactly `#GPT56 #Codex #gamedev` for the main post; do not post to X.
+- [x] Verify README links and shipped manifest, service-worker, icon, sprite, video, and documentation assets.
+- [ ] Acquire `/tmp/space_courier.deploy.lock`, stage only intended release files, reconcile `main` non-destructively, commit, push, verify exact `origin/main`, GitHub Pages build/source, and live HTTP/gameplay/PWA/offline/console gates while holding the lock.
+- [ ] Record exact final revision, video specs, commands, Pages receipt, live proof, preserved leftovers, route thread/model/effort, and final Review in `tasks/todo.md` and `progress.md`.
+
+### Current release review
+
+Fresh local evidence is complete through video replacement and PWA audit. Commit, push, Pages verification, and live proof remain in progress under persistent thread `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna, Medium effort); nothing has been posted to X.
+
+## Visual Quality Recovery Plan — Approved 2026-07-15
+
+Screenshot audit on 2026-07-15 found that the deployed build is functionally complete but does not meet the intended top-tier casual-game presentation bar. The point-sprite renderer gives the player, stations, enemies, projectiles, and effects nearly the same glowing-circle language, so the game reads as a particle prototype rather than a finished courier game. The current Pages deployment remains a valid PWA preview, but should not be treated as the final contest-facing cut.
+
+Primary visual truth is concept option 3:
+`/Users/yohan/.codex/generated_images/019f6503-0372-70d1-a71c-1534ba8db0ca/exec-c13b1acd-f93a-434e-9283-5c0d7e74aefb.png`
+
+This choice is final for the recovery: the friendly broad triangular carrier, mounted cargo, escort drones, delivery station, explicit independent MOVE/AIM controls, and FIRE/FOCUS actions define the target. `star_image.png` is secondary art-direction context only.
+
+Recovery starting state:
+
+- Branch/revision: `main` at `ba8d2d3dfad17c75c0ad447444d36089f3c385a6`
+- Pre-existing task changes to preserve: `tasks/todo.md`, `docs/social/x-post-kit.md`
+- Unrelated machine files to preserve and exclude: `.DS_Store`, `docs/.DS_Store`, `output/.DS_Store`
+- Existing `docs/media/starforge-courier-gameplay.mp4`: HOLD; not final
+
+### Recovery relay route
+
+| Phase | Thread | Model | Effort | Deliverable | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| Recovery coordination | current delegated coordinator | GPT-5.6 Sol | Extra High | Exact target, phase briefs, gate decisions | Canonical checklist and evidence-backed handoffs | In progress |
+| Art/control/gameplay implementation | `019f65e2-99b2-7f81-aef9-031b5fde0760` | GPT-5.6 Terra | High | Raster assets, renderer/control/game-feel overhaul, local verification | Review 1 P2 fixes verified; same-thread Luna Review 2 passed | Complete — Review 2 PASS |
+| Independent visual/control review | `019f65fe-231c-7e02-8a2a-bc3226abc7a0` | GPT-5.6 Luna | High | Read-only findings and pass/recheck verdict | Review 1 FAIL → Terra fixes → same-thread Review 2 PASS; no P0/P1/P2 | Complete — Review 2 PASS |
+| Video/release/live verification | `019f6615-e235-75d0-bfdb-6c3f41765426` | GPT-5.6 Luna | Medium | 26.24-second MP4, reconciled X kit, exact commit/push/Pages proof | Exact revision live and verified | In progress |
+
+- [x] Audit the user-provided gameplay and Codex-sidebar screenshots and identify the renderer and routing root causes.
+- [x] Resolve and inspect concept option 3 as the exact visual target; do not switch concepts.
+- [x] Catalog every visible raster gameplay asset and save generated/imported assets as individual repo-owned files with source/usage notes.
+  - [x] Inspect the locked Option 3 target and record measured entity/scene requirements in `docs/assets/starforge-asset-catalog.md`.
+  - [x] Add one consistent, repo-owned raster asset for each carrier, mounted cargo, escort, station, enemy role, projectile, cargo/interactable, and UI control role.
+- [x] Replace point sprites only for primary gameplay objects with distinct sprite/mesh silhouettes; retain points for trails, stars, pickups, and impact particles.
+- [x] Implement independent controls: WASD move + arrow-key aim + Space fire; optional mouse aim that cannot permanently override keyboard; gamepad left/right sticks + fire; mobile twin sticks + FIRE/FOCUS + mild aim assist.
+- [x] Keep carrier orientation, muzzle/projectile direction, input hints, and `render_game_to_text()` direction/control state consistent.
+- [x] Rework the world composition with clear travel lanes, environmental depth, target gates, and less empty black space.
+- [x] Rebuild the HUD hierarchy and responsive bounds so the objective, hull/cargo state, weapon state, and controls are legible without clipping or debug-like presentation.
+- [x] Add restrained game feel: directional thrust, recoil, hit response, enemy telegraphs, delivery celebration, upgrade feedback, and game-over recovery.
+- [x] Run the official web-game Playwright client after every meaningful gameplay delta and inspect screenshots, text state, and console output.
+- [x] Verify the entire loop: pickup, combat/fire, delivery, score/scrap, upgrade/tier, restart/Quick Play.
+- [x] Verify desktop keyboard aim without mouse, optional mouse aim, mobile twin-stick/fire/focus, and gamepad logic.
+- [x] Compare 1440x810 desktop gameplay against the exact target; also verify mobile portrait/landscape and zero unexpected console errors.
+- [x] Preserve and verify install/offline behavior, manifest/service-worker/assets, and GitHub Pages subpath compatibility.
+- [x] Complete independent Luna High visual/control review; send findings to the same Terra thread and repeat until passed.
+- [x] Create root `design-qa.md` with source/implementation evidence and `final result: passed` only after independent review genuinely clears P0/P1/P2.
+- [x] Replace the HOLD video only after the visual gate passes with a real 24–30 second, 1280x720-or-better, H.264 MP4 showing the actual loop and controls.
+- [x] Draft the complete X posting package: Korean and English main copy, optional replies, honest model-role framing, video edit script, accessibility text, and submission checklist.
+- [x] Recheck every X claim against the shipped build; recommend `#GPT56 #Codex #gamedev` and keep `#PWA #WebGame` only for an optional technical reply.
+- [x] Export and inspect the replacement X-ready MP4, then mark `docs/social/x-post-kit.md` ready instead of draft/hold.
+- [ ] Commit only scoped changes, push `main`, verify GitHub Pages was built from the exact revision, then rerun live gameplay/PWA checks while holding the deployment lock.
+- [x] Route new child work to a separate projectless `space_courier` target with the absolute repo path pinned, avoiding the broad `/Users/yohan/Projects` project.
+- [ ] Record every recovery child thread ID/model/effort and the exact final revision/evidence here and in the final handoff.
+
+### Recovery Review
+
+Approved target and constraints are locked. Implementation is delegated to one Terra High writer; the independent Luna High visual/control gate passed and the Luna Medium release handoff is now executing.
+
+### Terra implementation review — 2026-07-15
+
+- Raster implementation is complete with individual 512px RGBA sources under `assets/sprites/`; primary gameplay entities use textured, camera-facing WebGL quads. Legacy point rendering is limited to stars, trails, telegraphs, and impact FX.
+- The approved Option 3 comparison is captured at `output/visual-recovery/final-page-1440x810.png`; it shows the dominant carrier, cargo bay/escorts, asteroid field, route chevrons, right-side delivery anchor, and live HUD together.
+- Acceptance evidence is under `output/visual-recovery/`: `desktop-controls.json`, `loop-states.json`, `mobile-controls.json`, `gamepad.json`, `pwa-subpath-offline.json`, and the associated inspected screenshots. All final direct console lists are empty; the final official client produced no `errors-*.json` artifact.
+- No commit, push, deploy, trailer replacement, or X posting occurred. `design-qa.md` remains intentionally absent/unpassed until the independent Luna High review is genuinely complete.
+- Remaining review focus: independent verification of visual fidelity, mobile control ergonomics, and the raster renderer on a fresh browser/device. The CSS touch-control chrome remains functional and is deliberately not a release blocker for this implementation phase.
+
+### Luna Review 1 P2 fixes — 2026-07-15
+
+- [x] Moved the mobile startup toast into a dedicated clear zone: above touch controls in portrait and directly below the compact HUD in short landscape. Fresh visible-toast captures: `output/visual-recovery/mobile-portrait-toast.png` and `mobile-landscape-toast.png`.
+- [x] Bound the cached/cataloged raster `control-move.png`, `control-aim.png`, `control-fire.png`, and `control-focus.png` directly to the semantic, interactive touch elements. MOVE/AIM still retain move nubs; FIRE/FOCUS retain their original hit targets and labels.
+- [x] Reset `activeAimInput` to `keyboard` and `touchAimAssistTarget`/pointer eligibility in `resetRun()`. `loop-states.json` now proves `aimSource:"mouse"` before pause/restart and `aimSource:"keyboard"` immediately after Restart Run.
+- [x] Reran the official client, full acceptance suite, and a new-version subpath/offline test. Console evidence remains empty.
+
+Independent Luna Review 2 is complete and passed; root `design-qa.md` records the approved final result.
+
+### Luna Review 2 gate — 2026-07-15
+
+- Independent reviewer thread `019f65fe-231c-7e02-8a2a-bc3226abc7a0` (GPT-5.6 Luna, High) completed the same-thread read-only recheck with verdict: **PASS**.
+- Review sequence: Review 1 FAIL (three P2 findings) → Terra’s narrowly scoped fixes → Review 2 PASS. No P0/P1/P2 findings remain.
+- `design-qa.md` is now created with the locked target, desktop/mobile evidence, verification record, and `final result: passed`.
+- Video/release/live verification, commit, push, GitHub Pages verification, and X posting remain pending and were not performed by this QA-closeout update.

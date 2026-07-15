@@ -1,4 +1,4 @@
-const VERSION = "starforge-2026-07-15";
+const VERSION = "starforge-visual-recovery-2026-07-15-r2";
 const CACHE_PREFIX = "starforge-shell-";
 const CACHE_NAME = `starforge-shell-${VERSION}`;
 const APP_SHELL = [
@@ -9,7 +9,23 @@ const APP_SHELL = [
   "./star_icon.png",
   "./star_icon_192.png",
   "./star_icon_512.png",
-  "./star_image.png"
+  "./star_image.png",
+  "./assets/sprites/carrier.png",
+  "./assets/sprites/cargo-bay.png",
+  "./assets/sprites/escort-drone.png",
+  "./assets/sprites/delivery-station.png",
+  "./assets/sprites/enemy-chaser.png",
+  "./assets/sprites/enemy-dasher.png",
+  "./assets/sprites/enemy-shooter.png",
+  "./assets/sprites/player-bolt.png",
+  "./assets/sprites/enemy-bolt.png",
+  "./assets/sprites/cargo-pod.png",
+  "./assets/sprites/aim-marker.png",
+  "./assets/sprites/asteroid.png",
+  "./assets/sprites/control-move.png",
+  "./assets/sprites/control-aim.png",
+  "./assets/sprites/control-fire.png",
+  "./assets/sprites/control-focus.png"
 ];
 
 self.addEventListener("install", (event) => {

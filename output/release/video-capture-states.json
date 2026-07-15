@@ -1,0 +1,739 @@
+{
+  "desktop": [
+    {
+      "label": "menu-install-controls",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "menu",
+        "elapsed": 0,
+        "tier": 1,
+        "objective": "start",
+        "player": {
+          "x": 0,
+          "z": 0,
+          "vx": 0,
+          "vz": 0,
+          "aimRadians": 0,
+          "hp": 100,
+          "maxHp": 100,
+          "fireCooldown": 0,
+          "focus": 0,
+          "aimSource": "keyboard",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 0
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": null,
+        "resources": {
+          "score": 0,
+          "scrap": 0,
+          "combo": 1,
+          "deliveries": 0,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 0,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [],
+        "bullets": {
+          "player": 0,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": true,
+          "pause": false,
+          "upgrade": false,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    },
+    {
+      "label": "start-hook",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "playing",
+        "elapsed": 0.97,
+        "tier": 1,
+        "objective": "pickup",
+        "player": {
+          "x": 0,
+          "z": 0,
+          "vx": 0,
+          "vz": 0,
+          "aimRadians": 0,
+          "hp": 100,
+          "maxHp": 100,
+          "fireCooldown": 0,
+          "focus": 0,
+          "aimSource": "keyboard",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 0
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": {
+          "cargo": "Helio Seed",
+          "carrying": false,
+          "pickup": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0
+          },
+          "drop": {
+            "name": "Forge Dock",
+            "x": 33,
+            "z": 8
+          },
+          "target": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0,
+            "distance": 17
+          },
+          "cargoIntegrity": null
+        },
+        "resources": {
+          "score": 0,
+          "scrap": 0,
+          "combo": 1,
+          "deliveries": 0,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 0,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [],
+        "bullets": {
+          "player": 0,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": false,
+          "pause": false,
+          "upgrade": false,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    },
+    {
+      "label": "pickup",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "playing",
+        "elapsed": 2.87,
+        "tier": 1,
+        "objective": "deliver",
+        "player": {
+          "x": 13.57,
+          "z": 0,
+          "vx": 10.9,
+          "vz": 0,
+          "aimRadians": 0,
+          "hp": 100,
+          "maxHp": 100,
+          "fireCooldown": 0,
+          "focus": 0,
+          "aimSource": "keyboard",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 0
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": {
+          "cargo": "Helio Seed",
+          "carrying": true,
+          "pickup": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0
+          },
+          "drop": {
+            "name": "Forge Dock",
+            "x": 33,
+            "z": 8
+          },
+          "target": {
+            "name": "Forge Dock",
+            "x": 33,
+            "z": 8,
+            "distance": 21.02
+          },
+          "cargoIntegrity": 100
+        },
+        "resources": {
+          "score": 0,
+          "scrap": 0,
+          "combo": 1,
+          "deliveries": 0,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 0,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [
+          {
+            "type": "dasher",
+            "x": 26.63,
+            "z": 15.14,
+            "hp": 3,
+            "telegraph": 0
+          },
+          {
+            "type": "chaser",
+            "x": 19.05,
+            "z": -15.31,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "chaser",
+            "x": 27.22,
+            "z": 13.55,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 14.54,
+            "z": 16.38,
+            "hp": 3,
+            "telegraph": 0
+          }
+        ],
+        "bullets": {
+          "player": 0,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": false,
+          "pause": false,
+          "upgrade": false,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    },
+    {
+      "label": "combat-impact",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "upgrade",
+        "elapsed": 5.43,
+        "tier": 1,
+        "objective": "pickup",
+        "player": {
+          "x": 29.11,
+          "z": 8.96,
+          "vx": 10.82,
+          "vz": 0.2,
+          "aimRadians": 0,
+          "hp": 88,
+          "maxHp": 100,
+          "fireCooldown": 0.23,
+          "focus": 0,
+          "aimSource": "keyboard",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 0
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": {
+          "cargo": "Helio Seed",
+          "carrying": false,
+          "pickup": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0
+          },
+          "drop": {
+            "name": "Forge Dock",
+            "x": 33,
+            "z": 8
+          },
+          "target": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0,
+            "distance": 15.07
+          },
+          "cargoIntegrity": null
+        },
+        "resources": {
+          "score": 257,
+          "scrap": 106,
+          "combo": 1,
+          "deliveries": 1,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 0,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [
+          {
+            "type": "chaser",
+            "x": 20.04,
+            "z": -1.88,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 18.8,
+            "z": 8.08,
+            "hp": 3,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 25.46,
+            "z": 2.61,
+            "hp": 2,
+            "telegraph": 0
+          }
+        ],
+        "bullets": {
+          "player": 3,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": false,
+          "pause": false,
+          "upgrade": true,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    },
+    {
+      "label": "delivery-upgrade",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "upgrade",
+        "elapsed": 5.43,
+        "tier": 1,
+        "objective": "pickup",
+        "player": {
+          "x": 29.11,
+          "z": 8.96,
+          "vx": 10.82,
+          "vz": 0.2,
+          "aimRadians": 0,
+          "hp": 88,
+          "maxHp": 100,
+          "fireCooldown": 0.23,
+          "focus": 0,
+          "aimSource": "keyboard",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 0
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": {
+          "cargo": "Helio Seed",
+          "carrying": false,
+          "pickup": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0
+          },
+          "drop": {
+            "name": "Forge Dock",
+            "x": 33,
+            "z": 8
+          },
+          "target": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0,
+            "distance": 15.07
+          },
+          "cargoIntegrity": null
+        },
+        "resources": {
+          "score": 257,
+          "scrap": 106,
+          "combo": 1,
+          "deliveries": 1,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 0,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [
+          {
+            "type": "chaser",
+            "x": 20.04,
+            "z": -1.88,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 18.8,
+            "z": 8.08,
+            "hp": 3,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 25.46,
+            "z": 2.61,
+            "hp": 2,
+            "telegraph": 0
+          }
+        ],
+        "bullets": {
+          "player": 3,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": false,
+          "pause": false,
+          "upgrade": true,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    },
+    {
+      "label": "tier-two",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "playing",
+        "elapsed": 6.33,
+        "tier": 2,
+        "objective": "pickup",
+        "player": {
+          "x": 30.79,
+          "z": 8.99,
+          "vx": 0.04,
+          "vz": 0,
+          "aimRadians": 2.813,
+          "hp": 88,
+          "maxHp": 100,
+          "fireCooldown": 0,
+          "focus": 0,
+          "aimSource": "mouse",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 161
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": {
+          "cargo": "Flux Core",
+          "carrying": false,
+          "pickup": {
+            "name": "Ice Relay",
+            "x": -34,
+            "z": -24
+          },
+          "drop": {
+            "name": "Ember Gate",
+            "x": 40,
+            "z": 33
+          },
+          "target": {
+            "name": "Ice Relay",
+            "x": -34,
+            "z": -24,
+            "distance": 72.71
+          },
+          "cargoIntegrity": null
+        },
+        "resources": {
+          "score": 257,
+          "scrap": 106,
+          "combo": 1,
+          "deliveries": 1,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 1,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [
+          {
+            "type": "chaser",
+            "x": 23.76,
+            "z": 1.96,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 23.78,
+            "z": 8.47,
+            "hp": 3,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 27.06,
+            "z": 4.64,
+            "hp": 2,
+            "telegraph": 0.2
+          }
+        ],
+        "bullets": {
+          "player": 0,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": false,
+          "pause": false,
+          "upgrade": false,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    },
+    {
+      "label": "tier-two-combat",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "playing",
+        "elapsed": 8.88,
+        "tier": 2,
+        "objective": "pickup",
+        "player": {
+          "x": 44.5,
+          "z": 8.99,
+          "vx": 0,
+          "vz": 0,
+          "aimRadians": 0,
+          "hp": 88,
+          "maxHp": 100,
+          "fireCooldown": 0.15,
+          "focus": 0,
+          "aimSource": "keyboard",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 0
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": {
+          "cargo": "Flux Core",
+          "carrying": false,
+          "pickup": {
+            "name": "Ice Relay",
+            "x": -34,
+            "z": -24
+          },
+          "drop": {
+            "name": "Ember Gate",
+            "x": 40,
+            "z": 33
+          },
+          "target": {
+            "name": "Ice Relay",
+            "x": -34,
+            "z": -24,
+            "distance": 85.16
+          },
+          "cargoIntegrity": null
+        },
+        "resources": {
+          "score": 257,
+          "scrap": 106,
+          "combo": 1,
+          "deliveries": 1,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 1,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [
+          {
+            "type": "chaser",
+            "x": 37.72,
+            "z": 7.27,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 36.96,
+            "z": 8.87,
+            "hp": 3,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 36.84,
+            "z": 8.81,
+            "hp": 2,
+            "telegraph": 0.02
+          }
+        ],
+        "bullets": {
+          "player": 3,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": false,
+          "pause": false,
+          "upgrade": false,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    },
+    {
+      "label": "mobile-twin-stick-fire-focus",
+      "state": {
+        "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
+        "mode": "playing",
+        "elapsed": 4.17,
+        "tier": 1,
+        "objective": "deliver",
+        "player": {
+          "x": 35.37,
+          "z": 0,
+          "vx": 10.9,
+          "vz": 0,
+          "aimRadians": -0.499,
+          "hp": 82,
+          "maxHp": 100,
+          "fireCooldown": 0,
+          "focus": 0,
+          "aimSource": "touch",
+          "touchAimAssistTarget": null,
+          "facingDegrees": 331
+        },
+        "controls": {
+          "desktop": "WASD move; arrows aim; Space fires; mouse aim requires a new move after keyboard/touch/gamepad aim.",
+          "gamepad": "left stick move; right stick aim; A or trigger fire; B focus.",
+          "mobile": "left MOVE stick; right AIM stick; FIRE and FOCUS buttons."
+        },
+        "contract": {
+          "cargo": "Helio Seed",
+          "carrying": true,
+          "pickup": {
+            "name": "Near Beacon",
+            "x": 17,
+            "z": 0
+          },
+          "drop": {
+            "name": "Forge Dock",
+            "x": 33,
+            "z": 8
+          },
+          "target": {
+            "name": "Forge Dock",
+            "x": 33,
+            "z": 8,
+            "distance": 8.34
+          },
+          "cargoIntegrity": 78.4
+        },
+        "resources": {
+          "score": 0,
+          "scrap": 0,
+          "combo": 1,
+          "deliveries": 0,
+          "kills": 0
+        },
+        "upgrades": {
+          "engine": 0,
+          "cannon": 0,
+          "hull": 0,
+          "clamp": 0,
+          "cooling": 0
+        },
+        "enemies": [
+          {
+            "type": "dasher",
+            "x": 26.09,
+            "z": 5.98,
+            "hp": 3,
+            "telegraph": 0
+          },
+          {
+            "type": "chaser",
+            "x": 23.34,
+            "z": -6.29,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "chaser",
+            "x": 27.64,
+            "z": 4.4,
+            "hp": 2,
+            "telegraph": 0
+          },
+          {
+            "type": "dasher",
+            "x": 18.84,
+            "z": 8.11,
+            "hp": 3,
+            "telegraph": 0
+          }
+        ],
+        "bullets": {
+          "player": 0,
+          "enemy": 0
+        },
+        "overlays": {
+          "menu": false,
+          "pause": false,
+          "upgrade": false,
+          "gameOver": false
+        },
+        "fullscreenRequested": false
+      }
+    }
+  ],
+  "errors": []
+}

@@ -308,3 +308,85 @@ Release owner: persistent thread `019f65a3-ea58-7311-9a84-c672ca1996db`, GPT-5.6
 - Final evidence-only receipt commit `0c50e505cd98fb0cd3c7dae462044a2e99952af1` was pushed to `main`; no gameplay/source behavior changes were introduced after `15f2e7a`.
 - Pages rebuild was explicitly triggered with `gh api --method POST repos/ers123/space_courier/pages/builds`; the API then reported revision `0c50e505cd98fb0cd3c7dae462044a2e99952af1`, status `built`, created `2026-07-15T12:09:25Z`, updated `2026-07-15T12:10:08Z` (legacy build `id:null`).
 - Final live rerun against the `0c50e50` Pages build returned HTTP 200 for every required URL, tier-2 full-loop gameplay, Quick Play, controlled offline reload, and `consoleErrors:[]`. `origin/main` matched `0c50e505cd98fb0cd3c7dae462044a2e99952af1`; the nondeterministic post-deploy screenshot was discarded in favor of the committed durable proof version.
+
+## 2026-07-15 — Visual/control recovery implementation (Terra High, no release actions)
+
+- Persistent implementation thread: `019f65e2-99b2-7f81-aef9-031b5fde0760` (GPT-5.6 Terra, High). Starting source revision was `ba8d2d3dfad17c75c0ad447444d36089f3c385a6`; this phase intentionally made no commit, push, deploy, video replacement, or X post.
+- Locked source image inspected: `/Users/yohan/.codex/generated_images/019f6503-0372-70d1-a71c-1534ba8db0ca/exec-c13b1acd-f93a-434e-9283-5c0d7e74aefb.png`. Catalog: `docs/assets/starforge-asset-catalog.md`. Generated individual RGBA assets under `assets/sprites/` for carrier, cargo bay/pod, escorts, station, three enemy roles, both projectile roles, aim marker, asteroid, and controls. Sources were safely resized to 512px with alpha preserved, reducing the sprite directory from 21MB to 2.8MB.
+- `index.html` now retains the point pass only for stars/trails/telegraphs/impact FX and renders primary entities as textured camera-facing WebGL quads. The camera/composition was tightened to establish a dominant carrier, strong right-side station anchor, route chevrons, and asteroid depth. Screenshot inspected: `output/visual-recovery/final-page-1440x810.png`.
+- Controls now use WASD movement, arrow-key aim, Space fire, optional mouse aim that requires a fresh mouse movement after any keyboard/touch/gamepad aim, gamepad left/right sticks with trigger/A fire, and mobile MOVE/AIM twin sticks with FIRE/FOCUS. Touch-only mild aim assist biases toward a nearby enemy in a 0.48-radian/28-unit cone and writes its target to `render_game_to_text`; carrier facing and projectiles use the same `player.aim` value.
+
+### Verification evidence
+
+- Official client (final):
+  `node /Users/yohan/.codex/skills/develop-web-game/scripts/web_game_playwright_client.js --url http://127.0.0.1:4173 --actions-file /Users/yohan/.codex/skills/develop-web-game/references/action_payloads.json --click-selector "#startBtn" --iterations 1 --pause-ms 250 --screenshot-dir /Users/yohan/Projects/space_courier/output/visual-recovery/final-official-client`
+  Result: inspected `shot-0.png` and `state-0.json`; no `errors-*.json` artifact was produced.
+- Direct input/loop suite:
+  `node output/visual-recovery/acceptance.mjs http://127.0.0.1:4173`
+  Result: `desktop-controls.json` proves keyboard aim remains active after release until a new mouse move gives `aimSource:"mouse"`; `loop-states.json` proves pickup/cargo, delivery/upgrade, tier 2 choice, and restart; `mobile-controls.json` proves twin-stick movement (`x:15.75`) plus touch aim assist (`touchAimAssistTarget:"chaser"`); `gamepad.json` proves gamepad move/aim/fire. `acceptance-errors.json` is `[]`. Inspected captures: `desktop-controls.png`, `loop-pickup.png`, `loop-delivery.png`, `mobile-portrait.png`, and `mobile-landscape.png`.
+- Subpath/PWA proof served from `/Users/yohan/Projects` at `http://127.0.0.1:4175/space_courier/?quickplay=true`:
+  `pwa-subpath-offline.json` confirms Quick Play starts in `mode:"playing"`, the service worker controls the page, representative new sprite requests succeed, offline reload remains playing, and errors are `[]`. `sw.js` was versioned and pre-caches every shipped sprite asset.
+
+### Remaining risk / gate
+
+- Visual/control recovery is ready for an independent Luna review, but it is **not** a Luna pass. Do not mark `design-qa.md` passed until that fresh read-only review clears actionable P0/P1/P2 findings.
+
+## 2026-07-15 — Luna Review 1 P2 fix pass (Terra High, no release actions)
+
+- Independent reviewer: persistent thread `019f65fe-231c-7e02-8a2a-bc3226abc7a0` (GPT-5.6 Luna, High). Review 1 verdict was FAIL with no P0/P1 and three actionable P2s: startup-toast overlap in portrait, cached/cataloged mobile-control PNGs not visibly used, and stale `aimSource:"mouse"` after Restart Run.
+- Minimal `index.html` fixes:
+  - portrait toast now sits above touch controls (`bottom: 170px`); short-landscape toast sits below the compact HUD (`top: 116px`), preserving desktop behavior;
+  - semantic MOVE/AIM/FIRE/FOCUS touch elements now use `control-move.png`, `control-aim.png`, `control-fire.png`, and `control-focus.png` as their visible surfaces, preserving nubs and existing handlers;
+  - `resetRun()` resets `activeAimInput` to `keyboard`, alongside existing pointer/touch and assist-state resets.
+- `sw.js` cache version advanced to `starforge-visual-recovery-2026-07-15-r2` so an installed app cannot retain the old HTML/CSS shell.
+
+### Fresh evidence
+
+- Official smoke:
+  `node /Users/yohan/.codex/skills/develop-web-game/scripts/web_game_playwright_client.js --url 'http://127.0.0.1:4173/?luna=r2' --actions-file /Users/yohan/.codex/skills/develop-web-game/references/action_payloads.json --click-selector "#startBtn" --iterations 1 --pause-ms 250 --screenshot-dir /Users/yohan/Projects/space_courier/output/visual-recovery/luna-fix-official`
+  Result: `shot-0.png`/`state-0.json` generated and no error artifact.
+- Full regression/interaction suite:
+  `node output/visual-recovery/acceptance.mjs http://127.0.0.1:4173`
+  Result: `acceptance-errors.json` is `[]`; `loop-states.json` proves mouse before restart and keyboard immediately after; all prior desktop, cargo-loop, touch-aim-assist, and gamepad assertions remain green. Inspected fresh captures: `mobile-portrait-toast.png`, `mobile-landscape-toast.png`, `mobile-portrait.png`, and `mobile-landscape.png`.
+- New-version subpath/PWA check served under `/space_courier/`: `output/visual-recovery/pwa-subpath-offline-r2.json` confirms Quick Play remains playing, the service worker controls the page, carrier plus all four mobile-control assets fetch successfully, offline reload remains playing, and errors are `[]`. Screenshot: `pwa-subpath-offline-r2.png`.
+
+### Gate
+
+- Ready for the same Luna thread to re-review. No commit, push, deploy, video replacement, X posting, or `design-qa.md` creation/pass occurred.
+
+## 2026-07-15 — Independent Luna High Review 2 PASS gate
+
+- Reviewer: persistent thread `019f65fe-231c-7e02-8a2a-bc3226abc7a0` (GPT-5.6 Luna, High effort). Same-thread read-only recheck verdict: **PASS**; no remaining P0/P1/P2 findings. Luna explicitly authorized marking Design QA passed.
+- Gate history: Review 1 FAIL identified three P2s (portrait toast overlap, unused raster mobile-control artwork, stale mouse aim source after restart). Terra applied the documented minimal fixes; Review 2 accepted them with no new actionable findings.
+- Final QA record: `design-qa.md`. Locked reference: `/Users/yohan/.codex/generated_images/019f6503-0372-70d1-a71c-1534ba8db0ca/exec-c13b1acd-f93a-434e-9283-5c0d7e74aefb.png`; final desktop comparison capture: `output/visual-recovery/final-page-1440x810.png`; side-by-side comparison: `output/visual-recovery/qa-reference-vs-implementation.png`.
+- Fresh mobile/toast evidence: `output/visual-recovery/mobile-portrait-toast.png`, `mobile-landscape-toast.png`, `mobile-portrait.png`, and `mobile-landscape.png`.
+- Verification remains the already-completed official smoke (`output/visual-recovery/luna-fix-official/shot-0.png`, `state-0.json`), direct controls/full-loop/gamepad/mobile/restart suite (`node output/visual-recovery/acceptance.mjs http://127.0.0.1:4173`), PWA/subpath/offline proof (`pwa-subpath-offline-r2.json`), and empty console evidence (`acceptance-errors.json` is `[]`).
+- This was documentation/tracking only. No code/art/control changes, commit, push, deploy, trailer/video work, or X posting occurred. The recovery visual/control gate is **READY for Luna Medium release/video handoff**.
+
+## 2026-07-15 — Luna Medium recovery release execution
+
+Release/video owner: persistent thread `019f6615-e235-75d0-bfdb-6c3f41765426`, GPT-5.6 Luna, Medium effort. This is the sole repository-writing thread for the final recovery release. Terra implementation thread `019f65e2-99b2-7f81-aef9-031b5fde0760` (GPT-5.6 Terra, High) and independent Luna review thread `019f65fe-231c-7e02-8a2a-bc3226abc7a0` (GPT-5.6 Luna, High) are complete; Review 2 passed with no P0/P1/P2 findings.
+
+### Fresh local release gate
+
+- Started local server: `python3 -m http.server 4173` from `/Users/yohan/Projects/space_courier`.
+- Official client rerun:
+  `node /Users/yohan/.codex/skills/develop-web-game/scripts/web_game_playwright_client.js --url 'http://127.0.0.1:4173/?release=final' --actions-file /Users/yohan/.codex/skills/develop-web-game/references/action_payloads.json --click-selector '#startBtn' --iterations 1 --pause-ms 300 --screenshot-dir /Users/yohan/Projects/space_courier/output/release/final-official-client`
+  Fresh screenshot `output/release/final-official-client/shot-0.png` was visually inspected; state is `mode:"playing"`, `objective:"pickup"`, and no error artifact was emitted.
+- Direct regression suite: `node output/visual-recovery/acceptance.mjs http://127.0.0.1:4173` passed. Fresh `acceptance-errors.json` is `[]`; `desktop-controls.json` proves arrow-key aim, mouse retake, and stale-mouse blocking; `loop-states.json` proves pickup/cargo, combat bullets/damage, delivery score/scrap, upgrade, tier 2, and restart; `mobile-controls.json` proves MOVE/AIM touch input and touch aim assist; `gamepad.json` proves gamepad move/aim/fire.
+- Fresh PWA audit: `node /tmp/local_release_audit.mjs` passed. `output/release/local-pwa-audit.json` records manifest `start_url:"./"`/`scope:"./"`, 192x192 and 512x512 icons, Starforge-prefixed scoped cache, Quick Play playing/menu hidden, controlled offline reload playing/menu hidden, and `consoleErrors:[]`.
+
+### Final gameplay video
+
+- Capture script: `node /tmp/capture_space_courier_recovery.mjs`; it used real Playwright keyboard/touch input against `http://127.0.0.1:4173/`, repo-owned UI/canvas only, and no audio. Desktop input included `KeyD/KeyS` movement, `ArrowRight` aim, and `Space` fire; mobile input used shipped MOVE/AIM touch sticks and FIRE.
+- State evidence: `output/release/video-capture-states.json`. The desktop capture records `carrying:true`, combat bullets, delivery `mode:"upgrade"` with score 257/scrap 106/delivery 1, and selected tier 2 with `upgrades.engine:1`; the mobile capture records `aimSource:"touch"`, carrying cargo, cargo integrity 78.4, and four enemies. Capture errors are `[]`.
+- Final artifact: `docs/media/starforge-courier-gameplay.mp4`, SHA-256 `0331c5e13683afdd8d4684506822712e68258a998e1ec8ff8cc4137a6bd489b3`, 4,811,440 bytes.
+- Exact inspection:
+  `ffprobe -v error -show_entries format=duration:stream=index,codec_name,profile,codec_type,width,height,pix_fmt,r_frame_rate,avg_frame_rate,bit_rate,codec_tag_string -of json docs/media/starforge-courier-gameplay.mp4`
+  reports 26.240 seconds, H.264 High, 1280x720, yuv420p, 25/1 fps, video-only, and `avc1`; `grep -abo 'moov\\|mdat'` reports `moov` at byte 36 before `mdat` at byte 8484, proving faststart.
+- Extracted final frames: `output/release/video-frames/frame-01.png` through `frame-12.png`; contact sheet `output/release/video-contact-sheet.png` was opened and visually inspected. It covers the start/install hook, pickup, combat/projectiles/impact, delivery, `Choose one upgrade`, tier 2, and mobile raster MOVE/AIM/FIRE/FOCUS.
+
+### X and docs reconciliation
+
+- `docs/social/x-post-kit.md` now says ready to post with the final video and explicitly says nothing has been posted. Korean/English copy remains factual, uses exactly `#GPT56 #Codex #gamedev` in the main recommendation, leaves `#PWA #WebGame` to the optional technical reply, and makes no ranking/traction claim.
+- README video link remains `docs/media/starforge-courier-gameplay.mp4`; install/live guidance was not broadened. All shipped sprite, PWA, video, and documentation references were checked against the worktree inventory.
