@@ -2,7 +2,7 @@
   "keyboardAim": {
     "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
     "mode": "playing",
-    "elapsed": 0.18,
+    "elapsed": 0.2,
     "tier": 1,
     "objective": "pickup",
     "player": {
@@ -75,7 +75,7 @@
   "staleMouseBlocked": {
     "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
     "mode": "playing",
-    "elapsed": 0.42,
+    "elapsed": 0.43,
     "tier": 1,
     "objective": "pickup",
     "player": {
@@ -148,7 +148,7 @@
   "mouseRetake": {
     "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
     "mode": "playing",
-    "elapsed": 0.53,
+    "elapsed": 0.55,
     "tier": 1,
     "objective": "pickup",
     "player": {

@@ -1,4 +1,4 @@
-const VERSION = "starforge-visual-recovery-2026-07-15-r2";
+const VERSION = "starforge-firing-direction-2026-07-15-r3";
 const CACHE_PREFIX = "starforge-shell-";
 const CACHE_NAME = `starforge-shell-${VERSION}`;
 const APP_SHELL = [

@@ -1,7 +1,7 @@
 {
   "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
   "mode": "playing",
-  "elapsed": 0.6,
+  "elapsed": 0.62,
   "tier": 1,
   "objective": "pickup",
   "player": {

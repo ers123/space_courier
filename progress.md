@@ -408,3 +408,14 @@ Prior verified evidence revision: `22a3c617f85a95a9cba1242ef05d372bc4686fdc`; th
 - Sol coordination thread `019f65df-6b20-7fa0-a54a-10d7669b8f93` completed the approved Option 3 decision and release gates.
 - Terra implementation thread `019f65e2-99b2-7f81-aef9-031b5fde0760`, Luna review thread `019f65fe-231c-7e02-8a2a-bc3226abc7a0`, and Luna release thread `019f6615-e235-75d0-bfdb-6c3f41765426` are complete.
 - The final task checklist now reflects the already completed push, exact Pages build verification, live gameplay/PWA/offline checks, video inspection, and X-kit reconciliation. This documentation-only reconciliation changes no game, PWA, or video behavior.
+
+## 2026-07-15 — Firing-direction regression report
+
+- User reported that the carrier appears to fire backward.
+- Focused plan: reproduce a fixed aim, determine whether the mismatch is sprite-forward orientation or projectile physics, change only the shared orientation boundary, then rerun official-client and multi-input direction checks before release.
+- Root cause confirmed from `output/release/firing-direction-right.png`: projectile physics and muzzle placement were correct, but WebGL uploaded source art without Y-flip and directional billboards used the wrong screen-space sign for world Z. The carrier's generated source also has a fixed diagonal art-forward angle.
+- Minimal fix in `index.html`: enable `UNPACK_FLIP_Y_WEBGL`; centralize `spriteHeading(worldAngle, artForward)`; apply it to route arrows, player/enemy bolts, carrier, cargo bay, and escorts; reduce carrier size from 16.5 to 13; reduce cargo/escort scale; add slight thrust bob; ease camera follow to 0.05 so travel is visible.
+- Focused official-client evidence: right aim/fire `output/release/firing-direction-right.png` and up aim/fire `output/release/firing-direction-up.png`; state files prove `aimRadians:0` and `aimRadians:-1.571` with live player bullets. No official-client error artifact was emitted.
+- Full `output/visual-recovery/acceptance.mjs` rerun passed for keyboard/mouse ownership, touch aim assist, gamepad move/aim/fire, pickup/combat/delivery/upgrade/tier/restart; `acceptance-errors.json` is `[]`. `/tmp/local_release_audit.mjs` also passed Quick Play, controlled offline reload, cache ownership, icons, and `consoleErrors:[]`.
+- Replacement X video regenerated from real Playwright desktop/touch input and visually checked via `output/release/video-contact-sheet.png`: 26.240 seconds, 1280x720, H.264 High, yuv420p, 25 fps, video-only, faststart; SHA-256 `edc5d386807488c0d480851186c801f0c46bca943eb2b6a8dd7b34f4a3dc8ea0`.
+- `sw.js` cache version advanced to `starforge-firing-direction-2026-07-15-r3`; deployment verification remains pending.

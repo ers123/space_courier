@@ -943,6 +943,10 @@
   const angleDelta = (a, b) => Math.atan2(Math.sin(b - a), Math.cos(b - a));
   const lerp = (a, b, t) => a + (b - a) * t;
   const lerpAngle = (a, b, t) => a + angleDelta(a, b) * t;
+  // Billboard-local +Y renders upward while world +Z travels down-screen.
+  // The carrier art's unrotated nose points about 155 degrees down-left.
+  const CARRIER_ART_FORWARD = -2.70;
+  const spriteHeading = (worldAngle, artForward = 0) => -worldAngle - artForward;
 
   function compile(type, source) {
     const shader = gl.createShader(type);
@@ -1076,6 +1080,7 @@
     image.onload = () => {
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -1877,8 +1882,8 @@
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     const p = state.player;
-    camera.x = lerp(camera.x, p.x, .08);
-    camera.z = lerp(camera.z, p.z, .08);
+    camera.x = lerp(camera.x, p.x, .05);
+    camera.z = lerp(camera.z, p.z, .05);
     const sx = shake ? (rng() - .5) * shake * 1.8 : 0;
     const sz = shake ? (rng() - .5) * shake * 1.8 : 0;
     const eye = [camera.x + sx, 14, camera.z + 18 + sz];
@@ -1929,17 +1934,17 @@
         const t = i / 7;
         const x = lerp(p.x, target.x, t);
         const z = lerp(p.z, target.z, t);
-        drawSprite(spriteList, "aimMarker", x, .12, z, 3.4, 2.0, a, state.carrying ? [1, .82, .38] : [.55, 1, .96]);
+        drawSprite(spriteList, "aimMarker", x, .12, z, 3.4, 2.0, spriteHeading(a), state.carrying ? [1, .82, .38] : [.55, 1, .96]);
       }
-      drawSprite(spriteList, "aimMarker", p.x + Math.cos(a) * 4.2, .22, p.z + Math.sin(a) * 4.2, 3.8, 2.2, a, [1, 1, 1]);
+      drawSprite(spriteList, "aimMarker", p.x + Math.cos(a) * 4.2, .22, p.z + Math.sin(a) * 4.2, 3.8, 2.2, spriteHeading(a), [1, 1, 1]);
       if (!state.carrying) drawSprite(spriteList, "cargoPod", target.x, 1.15, target.z, 4.2, 4.2, state.elapsed * .25);
     }
   }
 
   function drawEntities(list, spriteList) {
     const p = state.player;
-    for (const b of state.bullets) drawSprite(spriteList, "playerBolt", b.x, .54, b.z, 3.6, 1.05, Math.atan2(b.vz, b.vx));
-    for (const b of state.enemyBullets) drawSprite(spriteList, "enemyBolt", b.x, .54, b.z, 3.5, 1.05, Math.atan2(b.vz, b.vx));
+    for (const b of state.bullets) drawSprite(spriteList, "playerBolt", b.x, .54, b.z, 3.6, 1.05, spriteHeading(Math.atan2(b.vz, b.vx)));
+    for (const b of state.enemyBullets) drawSprite(spriteList, "enemyBolt", b.x, .54, b.z, 3.5, 1.05, spriteHeading(Math.atan2(b.vz, b.vx)));
     for (const e of state.enemies) {
       const spriteName = e.type === "dasher" ? "dasher" : e.type === "shooter" ? "shooter" : "chaser";
       const size = e.type === "dasher" ? 8.2 : e.type === "shooter" ? 8.5 : 7.4;
@@ -1956,18 +1961,21 @@
     for (const text of state.texts) {
       drawPoint(list, text.x, text.y, text.z, text.color, 20 * clamp(text.ttl, .2, 1));
     }
-    drawSprite(spriteList, "carrier", p.x, .72, p.z, 16.5, 16.5, p.aim, p.hitFlash > 0 ? [1.35, .5, .5] : [1, 1, 1]);
+    const carrierAngle = spriteHeading(p.aim, CARRIER_ART_FORWARD);
+    const thrust = clamp(Math.hypot(p.vx, p.vz) / 13, 0, 1);
+    const carrierY = .72 + Math.sin(state.elapsed * 6) * (.025 + thrust * .035);
+    drawSprite(spriteList, "carrier", p.x, carrierY, p.z, 13.0, 13.0, carrierAngle, p.hitFlash > 0 ? [1.35, .5, .5] : [1, 1, 1]);
     drawPoint(list, p.x + Math.cos(p.aim) * 2.8, .72, p.z + Math.sin(p.aim) * 2.8, [.45, 1, 1], 2.2);
     for (let i = 0; i < 5; i++) {
       const a = p.aim + Math.PI + (i - 2) * .18;
       drawPoint(list, p.x + Math.cos(a) * (2.2 + i * .22), .46, p.z + Math.sin(a) * (2.2 + i * .22), [.22, .72, 1], 1.15);
     }
     if (state.carrying) {
-      drawSprite(spriteList, "cargoBay", p.x - Math.cos(p.aim) * .3, 1.38, p.z - Math.sin(p.aim) * .3, 6.2, 6.2, p.aim);
+      drawSprite(spriteList, "cargoBay", p.x - Math.cos(p.aim) * .3, 1.24, p.z - Math.sin(p.aim) * .3, 5.1, 5.1, carrierAngle);
     }
     for (let i = 0; i < 2; i++) {
       const a = state.elapsed * 1.9 + i * Math.PI;
-      drawSprite(spriteList, "escort", p.x + Math.cos(a) * 5.2, .83, p.z + Math.sin(a) * 5.2, 4.0, 4.0, a + Math.PI / 2);
+      drawSprite(spriteList, "escort", p.x + Math.cos(a) * 4.5, .83, p.z + Math.sin(a) * 4.5, 3.4, 3.4, -a + Math.PI / 2);
     }
   }
 

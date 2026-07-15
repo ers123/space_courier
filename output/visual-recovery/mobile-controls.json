@@ -2,7 +2,7 @@
   "afterTouchMove": {
     "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
     "mode": "playing",
-    "elapsed": 1.93,
+    "elapsed": 1.9,
     "tier": 1,
     "objective": "deliver",
     "player": {
@@ -104,7 +104,7 @@
   "touchAssist": {
     "coordinateSystem": "World units use x east/right and z south/down on the playfield; origin is the first spawn. Rendered camera is angled top-down.",
     "mode": "playing",
-    "elapsed": 2.23,
+    "elapsed": 2.2,
     "tier": 1,
     "objective": "deliver",
     "player": {

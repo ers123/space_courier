@@ -29,6 +29,16 @@ Independent reviewer: thread `019f65fe-231c-7e02-8a2a-bc3226abc7a0`, GPT-5.6 Lun
 
 The same Luna thread rechecked the fixes read-only and returned **PASS**: no remaining P0, P1, or P2 findings. Luna explicitly authorized marking this Design QA result passed.
 
+### Firing-direction regression — PASS
+
+The user-supplied live screenshot exposed a post-review orientation defect: the route and projectile traveled right while the oversized carrier art faced left and was vertically flipped. The root cause was the texture-upload Y convention plus a world-Z/screen-Y sign mismatch in directional billboard rotation, not projectile physics.
+
+- `output/release/firing-direction-right.png`: carrier nose, route marker, muzzle, and live bolt align right.
+- `output/release/firing-direction-up.png`: arrow-key up aim rotates the carrier and live bolt upward.
+- Carrier scale is reduced from 16.5 to 13 world units; cargo and escorts scale with it; gentler camera follow and restrained thrust bob make movement legible.
+- The full desktop/mouse/touch/gamepad/game-loop suite and local PWA/offline audit pass with empty console errors.
+- The 26.24-second release video and contact sheet were regenerated after the fix, so promotional evidence matches the shipped orientation.
+
 ## Findings
 
 No actionable P0/P1/P2 findings remain. The implementation is a playable adaptation rather than a literal static-painting reproduction, while preserving the approved Option 3’s prioritized carrier, cargo/escort, station, palette, lane, and control hierarchy.

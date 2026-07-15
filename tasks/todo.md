@@ -122,6 +122,15 @@ Primary visual truth is concept option 3:
 
 This choice is final for the recovery: the friendly broad triangular carrier, mounted cargo, escort drones, delivery station, explicit independent MOVE/AIM controls, and FIRE/FOCUS actions define the target. `star_image.png` is secondary art-direction context only.
 
+### Firing-direction regression — 2026-07-15
+
+- [x] Reproduce a fixed right-aim shot and compare the carrier nose, muzzle marker, bolt sprite, and projectile travel direction.
+- [x] Correct the single visual-orientation source of truth without changing projectile physics or control ownership.
+- [x] Rerun the official web-game client plus focused keyboard, mouse, touch, and gamepad fire-direction assertions; inspect screenshots and console output.
+- [ ] Update the service-worker cache, commit only scoped files, push `main`, and verify the exact GitHub Pages revision and live asset responses.
+
+Review: the texture upload was vertically flipped and billboard rotations used the world-Z sign directly even though world +Z projects down-screen. The fix enables WebGL Y-flip, converts world headings at one boundary, applies the carrier art's measured forward offset, reduces the carrier from 16.5 to 13 world units, and eases camera follow from 0.08 to 0.05. Focused right/up screenshots, the full acceptance suite, regenerated video contact sheet, and local PWA/offline audit passed with no console errors. Deployment remains the final unchecked gate.
+
 Recovery starting state:
 
 - Branch/revision: `main` at `ba8d2d3dfad17c75c0ad447444d36089f3c385a6`
