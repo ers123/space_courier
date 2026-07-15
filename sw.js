@@ -1,70 +1,63 @@
-const VERSION = 'v2.0.0'; // Updated with 2025 features
-const STATIC_CACHE = `sfc-static-${VERSION}`;
-const DYNAMIC_CACHE = `sfc-dynamic-${VERSION}`;
-const STATIC_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './star_icon.png',
-  './star_image.png'
+const VERSION = "starforge-2026-07-15";
+const CACHE_PREFIX = "starforge-shell-";
+const CACHE_NAME = `starforge-shell-${VERSION}`;
+const APP_SHELL = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./sw.js",
+  "./star_icon.png",
+  "./star_icon_192.png",
+  "./star_icon_512.png",
+  "./star_image.png"
 ];
 
-// Install: cache static assets
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then(c => c.addAll(STATIC_ASSETS))
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(APP_SHELL))
       .then(() => self.skipWaiting())
   );
 });
 
-// Activate: cleanup old caches
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(
-        keys.map(k => {
-          if (k.startsWith('sfc-') && k !== STATIC_CACHE && k !== DYNAMIC_CACHE) {
-            return caches.delete(k);
-          }
-        })
+      .then((keys) => Promise.all(
+        keys.map((key) => (key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME ? caches.delete(key) : null))
       ))
       .then(() => self.clients.claim())
   );
 });
 
-// Fetch: Network-first with fallback for better updates
-self.addEventListener('fetch', (e) => {
-  const { request } = e;
-  const url = new URL(request.url);
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
 
-  // Skip cross-origin requests
+  const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // Network-first strategy with timeout
-  e.respondWith(
-    Promise.race([
-      fetch(request)
-        .then(resp => {
-          // Cache successful responses
-          if (resp && resp.status === 200) {
-            const copy = resp.clone();
-            const cacheName = STATIC_ASSETS.some(asset =>
-              request.url.endsWith(asset.replace('./', ''))
-            ) ? STATIC_CACHE : DYNAMIC_CACHE;
-            caches.open(cacheName).then(c => c.put(request, copy));
-          }
-          return resp;
-        }),
-      // Timeout after 3s on slow networks
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('timeout')), 3000)
-      )
-    ])
-    .catch(() =>
-      // Fallback to cache
-      caches.match(request)
-        .then(r => r || caches.match('./index.html'))
-    )
-  );
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request, { ignoreSearch: request.mode === "navigate" });
+    const networkFetch = fetch(request).then((response) => {
+      if (response && response.ok) cache.put(request, response.clone());
+      return response;
+    });
+
+    if (cached) {
+      event.waitUntil(networkFetch.catch(() => {}));
+      return cached;
+    }
+
+    try {
+      return await networkFetch;
+    } catch (error) {
+      if (request.mode === "navigate") {
+        const shell = await cache.match("./index.html");
+        if (shell) return shell;
+      }
+      throw error;
+    }
+  })());
 });

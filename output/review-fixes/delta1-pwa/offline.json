@@ -1,0 +1,8 @@
+{
+  "controller": true,
+  "offline": {
+    "swControlled": true,
+    "menuVisible": false,
+    "mode": "playing"
+  }
+}

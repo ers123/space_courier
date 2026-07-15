@@ -1,0 +1,47 @@
+{
+  "viewport": {
+    "width": 844,
+    "height": 390
+  },
+  "touchControls": "block",
+  "hud": {
+    "x": 10,
+    "y": 10,
+    "width": 824,
+    "height": 221.234375,
+    "top": 10,
+    "right": 834,
+    "bottom": 231.234375,
+    "left": 10
+  },
+  "mission": {
+    "x": 10,
+    "y": 10,
+    "width": 824,
+    "height": 168.234375,
+    "top": 10,
+    "right": 834,
+    "bottom": 178.234375,
+    "left": 10
+  },
+  "stick": {
+    "x": 18,
+    "y": 240,
+    "width": 132,
+    "height": 132,
+    "top": 240,
+    "right": 150,
+    "bottom": 372,
+    "left": 18
+  },
+  "buttons": {
+    "x": 672,
+    "y": 232,
+    "width": 158,
+    "height": 140,
+    "top": 232,
+    "right": 830,
+    "bottom": 372,
+    "left": 672
+  }
+}

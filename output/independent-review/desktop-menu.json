@@ -1,0 +1,15 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "install": {
+    "display": "block",
+    "text": "Install Guide"
+  },
+  "manifestHref": "http://127.0.0.1:4174/manifest.json",
+  "swSupported": true,
+  "swController": true,
+  "renderType": "function",
+  "advanceType": "function"
+}

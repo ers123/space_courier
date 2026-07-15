@@ -1,0 +1,31 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "touchControls": "block",
+  "install": {
+    "display": "block",
+    "text": "Install Guide"
+  },
+  "menuCard": {
+    "x": 14,
+    "y": 22.15625,
+    "width": 362,
+    "height": 799.6875,
+    "top": 22.15625,
+    "right": 376,
+    "bottom": 821.84375,
+    "left": 14
+  },
+  "installRect": {
+    "x": 115,
+    "y": 788,
+    "width": 160,
+    "height": 38,
+    "top": 788,
+    "right": 275,
+    "bottom": 826,
+    "left": 115
+  }
+}

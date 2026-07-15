@@ -1,0 +1,46 @@
+{
+  "manifest": {
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "./star_icon_192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "./star_icon_512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ]
+  },
+  "iconSizes": {
+    "192": {
+      "width": 192,
+      "height": 192
+    },
+    "512": {
+      "width": 512,
+      "height": 512
+    }
+  },
+  "serviceWorkerOwnership": {
+    "hasStarforgePrefix": true,
+    "deletesOnlyPrefixed": true
+  },
+  "quickplay": {
+    "mode": "playing",
+    "menuVisible": false
+  },
+  "offline": {
+    "mode": "playing",
+    "menuVisible": false,
+    "controlledBefore": true,
+    "controlledOffline": true
+  },
+  "consoleErrors": []
+}
