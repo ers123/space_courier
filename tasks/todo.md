@@ -75,13 +75,13 @@ Release/video owner: persistent thread `019f65a3-ea58-7311-9a84-c672ca1996db`, G
 
 ### Release plan
 
-- [ ] Capture controlled gameplay frames for hook, pickup, ambush/combat, delivery, upgrade, tier 2, and install affordance; inspect representative frames/contact sheet.
-- [ ] Encode `/Users/yohan/Projects/space_courier/docs/media/starforge-courier-gameplay.mp4` as 1280x720 H.264 yuv420p faststart and record metadata/commands.
-- [ ] Add a GitHub-compatible README video link/preview without disturbing live demo/install guidance.
-- [ ] Rerun the official develop-web-game client and direct PWA checks after video/docs changes; inspect screenshots/state and console output.
-- [ ] Review the final diff, commit only intended task artifacts, and verify clean attached `main`.
-- [ ] Acquire `/tmp/space_courier.deploy.lock`, fetch/pull/ancestor-check, push non-destructively, and verify GitHub Pages build/source/revision.
-- [ ] Run bounded live HTTP/PWA/gameplay/Quick Play/offline/console verification and write durable release proof.
+- [x] Capture controlled gameplay frames for hook, pickup, ambush/combat, delivery, upgrade, tier 2, and install affordance; inspect representative frames/contact sheet.
+- [x] Encode `/Users/yohan/Projects/space_courier/docs/media/starforge-courier-gameplay.mp4` as 1280x720 H.264 yuv420p faststart and record metadata/commands.
+- [x] Add a GitHub-compatible README video link/preview without disturbing live demo/install guidance.
+- [x] Rerun the official develop-web-game client and direct PWA checks after video/docs changes; inspect screenshots/state and console output.
+- [x] Review the final diff, commit only intended task artifacts, and verify clean attached `main`.
+- [x] Acquire `/tmp/space_courier.deploy.lock`, fetch/pull/ancestor-check, push non-destructively, and verify GitHub Pages build/source/revision.
+- [x] Run bounded live HTTP/PWA/gameplay/Quick Play/offline/console verification and write durable release proof.
 
 ### Release review
 
