@@ -45,7 +45,7 @@ No actionable P0/P1/P2 findings remain. The implementation is a playable adaptat
 
 ## Open Questions
 
-No Design QA blocker remains. Release/video, commit, push, GitHub Pages verification, and X posting are intentionally not part of this gate and have not been performed in this recovery phase.
+No Design QA blocker remains. The corrected gameplay and regenerated video are deployed and live-verified. X posting remains intentionally unperformed.
 
 ## Implementation Checklist
 
@@ -60,6 +60,6 @@ No Design QA blocker remains. Release/video, commit, push, GitHub Pages verifica
 
 ## Follow-up Polish
 
-No further visual/control polish is required for this approved QA gate. A separate Luna Medium release/video handoff remains pending and must create its own release evidence before any commit, push, deployment, trailer replacement, or X post.
+No further visual/control polish is required for this approved QA gate. Any later aesthetic change should preserve the verified carrier/route/bolt direction relationship and rerun the same focused screenshots plus the full control suite.
 
 final result: passed

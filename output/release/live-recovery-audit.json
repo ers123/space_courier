@@ -4,7 +4,7 @@
     "/": {
       "status": 200,
       "contentType": "text/html; charset=utf-8",
-      "contentLength": "19798"
+      "contentLength": "20051"
     },
     "/manifest.json": {
       "status": 200,
@@ -14,7 +14,7 @@
     "/sw.js": {
       "status": 200,
       "contentType": "application/javascript; charset=utf-8",
-      "contentLength": "827"
+      "contentLength": "830"
     },
     "/star_icon.png": {
       "status": 200,
@@ -39,7 +39,7 @@
     "/docs/media/starforge-courier-gameplay.mp4": {
       "status": 200,
       "contentType": "video/mp4",
-      "contentLength": "4811440"
+      "contentLength": "4526491"
     },
     "/docs/social/x-post-kit.md": {
       "status": 200,

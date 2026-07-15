@@ -127,9 +127,9 @@ This choice is final for the recovery: the friendly broad triangular carrier, mo
 - [x] Reproduce a fixed right-aim shot and compare the carrier nose, muzzle marker, bolt sprite, and projectile travel direction.
 - [x] Correct the single visual-orientation source of truth without changing projectile physics or control ownership.
 - [x] Rerun the official web-game client plus focused keyboard, mouse, touch, and gamepad fire-direction assertions; inspect screenshots and console output.
-- [ ] Update the service-worker cache, commit only scoped files, push `main`, and verify the exact GitHub Pages revision and live asset responses.
+- [x] Update the service-worker cache, commit only scoped files, push `main`, and verify the exact GitHub Pages revision and live asset responses.
 
-Review: the texture upload was vertically flipped and billboard rotations used the world-Z sign directly even though world +Z projects down-screen. The fix enables WebGL Y-flip, converts world headings at one boundary, applies the carrier art's measured forward offset, reduces the carrier from 16.5 to 13 world units, and eases camera follow from 0.08 to 0.05. Focused right/up screenshots, the full acceptance suite, regenerated video contact sheet, and local PWA/offline audit passed with no console errors. Deployment remains the final unchecked gate.
+Review: the texture upload was vertically flipped and billboard rotations used the world-Z sign directly even though world +Z projects down-screen. The fix enables WebGL Y-flip, converts world headings at one boundary, applies the carrier art's measured forward offset, reduces the carrier from 16.5 to 13 world units, and eases camera follow from 0.08 to 0.05. Focused right/up screenshots, the full acceptance suite, regenerated video contact sheet, and local PWA/offline audit passed with no console errors. Fix revision `f26fc514e28e910d034633ca0b916c8b56db30ff` was pushed to `main`; GitHub Pages reported that exact revision `built`, and the live full-loop/PWA/offline audit passed with `consoleErrors:[]`.
 
 Recovery starting state:
 
