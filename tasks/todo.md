@@ -133,10 +133,10 @@ Recovery starting state:
 
 | Phase | Thread | Model | Effort | Deliverable | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Recovery coordination | current delegated coordinator | GPT-5.6 Sol | Extra High | Exact target, phase briefs, gate decisions | Canonical checklist and evidence-backed handoffs | In progress |
+| Recovery coordination | `019f65df-6b20-7fa0-a54a-10d7669b8f93` | GPT-5.6 Sol | Extra High | Exact target, phase briefs, gate decisions | Canonical checklist and evidence-backed handoffs | Complete |
 | Art/control/gameplay implementation | `019f65e2-99b2-7f81-aef9-031b5fde0760` | GPT-5.6 Terra | High | Raster assets, renderer/control/game-feel overhaul, local verification | Review 1 P2 fixes verified; same-thread Luna Review 2 passed | Complete — Review 2 PASS |
 | Independent visual/control review | `019f65fe-231c-7e02-8a2a-bc3226abc7a0` | GPT-5.6 Luna | High | Read-only findings and pass/recheck verdict | Review 1 FAIL → Terra fixes → same-thread Review 2 PASS; no P0/P1/P2 | Complete — Review 2 PASS |
-| Video/release/live verification | `019f6615-e235-75d0-bfdb-6c3f41765426` | GPT-5.6 Luna | Medium | 26.24-second MP4, reconciled X kit, exact commit/push/Pages proof | Exact revision live and verified | In progress |
+| Video/release/live verification | `019f6615-e235-75d0-bfdb-6c3f41765426` | GPT-5.6 Luna | Medium | 26.24-second MP4, reconciled X kit, exact commit/push/Pages proof | Exact revision live and verified | Complete |
 
 - [x] Audit the user-provided gameplay and Codex-sidebar screenshots and identify the renderer and routing root causes.
 - [x] Resolve and inspect concept option 3 as the exact visual target; do not switch concepts.
@@ -160,13 +160,13 @@ Recovery starting state:
 - [x] Draft the complete X posting package: Korean and English main copy, optional replies, honest model-role framing, video edit script, accessibility text, and submission checklist.
 - [x] Recheck every X claim against the shipped build; recommend `#GPT56 #Codex #gamedev` and keep `#PWA #WebGame` only for an optional technical reply.
 - [x] Export and inspect the replacement X-ready MP4, then mark `docs/social/x-post-kit.md` ready instead of draft/hold.
-- [ ] Commit only scoped changes, push `main`, verify GitHub Pages was built from the exact revision, then rerun live gameplay/PWA checks while holding the deployment lock.
+- [x] Commit only scoped changes, push `main`, verify GitHub Pages was built from the exact revision, then rerun live gameplay/PWA checks while holding the deployment lock.
 - [x] Route new child work to a separate projectless `space_courier` target with the absolute repo path pinned, avoiding the broad `/Users/yohan/Projects` project.
-- [ ] Record every recovery child thread ID/model/effort and the exact final revision/evidence here and in the final handoff.
+- [x] Record every recovery child thread ID/model/effort and the exact final revision/evidence here and in the final handoff.
 
 ### Recovery Review
 
-Approved target and constraints are locked. Implementation is delegated to one Terra High writer; the independent Luna High visual/control gate passed and the Luna Medium release handoff is now executing.
+The approved Option 3 target shipped. Terra High completed the visual/control recovery, Luna High independently cleared the second review with no P0/P1/P2 findings, and Luna Medium completed the video, scoped release, Pages build, and live gameplay/PWA verification. X remains intentionally unposted; the ready-to-copy package is in `docs/social/x-post-kit.md`.
 
 ### Terra implementation review — 2026-07-15
 
