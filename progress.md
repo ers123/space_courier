@@ -295,3 +295,14 @@ Release owner: persistent thread `019f65a3-ea58-7311-9a84-c672ca1996db`, GPT-5.6
 - Official-client proof: `output/release/official-full-loop/state-0.json` ended at `mode:"playing"`, `tier:2`, `deliveries:1`, `kills:1`, `score:288`, with no `errors-*.json` artifact. Screenshot `/Users/yohan/Projects/space_courier/output/release/official-full-loop/shot-0.png` was inspected.
 - Fresh PWA audit command: `node /tmp/local_release_audit.mjs`.
 - PWA proof: `output/release/local-pwa-audit.json` confirms `start_url:"./"`, `scope:"./"`, exact 192x192 and 512x512 icon bitmaps, Starforge-prefixed cache ownership, Quick Play `mode:"playing"` with menu hidden, offline reload still playing and service-worker controlled, and `consoleErrors:[]`.
+
+### Live release receipt
+
+- Deployment lock: `/tmp/space_courier.deploy.lock`, acquired before fetch/pull/ancestor-check/push and held through Pages polling and live verification; released cleanly afterward.
+- First integrated release revision: `15f2e7ac4f03b53e226abc17521fedbea6790c4e`; `origin/main` matched it after non-destructive `git push origin main`.
+- Pages source: `https://api.github.com/repos/ers123/space_courier/pages` returned `build_type:"legacy"`, `source.branch:"main"`, `source.path:"/"`, URL `https://ers123.github.io/space_courier/`.
+- Pages build poll: revision `15f2e7ac4f03b53e226abc17521fedbea6790c4e`, status `built`, created `2026-07-15T12:05:26Z`, updated `2026-07-15T12:06:09Z`; legacy API returned build `id:null`.
+- Live audit command: `node /tmp/live_release_audit.mjs`; durable proof is `output/release/live-audit.json` and screenshot `output/release/live-full-loop.png`.
+- Live URL checks: `https://ers123.github.io/space_courier/`, `/manifest.json`, `/sw.js`, `/star_icon_192.png`, `/star_icon_512.png`, and `/docs/media/starforge-courier-gameplay.mp4` each returned HTTP 200 with expected HTML/JSON/JavaScript/PNG/MP4 content types.
+- Live gameplay proof: `mode:"playing"`, `tier:2`, `deliveries:1`, `kills:1`; Quick Play returned `mode:"playing"` with menu hidden; controlled offline reload remained `mode:"playing"` and service-worker controlled; `consoleErrors:[]`.
+- Final evidence-only commit and second Pages poll are required after adding these live proof files; no gameplay/source behavior changes are expected in that final receipt.

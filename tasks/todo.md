@@ -25,7 +25,7 @@ Turn the existing single-file mobile WebGL PWA into a polished, highly replayabl
 | Implementation attempt 1 | `019f6567-8077-7c01-a6b8-ef608e8b888a` | GPT-5.5 | Extra High | Initial compact `index.html` replacement and start-flow smoke evidence | Interrupted after one large patch; no canonical evidence log/PWA/docs completion | Replaced |
 | Implementation and focused tests | `019f6572-2e35-7d51-9f6f-802514db385d` | GPT-5.4 | High | Verify preserved patch, finish PWA/docs, then fix reviewed findings in small deltas | Core loop works, focused checks pass, Luna recheck still pending | Complete |
 | Independent playtest and polish review | `019f6582-7e92-7633-af08-e6551e6048b0` | Luna High | High | Actionable findings plus same-thread read-only recheck | PASS — no remaining actionable finding among the five | Complete |
-| Video packaging, release, and live verification | `019f65a3-ea58-7311-9a84-c672ca1996db` | GPT-5.6 Luna | Medium | Upload-ready MP4, clean integrated commit/push, Pages receipt, live proof | Integrated revision deployed and verified | In progress |
+| Video packaging, release, and live verification | `019f65a3-ea58-7311-9a84-c672ca1996db` | GPT-5.6 Luna | Medium | Upload-ready MP4, clean integrated commit/push, Pages receipt, live proof | Integrated revision deployed and verified | Complete |
 
 ### Settled Redesign
 
@@ -55,7 +55,7 @@ Turn the existing single-file mobile WebGL PWA into a polished, highly replayabl
 - [x] Exercise start, movement, aiming, shooting, enemy death, player damage, cargo pickup/delivery, upgrades, pause/resume, game over/restart, mobile layout, fullscreen, install/offline behavior.
 - [x] Produce a short upload-ready gameplay video showing hook, core loop, and progression without misleading claims or unlicensed assets.
 - [x] Run independent review and fix/recheck every actionable finding.
-- [ ] Commit only task changes, push to `main`, verify GitHub Pages from the integrated revision, and record live health/gameplay evidence.
+- [x] Commit only task changes, push to `main`, verify GitHub Pages from the integrated revision, and record live health/gameplay evidence.
 - [x] Update this file and `progress.md` with actual thread IDs, model/effort, artifacts, checks, deployment revision, and remaining risks.
 
 ## Review
@@ -85,4 +85,4 @@ Release/video owner: persistent thread `019f65a3-ea58-7311-9a84-c672ca1996db`, G
 
 ### Release review
 
-Video gate complete: `docs/media/starforge-courier-gameplay.mp4` is a 23.240-second, 1280x720, H.264/yuv420p, silent, faststart MP4. The final capture/contact sheet was visually inspected; local post-media official-client and PWA gates are clean. Commit, Pages receipt, and live proof remain pending.
+Release complete: `docs/media/starforge-courier-gameplay.mp4` is a 23.240-second, 1280x720, H.264/yuv420p, silent, faststart MP4. The final capture/contact sheet was visually inspected; local and live official-client/PWA gates are clean. Final commit, Pages receipt, and live proof are recorded in `progress.md`.

@@ -1,0 +1,53 @@
+{
+  "base": "https://ers123.github.io/space_courier",
+  "http": {
+    "/": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": "16836"
+    },
+    "/manifest.json": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "contentLength": "411"
+    },
+    "/sw.js": {
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "contentLength": "685"
+    },
+    "/star_icon_192.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "59417"
+    },
+    "/star_icon_512.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "400260"
+    },
+    "/docs/media/starforge-courier-gameplay.mp4": {
+      "status": 200,
+      "contentType": "video/mp4",
+      "contentLength": "1573228"
+    }
+  },
+  "gameplay": {
+    "mode": "playing",
+    "tier": 2,
+    "deliveries": 1,
+    "kills": 1,
+    "upgradeVisible": true
+  },
+  "quickplay": {
+    "mode": "playing",
+    "menuVisible": false
+  },
+  "offline": {
+    "mode": "playing",
+    "menuVisible": false,
+    "controlledBeforeOffline": true,
+    "controlledOffline": true
+  },
+  "consoleErrors": []
+}
