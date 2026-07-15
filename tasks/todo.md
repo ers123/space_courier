@@ -97,12 +97,12 @@ Persistent release thread: `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna,
 - [x] Inspect the candidate MP4 with exact ffprobe metadata, faststart evidence, extracted frames, and a visually inspected contact sheet; replace the HOLD video only after it passes.
 - [x] Reconcile `docs/social/x-post-kit.md` minimally against shipped behavior, including factual Korean/English copy, accessibility text, video description, and exactly `#GPT56 #Codex #gamedev` for the main post; do not post to X.
 - [x] Verify README links and shipped manifest, service-worker, icon, sprite, video, and documentation assets.
-- [ ] Acquire `/tmp/space_courier.deploy.lock`, stage only intended release files, reconcile `main` non-destructively, commit, push, verify exact `origin/main`, GitHub Pages build/source, and live HTTP/gameplay/PWA/offline/console gates while holding the lock.
-- [ ] Record exact final revision, video specs, commands, Pages receipt, live proof, preserved leftovers, route thread/model/effort, and final Review in `tasks/todo.md` and `progress.md`.
+- [x] Acquire `/tmp/space_courier.deploy.lock`, stage only intended release files, reconcile `main` non-destructively, commit, push, verify exact `origin/main`, GitHub Pages build/source, and live HTTP/gameplay/PWA/offline/console gates while holding the lock.
+- [x] Record exact final revision, video specs, commands, Pages receipt, live proof, preserved leftovers, route thread/model/effort, and final Review in `tasks/todo.md` and `progress.md`.
 
 ### Current release review
 
-Fresh local evidence is complete through video replacement and PWA audit. Commit, push, Pages verification, and live proof remain in progress under persistent thread `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna, Medium effort); nothing has been posted to X.
+Fresh local and live evidence is complete for release commit `67f784f1e22ea2a621266dd99be491ae1fc7c429`; an evidence-only follow-up commit will add the live receipt/screenshot and then repeat the exact Pages/live verification. Persistent thread: `019f6615-e235-75d0-bfdb-6c3f41765426` (GPT-5.6 Luna, Medium effort); nothing has been posted to X.
 
 ## Visual Quality Recovery Plan — Approved 2026-07-15
 

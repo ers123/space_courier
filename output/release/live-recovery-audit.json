@@ -1,0 +1,171 @@
+{
+  "base": "https://ers123.github.io/space_courier",
+  "http": {
+    "/": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": "19798"
+    },
+    "/manifest.json": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "contentLength": "411"
+    },
+    "/sw.js": {
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "contentLength": "827"
+    },
+    "/star_icon.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "1639526"
+    },
+    "/star_icon_192.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "59417"
+    },
+    "/star_icon_512.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "400260"
+    },
+    "/star_image.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "2629024"
+    },
+    "/docs/media/starforge-courier-gameplay.mp4": {
+      "status": 200,
+      "contentType": "video/mp4",
+      "contentLength": "4811440"
+    },
+    "/docs/social/x-post-kit.md": {
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "contentLength": "3043"
+    },
+    "/docs/assets/starforge-asset-catalog.md": {
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "contentLength": "1638"
+    },
+    "/assets/sprites/carrier.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "174064"
+    },
+    "/assets/sprites/cargo-bay.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "239953"
+    },
+    "/assets/sprites/cargo-pod.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "300861"
+    },
+    "/assets/sprites/escort-drone.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "139635"
+    },
+    "/assets/sprites/delivery-station.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "292788"
+    },
+    "/assets/sprites/enemy-chaser.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "211815"
+    },
+    "/assets/sprites/enemy-dasher.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "149704"
+    },
+    "/assets/sprites/enemy-shooter.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "148782"
+    },
+    "/assets/sprites/player-bolt.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "40006"
+    },
+    "/assets/sprites/enemy-bolt.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "36126"
+    },
+    "/assets/sprites/control-move.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "168604"
+    },
+    "/assets/sprites/control-aim.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "204403"
+    },
+    "/assets/sprites/control-fire.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "230021"
+    },
+    "/assets/sprites/control-focus.png": {
+      "status": 200,
+      "contentType": "image/png",
+      "contentLength": "243429"
+    }
+  },
+  "gameplay": {
+    "start": {
+      "mode": "playing",
+      "objective": "pickup"
+    },
+    "pickup": {
+      "mode": "playing",
+      "carrying": true
+    },
+    "combat": {
+      "mode": "upgrade",
+      "score": 257,
+      "scrap": 106,
+      "deliveries": 1,
+      "bullets": 3
+    },
+    "tierTwo": {
+      "mode": "playing",
+      "tier": 2,
+      "upgrades": {
+        "engine": 1,
+        "cannon": 0,
+        "hull": 0,
+        "clamp": 0,
+        "cooling": 0
+      }
+    },
+    "upgradeVisible": true
+  },
+  "quickplay": {
+    "mode": "playing",
+    "menuVisible": false
+  },
+  "offline": {
+    "mode": "playing",
+    "menuVisible": false,
+    "controlledBeforeOffline": true,
+    "controlledOffline": true
+  },
+  "mobileControls": {
+    "move": "block",
+    "aim": "block",
+    "fire": "block",
+    "focus": "block"
+  },
+  "consoleErrors": []
+}
